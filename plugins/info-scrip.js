@@ -5,6 +5,6 @@ await conn.sendUrl(m.chat, git, m, { externalAdReply: { mediaType: 1, renderLarg
 }
 handler.tags =['info'] 
 handler.help = ['script'] 
-handler.command = ['sc', 'script', 'codigo', 'git', 'github'] 
+handler.command = ['sc'] 
 handler.register = true 
 export default handler
