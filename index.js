@@ -1,4 +1,4 @@
-console.log('🧿 Iniciando el Mejor Boot....')
+console.log('🧿 Iniciando el Mejor Boot De WhatsApp....')
 import { join, dirname } from 'path'
 import { createRequire } from 'module'
 import { fileURLToPath } from 'url'
@@ -15,15 +15,15 @@ const { name, author } = require(join(__dirname, './package.json')) // https://w
 const { say } = cfonts
 const rl = createInterface(process.stdin, process.stdout)
 
-say('Kan\nBot', {
+say('✰ Kan\nBot ✰', {
 font: 'block',
 align: 'center',
 colors: ['red', 'yellow']
 })
-say(`Bot: ${name} By: Stiiven`, {
+say(`${name} By: Stiiven`, {
 font: 'console',
   align: 'center',
-gradient: ['green', 'magenta']
+gradient: ['green', 'whitw']
 })
 
 var isRunning = false
