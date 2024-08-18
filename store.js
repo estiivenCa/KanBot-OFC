@@ -41,18 +41,14 @@ global.img7 = 'https://telegra.ph/file/951275803faa754aff010.jpg'
 global.sityImg = [img, img1, img2, img3, img4, img5, img6, img7]
 
 //Enlaces
-global.yt = 'https://whatsapp.com/channel/0029VakhAHc5fM5hgaQ8ed2N'
+global.yt = 'https://github.com/estiivenCa/KanBot-OFC'
 global.ig = 'https://whatsapp.com/channel/0029VakhAHc5fM5hgaQ8ed2N'
-global.md = 'https://whatsapp.com/channel/0029VakhAHc5fM5hgaQ8ed2N'
+global.md = 'https://github.com/estiivenCa/KanBot-OFC'
 global.paypal = 'https://whatsapp.com/channel/0029VakhAHc5fM5hgaQ8ed2N'
-global.git = 'https://whatsapp.com/channel/0029VakhAHc5fM5hgaQ8ed2N'
-global.nn = 'https://whatsapp.com/channel/0029VakhAHc5fM5hgaQ8ed2N' //Grupo ofc
-global.Curiosity = 'https://whatsapp.com/channel/0029VakhAHc5fM5hgaQ8ed2N' //Curiosity OFC
-global.hachiko = 'https://whatsapp.com/channel/0029VakhAHc5fM5hgaQ8ed2N' //Hachiko OFC
-global.Lobo = 'https://whatsapp.com/channel/0029VakhAHc5fM5hgaQ8ed2N' //Lobo OFC
-global.nnn = 'https://whatsapp.com/channel/0029VakhAHc5fM5hgaQ8ed2N' //Bailey global
-global.channel = 'https://whatsapp.com/channel/0029VakhAHc5fM5hgaQ8ed2N' //BaileyBot-MD
-global.nnnn = 'https://whatsapp.com/channel/0029VakhAHc5fM5hgaQ8ed2N' //colaboración multi bots
+global.git = 'https://github.com/estiivenCa/KanBot-OFC'
+global.nn = 'https://whatsapp.com/channel/0029VakhAHc5fM5hgaQ8ed2N' 
+global.channel = 'https://whatsapp.com/channel/0029VakhAHc5fM5hgaQ8ed2N' 
+global.nnnn = 'https://github.com/estiivenCa/KanBot-OFC' 
 global.linkSity = [yt, ig, md, paypal, git, nn]
 
 //Raíz
