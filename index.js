@@ -20,7 +20,7 @@ font: '3d',
 align: 'center',
 colors: ['red', 'yellow']
 })
-say(`${name} By: Stiiven`, {
+say(`By: Stiiven`, {
 font: 'chrome',
   align: 'center',
 gradient: ['green', 'white']
