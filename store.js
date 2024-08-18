@@ -48,7 +48,7 @@ global.paypal = 'https://whatsapp.com/channel/0029VakhAHc5fM5hgaQ8ed2N'
 global.git = 'https://github.com/estiivenCa/KanBot-OFC'
 global.nn = 'https://whatsapp.com/channel/0029VakhAHc5fM5hgaQ8ed2N' 
 global.channel = 'https://whatsapp.com/channel/0029VakhAHc5fM5hgaQ8ed2N' 
-global.nnnn = 'https://github.com/estiivenCa/KanBot-OFC' 
+global.nnn = 'https://github.com/estiivenCa/KanBot-OFC' 
 global.linkSity = [yt, ig, md, paypal, git, nn]
 
 //Raíz
