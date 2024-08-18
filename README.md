@@ -23,7 +23,7 @@ pkg install -y git nodejs ffmpeg imagemagick && pkg install yarn
 ```
 
 ```bash
-git clone https://github.com/estiivenCa/KanBot && cd KanBot && yarn install && npm install
+git clone https://github.com/estiivenCa/KanBot-OFC && cd KanBot-OFC && yarn install && npm install
 ```
 
 ```bash
@@ -41,7 +41,7 @@ npm start
 > Escribe Estos Comandos Uno Por Uno
 ```bash
 > cd
-> cd KanBot
+> cd KanBot-OFC
 > npm start
 ```
 
@@ -60,7 +60,7 @@ npm start
 * Descargar e instala ImageMagick [`Aquí`](https://imagemagick.org/script/download.php)
 * Descargar e instala Yarn [`Aquí`](https://classic.yarnpkg.com/en/docs/install#windows-stable)
 ```bash
-git clone https://github.com/estiivenCa/KanBot && cd KanBot && npm install && npm update && node .
+git clone https://github.com/estiivenCa/KanBot-OFC && cd KanBot && npm install && npm update && node .
 ```
 ## `💻 Instalación de FFmpeg para Windows ✰`
 * Descarga cualquiera de las versiones de FFmpeg disponibles haciendo clic en [FFmpeg](https://www.gyan.dev/ffmpeg/builds/).
