@@ -15,15 +15,15 @@ const { name, author } = require(join(__dirname, './package.json')) // https://w
 const { say } = cfonts
 const rl = createInterface(process.stdin, process.stdout)
 
-say('✰ Kan\nBot ✰', {
-font: 'block',
+say('Kan\nBot', {
+font: 'shade',
 align: 'center',
 colors: ['red', 'yellow']
 })
 say(`${name} By: Stiiven`, {
-font: 'console',
+font: 'chrome',
   align: 'center',
-gradient: ['green', 'whitw']
+gradient: ['green', 'white']
 })
 
 var isRunning = false
