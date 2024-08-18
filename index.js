@@ -16,7 +16,7 @@ const { say } = cfonts
 const rl = createInterface(process.stdin, process.stdout)
 
 say('Kan\nBot', {
-font: 'shade',
+font: 'grid',
 align: 'center',
 colors: ['red', 'yellow']
 })
