@@ -22,6 +22,7 @@ colors: ['red', 'yellow']
 })
 say(`Bot: ${name} By: Stiiven`, {
 font: 'console',
+  align: 'center',
 gradient: ['green', 'magenta']
 })
 
