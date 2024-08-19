@@ -21,6 +21,8 @@ let tags = {
   'nsfw': 'N S F W +18', 
   'owner': 'O W N E R', */
 }
+const more = String.fromCharCode(8206)
+const readMore = more.repeat(5)
 const defaultMenu = {
   before: `
   🔥✩*⢄⢁✧ -------⚠️-------- ✧⡈⡠*✩🔥
@@ -184,8 +186,7 @@ handler.exp = 3
 
 export default handler
 
-const more = String.fromCharCode(8206)
-const readMore = more.repeat(5)
+
 
 function clockString(ms) {
   let d = isNaN(ms) ? '--' : Math.floor(ms / 86400000)
