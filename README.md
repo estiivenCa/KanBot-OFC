@@ -79,8 +79,8 @@ Si tiene éxito, le dará un mensaje como: `SUCCESS: specified value was saved`.
 ----
 ----
 
-## <img src="https://telegra.ph/file/45fd3e88399fdaa0a64d4.mp4" alt="Creador 😎" width="42" height="42"> Contactame crack 🥀
- <a href="https://wa.me/573028488839"><img alt="Stiiven Creador 🥀" src="https://img.shields.io/badge/Stiiven-Creador🥀-25D366?style=for-the-badge&logo=whatsapp&logoColor=white"/></a>
+## <img src="https://telegra.ph/file/45fd3e88399fdaa0a64d4.mp4" alt="Creador 😎" width="42" height="42"> Contactame 🥀
+ <a href="https://wa.me/67078852299"><img alt="Stiiven Creador 🥀" src="https://img.shields.io/badge/Stiiven-Creador🥀-25D366?style=for-the-badge&logo=whatsapp&logoColor=white"/></a>
 
 ### `✰ Propietario Del Bot ✰` 😎
 [![WOTCHITO](https://i.postimg.cc/sgnFTjH2/Menu1.jpg?size=100)](https://github.com/estiivenCa)
