@@ -42,13 +42,14 @@ global.sityImg = [img, img1, img2, img3, img4, img5, img6, img7]
 
 //Enlaces
 global.yt = 'https://github.com/estiivenCa/KanBot-OFC'
-global.ig = 'https://whatsapp.com/channel/0029VakhAHc5fM5hgaQ8ed2N'
+global.ig = 'https://chat.whatsapp.com/Fs4642Xistj9MJHvJJjpi4'
 global.md = 'https://github.com/estiivenCa/KanBot-OFC'
 global.paypal = 'https://whatsapp.com/channel/0029VakhAHc5fM5hgaQ8ed2N'
 global.git = 'https://github.com/estiivenCa/KanBot-OFC'
-global.nn = 'https://whatsapp.com/channel/0029VakhAHc5fM5hgaQ8ed2N' 
+global.nn = 'https://chat.whatsapp.com/Fs4642Xistj9MJHvJJjpi4' 
 global.channel = 'https://whatsapp.com/channel/0029VakhAHc5fM5hgaQ8ed2N' 
-global.nnn = 'https://github.com/estiivenCa/KanBot-OFC' 
+global.nnn = 'https://github.com/estiivenCa/KanBot-OFC'
+global.nnnn = 'https://chat.whatsapp.com/Fs4642Xistj9MJHvJJjpi4'
 global.linkSity = [yt, ig, md, paypal, git, nn]
 
 //Raíz
