@@ -83,7 +83,7 @@ Si tiene éxito, le dará un mensaje como: `SUCCESS: specified value was saved`.
  <a href="https://wa.me/67078852299"><img alt="Stiiven Creador 🥀" src="https://img.shields.io/badge/Stiiven-Creador🥀-25D366?style=for-the-badge&logo=whatsapp&logoColor=white"/></a>
 
 ### `✰ Propietario Del Bot ✰` 😎
-> Stiiven 👑
+## > Stiiven 👑
 [![WOTCHITO](https://i.postimg.cc/sgnFTjH2/Menu1.jpg?size=100)](https://github.com/estiivenCa)
 
  ### `✰ Colaboradores Del Bot ✰ 😜`
