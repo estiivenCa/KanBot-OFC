@@ -2,8 +2,8 @@ import { watchFile, unwatchFile } from 'fs'
 import chalk from 'chalk'
 import { fileURLToPath, pathToFileURL } from 'url'
 
-global.owner = [['573028488839', 'Kan', true],
-['67078859922', 'KanV2', true]]
+global.owner = [['573028488839', 'Stiiven', true],
+['67078859922', 'Stiiven', true]]
 
 global.botNumberCode = ''
 global.confirmCode = ''
@@ -21,7 +21,7 @@ global.jxtxn = 'Kan'
 global.cb = '✰ 𝙺𝚊𝚗𝙱𝚘𝚝 ✰'
 
 //Las Versiones Y Entre Otros
-global.vs = 'V2'
+global.vs = '✰ 𝙺𝚊𝚗𝙱𝚘𝚝 ✰'
 global.library = 'Baileys'
 global.baileys = '@whiskeysockets/baileys'
 global.lenguaje = 'Español'
