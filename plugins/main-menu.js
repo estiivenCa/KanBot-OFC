@@ -22,7 +22,7 @@ let tags = {
   'owner': 'O W N E R', */
 }
 const more = String.fromCharCode(8206)
-const readMore = more.repeat(5)
+const readMore = more.repeat(4001)
 const defaultMenu = {
   before: `
   🔥✩*⢄⢁✧ -------⚠️-------- ✧⡈⡠*✩🔥
