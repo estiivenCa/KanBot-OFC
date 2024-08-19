@@ -5,8 +5,8 @@ let texto = `
 │ *Hola 👋 para agregar el Bot a tu grupo se debe tener en cuenta:*
 ╰┬────────────┈⊷
 ┌┤ ✰ 𝙺𝚊𝚗𝙱𝚘𝚝 ✰
-┌┤➳ _Usa .pg y el link de tu grupo_
-┌┤➳ _Ejemplo: *.pg https://chat.whatsapp.com*_
+┌┤➳ _Usa .join y el link de tu grupo_
+┌┤➳ _Ejemplo: *.join https://chat.whatsapp.com*_
 ┌┤➳ _El dueño del Bot evaluara el link lo mas pronto posible para ver si cumple con los requisitos minimos_
 ┌┤➳ _Si se cumple el Bot se unira al grupo_
 ╰┬────────────┈⊷
