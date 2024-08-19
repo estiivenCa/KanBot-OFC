@@ -21,7 +21,7 @@ global.jxtxn = 'Kan'
 global.cb = '✰ 𝙺𝚊𝚗𝙱𝚘𝚝 ✰'
 
 //Las Versiones Y Entre Otros
-global.vs = '✰ 𝙺𝚊𝚗𝙱𝚘𝚝 ✰'
+global.vs = 'KanV2'
 global.library = 'Baileys'
 global.baileys = '@whiskeysockets/baileys'
 global.lenguaje = 'Español'
