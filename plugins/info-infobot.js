@@ -24,14 +24,11 @@ import { generateWAMessageFromContent } from '@whiskeysockets/baileys'
  
  Hola, para cualquier duda sobre el Bot puedes contactarme aqui:
    
- 🥀 *DUEÑO* 
- * ⁨𝑺̳̽𝒕̳̽𝒊̳𝒊̳𝒗̳̽𝒙̳̽𝒏̳̽×፝֟͜×*
- -------------------------- 
  🥏 *CONTACTO*  
-  *wa.me/67078866397* 
+  *wa.me/67078859922* 
  -------------------------- 
   👑 *CREADOR* 
-  *Jxtxn17*
+  *Stiiven*
  -------------------------- 
  🌐 *VERSIÓN ACTUAL* 
   ${vs} 
