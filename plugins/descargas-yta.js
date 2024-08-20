@@ -62,7 +62,7 @@ var handler = async (m, { text, conn, args, usedPrefix, command }) => {
 
 handler.help = ['yta'];
 handler.tags = ['descargas'];
-handler.command = /^audio|fgmp3|dlmp3|mp3|getaud|yta$/i;
+handler.command = /^fgmp3|dlmp3|getaud|yta$/i;
 
 
 export default handler;
