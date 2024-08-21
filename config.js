@@ -3,7 +3,8 @@ import chalk from 'chalk'
 import { fileURLToPath, pathToFileURL } from 'url'
 
 global.owner = [['573028488839', 'Stiiven', true],
-['67078859922', 'Stiiven', true]]
+['67078859922', 'Stiiven', true],
+['573204545069']]
 
 global.botNumberCode = ''
 global.confirmCode = ''
