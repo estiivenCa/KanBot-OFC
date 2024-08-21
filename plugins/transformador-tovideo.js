@@ -25,7 +25,7 @@ await conn.sendFile(m.chat, out, 'error.mp4', '*🧃 𝘼𝙌𝙐𝙄 𝙀𝙎�
 }
 handler.help = ['tovideo']
 handler.tags = ['transformador']
-handler.command = {'tovideo']
+handler.command = ['tovideo']
 
 handler.limit = true
 
