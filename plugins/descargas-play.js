@@ -22,9 +22,9 @@ sourceUrl: channel }}}) */
 const yt_play = await search(args.join(' '))
 let additionalText = ''
 if (command === 'play') {
-additionalText = 'audio'
+additionalText = 'AUDIO'
 } else if (command === 'play2') {
-additionalText = 'video'}
+additionalText = 'VIDEO'}
 
 let texto1 = ` ┏━━━━━━━━━━━━━━━━━
  ┃ *∘ 📩 𝘿𝙀𝙎𝘾𝘼𝙍𝙂𝘼𝙉𝘿𝙊* 
