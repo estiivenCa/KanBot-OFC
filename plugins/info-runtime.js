@@ -82,7 +82,7 @@ conn.sendFile(m.chat, picture, 'curiosity.jpg', info, fkontak, m)
 handler.help = ['estado']
 handler.tags = ['main']
 handler.command = ['runtime', 'uptime', 'estado']
-/* handler.register = true */
+handler.register = true
 export default handler
 
 const more = String.fromCharCode(8206)
