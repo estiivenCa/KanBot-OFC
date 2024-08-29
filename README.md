@@ -48,7 +48,7 @@ npm start
 - #### `🧿 Obtener Otro Codigo Qr`
 > 𝙴𝚂𝙲𝚁𝙸𝙱𝙴 𝙴𝚂𝚃𝙾𝚂 𝙲𝙾𝙼𝙰𝙽𝙳𝙾𝚂 𝚄𝙽𝙾 𝙿𝙾𝚁 𝚄𝙽𝙾:
 ```bash
-> cd Nexus-bot
+> cd KanBot-OFC
 > rm -rf sessions
 > npm start
 ```
