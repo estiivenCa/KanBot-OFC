@@ -6,7 +6,7 @@ import {youtubedl, youtubedlv2} from '@bochilteam/scraper'
 
 const handler = async (m, {conn, command, args, text, usedPrefix}) => {
 
-if (!text) return conn.reply(m.chat, `🧿 *Ingrese un nombre de una cancion de YouTube*\n\nEjemplo, !${command} falling - Daniel Trevor`,  m, fake, )
+if (!text) return conn.reply(m.chat, `💥 *Ingrese el nombre de un video de YouTube*\n\nEjemplo, !${command} Huellas - Maiye Torrex`,  m, rcanal, )
 m.react(rwait)
 
 try {
@@ -15,7 +15,7 @@ conn.reply(m.chat, wait, m, {
 contextInfo: { externalAdReply :{ mediaUrl: null, mediaType: 1, showAdAttribution: true,
 title: packname,
 body: wm,
-previewType: 0, 
+previewType: 0, thumbnail: icons,
 sourceUrl: channel }}})
 
 const yt_play = await search(args.join(' '))
@@ -25,31 +25,27 @@ additionalText = 'audio'
 } else if (command === 'play4' || command == 'playdoc2') {
 additionalText = 'video'}
 
-let texto1 = `
-┏◚◚◚◚🅓🅞🅒🅢◚◚◚◚┓
-🍁 𝚃𝚒𝚝𝚞𝚕𝚘:
-${yt_play[0].title}
+let texto1 = `・₊✧★。..・✫・🎸🎧°⋆♡₊˚ 🔮
+> 🌩 τιτυℓο:
+> • ${yt_play[0].title}
+> ◌⃘࣭ٜ࣪࣪࣪۬☪︎︎︎︎̸─ׅ─ׅ┈ ─๋︩︪───ׅ──ׅ─ׅ─ׅ┈ ─๋︩︪─◌⃘࣭ٜ࣪࣪࣪۬☪︎︎︎︎̸
+> 🌦 ρυϐℓιϲα∂ο єи: 
+> • ${yt_play[0].ago}
+> ◌⃘࣭ٜ࣪࣪࣪۬☪︎︎︎︎─ׅ─ׅ┈ ─๋︩︪───ׅ──ׅ─ׅ─ׅ┈ ─๋︩︪─⃘࣭ٜ࣪࣪࣪۬☪︎︎︎︎̸
+> 🍭 єиℓαϲє:
+> • ${yt_play[0].url}
+> ◌⃘࣭ٜ࣪࣪࣪۬☪︎︎︎︎̸─ׅ─ׅ┈ ─๋︩︪───ׅ──ׅ─ׅ─ׅ┈ ─๋︩︪─⃘࣭ٜ࣪࣪࣪۬☪︎︎︎︎̸
+> 🍒 αմԵօɾ:
+> • ${yt_play[0].author.name}
+> ◌⃘࣭ٜ࣪࣪࣪۬☪︎︎︎︎̸─ׅ─ׅ┈ ─๋︩︪──ׅ──ׅ──ׅ─ׅ┈ ─๋︩︪─◌⃘࣭ٜ࣪࣪࣪۬☪︎︎︎︎̸
+> 🧃 cαɳαℓ:
+> • ${yt_play[0].author.url}
+> ◌⃘࣭ٜ࣪࣪࣪۬☪︎︎︎︎̸─ׅ─ׅ┈ ─๋︩︪───ׅ──ׅ─ׅ─ׅ┈ ─๋︩︪─◌⃘࣭ٜ࣪࣪࣪۬☪︎︎︎︎̸
+> 🍇 ժմɾαcíօ́ղ:
+> • ${secondString(yt_play[0].duration.seconds)}
+・₊✧。..・★🎸🎧°⋆♡₊˚ 🔮
 
-🎀 𝙿𝚞𝚋𝚕𝚒𝚌𝚊𝚍𝚘:
-${yt_play[0].ago}
-
-🧿 𝚄𝚁𝙻:
-${yt_play[0].url}
-
-🖋️ 𝙰𝚞𝚝𝚘𝚛:
-${yt_play[0].author.name}
-
-📌 𝙲𝚊𝚗𝚊𝚕:
-${yt_play[0].author.url}
-
-⏰ 𝙳𝚞𝚛𝚊𝚌𝚒𝚘𝚗:
-${secondString(yt_play[0].duration.seconds)}
-
-┗◛◛◛🅚🅐🅝🅑🅞🅣◛◛◛┛
-
-𝙴𝚗𝚟𝚒𝚊𝚗𝚍𝚘 𝚜𝚞  ${additionalText}, 𝙿𝚘𝚛 𝙵𝚊𝚟𝚘𝚛 𝙴𝚜𝚙𝚎𝚛𝚎 
-
-`.trim()
+> _*🍬 εɳѵเαɳ∂σ รµ ${additionalText}, αɠµαɾ∂ε µɳ ɱσɱεɳƭσ 🍓...*_`.trim()
 await conn.sendMessage(m.chat, { text: texto1, contextInfo: { externalAdReply: { title: yt_play[0].title, body: dev, thumbnailUrl: yt_play[0].thumbnail, mediaType: 1, showAdAttribution: true, renderLargerThumbnail: true }}} , { quoted: fkontak })
 
 if (command == 'play3' || command == 'playdoc') {
@@ -81,7 +77,7 @@ const infoo = await ytdl.getInfo('https://youtu.be/' + __res[0].videoId)
 const ress = await ytdl.chooseFormat(infoo.formats, {filter: 'audioonly'})
 conn.sendMessage(m.chat, {audio: {url: ress.url}, fileName: __res[0].title + '.mp3', mimetype: 'audio/mp4'}, {quoted: fkontak})
 } catch {
-await conn.reply(m.chat, '*❌ Ocurrió un error, intente de nuevo*', m, fake, )
+await conn.reply(m.chat, '🌟 *Ocurrió un fallo*', m, rcanal, )
 }}}}
 
 if (command == 'play4' || command == 'playdoc2') {
@@ -114,18 +110,19 @@ const n4 = lolh.result.thumbnail
 await conn.sendMessage(m.chat, {document: {url: n2}, fileName: `${n}.mp4`, mimetype: 'video/mp4', thumbnail: await fetch(n4)}, {quoted: fkontak})
 } catch {
 
-await conn.reply(m.chat, '*❌ Ocurrió un error, intente de nuevo*', m, fake,  )
+await conn.reply(m.chat, '🌟 *Ocurrió un fallo*', m, rcanal, )
 }}}}
 
 } catch {
-return conn.reply(m.chat, '*❌ Ocurrió un error, intente de nuevo*', m, fake )}
+return conn.reply(m.chat, '🌟 *Inténtelo de nuevo*', m, rcanal, )}
 
 }
 handler.help = ['play3', 'play4']
 handler.tags = ['descargas']
-handler.command = ['playdoc', 'playdoc2', 'play3', 'play4']
+handler.command = ['playdoc','playdoc2','play3','play4']
 
 //handler.estrellas = 1
+handler.group = true;
 handler.register = true
 
 export default handler

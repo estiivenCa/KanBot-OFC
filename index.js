@@ -1,76 +1,80 @@
-console.log('🧿 Iniciando el Mejor Boot De WhatsApp....')
-import { join, dirname } from 'path'
-import { createRequire } from 'module'
-import { fileURLToPath } from 'url'
-import { setupMaster, fork } from 'cluster'
-import { watchFile, unwatchFile } from 'fs'
-import cfonts from 'cfonts'
-import { createInterface } from 'readline'
-import yargs from 'yargs'
-
-// https://stackoverflow.com/a/50052194
-const __dirname = dirname(fileURLToPath(import.meta.url))
-const require = createRequire(__dirname) // Bring in the ability to create the 'require' method
-const { name, author } = require(join(__dirname, './package.json')) // https://www.stefanjudis.com/snippets/how-to-import-json-files-in-es-modules-node-js/
-const { say } = cfonts
-const rl = createInterface(process.stdin, process.stdout)
-
-say('Kan\nBot', {
-font: '3d',
+import { join, dirname } from 'path';
+import { createRequire } from 'module';
+import { fileURLToPath } from 'url';
+import { setupMaster, fork } from 'cluster';
+import { watchFile, unwatchFile } from 'fs';
+import cfonts from 'cfonts';
+import { createInterface } from 'readline';
+import yargs from 'yargs';
+import chalk from 'chalk';
+console.log('\n✰ Iniciando Megumin ✰');
+const __dirname = dirname(fileURLToPath(import.meta.url));
+const require = createRequire(__dirname);
+const { name, description, author, version } = require(join(__dirname, './package.json'));
+const { say } = cfonts;
+const rl = createInterface(process.stdin, process.stdout);
+say('Megumin-Bot', {
+font: 'block',
 align: 'center',
-colors: ['red', 'yellow']
-})
-say(`By: Stiiven`, {
+colors: ['white']
+});
+say(`Multi Device`, {
 font: 'chrome',
-  align: 'center',
-gradient: ['green', 'white']
-})
-
-var isRunning = false
-/**
- * Start a js file
- * @param {String} file `path/to/file`
- */
+align: 'center',
+colors: ['red']
+});
+say(`Developed By • David-Chian`, {
+font: 'console',
+align: 'center',
+colors: ['yellow']
+});
+var isRunning = false;
 function start(file) {
-if (isRunning) return
-isRunning = true
-let args = [join(__dirname, file), ...process.argv.slice(2)]
+if (isRunning) return;
+isRunning = true;
+let args = [join(__dirname, file), ...process.argv.slice(2)];
 say([process.argv[0], ...args].join(' '), {
 font: 'console',
 align: 'center',
-gradient: ['blue', 'magenta']
-})
+colors: ['green']
+});
 setupMaster({
 exec: args[0],
 args: args.slice(1),
-})
-let p = fork()
+});
+let p = fork();
 p.on('message', data => {
 switch (data) {
 case 'reset':
-p.process.kill()
-isRunning = false
-start.apply(this, arguments)
-break
+p.process.kill();
+isRunning = false;
+start.apply(this, arguments);
+break;
 case 'uptime':
-p.send(process.uptime())
-break
+p.send(process.uptime());
+break;
 }
-})
+});
 p.on('exit', (_, code) => {
-isRunning = false
-console.error('⚠️ Ocurrió un error inesperado:', code)
-if (code === 0) return
+isRunning = false;
+console.error('🚩 Error:\n', code);
+process.exit();
+if (code === 0) return;
 watchFile(args[0], () => {
-unwatchFile(args[0])
-start(file)
-})
-})
-let opts = new Object(yargs(process.argv.slice(2)).exitProcess(false).parse())
+unwatchFile(args[0]);
+start(file);
+});
+});
+let opts = new Object(yargs(process.argv.slice(2)).exitProcess(false).parse());
 if (!opts['test'])
 if (!rl.listenerCount()) rl.on('line', line => {
-p.emit('message', line.trim())
-})
+p.emit('message', line.trim());
+});
 }
-
-start('main.js')
+process.on('warning', (warning) => {
+if (warning.name === 'MaxListenersExceededWarning') {
+console.warn('🚩 Se excedió el límite de Listeners en:');
+console.warn(warning.stack);
+}
+});
+start('sunlight.js');

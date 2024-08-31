@@ -1,80 +1,81 @@
-//import db from '../lib/database.js'
 import { promises } from 'fs'
 import { join } from 'path'
 import fetch from 'node-fetch'
 import { xpRange } from '../lib/levelling.js'
-//import { plugins } from '../lib/plugins.js'
+
 let tags = {
-/*'main': 'I N F O R M A C I Ó N ',
-  'group': 'G R U P O S',
-  'game': 'J U E G O S',
-  'dl': ' D E S C A R G A S',
-  'jadibot': 'J A D I B O T', 
-  'nable': 'E N A B L E / D I S A B L E', 
-  'internet': 'B U S C A D O R E S',
-  'convertido': 'C O N V E R T I D O R E S', 
-  'sticker': 'S T I C K E R',
-  'rg': 'R P G',
-  'audio': 'A U D I O S   E F E C T O S', 
-  'tools': 'H E R R A M I E N T A S', 
-  'anime': 'A N I M E', 
-  'nsfw': 'N S F W +18', 
-  'owner': 'O W N E R', */
+  'main': '🄸🄽🄵🄾×🄱🄾🅃',
+  'buscador': '🄱🅄🅂🄲🄰🄳🄾🅁🄴🅂',
+  'fun': '🄹🅄🄴🄶🄾🅂',
+  'citaboom': '🄲🄸🅃🄰🄱🄾🄾🄼',  
+  'jadibot': '🅂🄴🅁🄱🄾🅃',
+  'rpg': '×🅁×🄿×🄶×',
+  'rg': '🅁🄴🄶🄸🅂🅃🅁🄾',
+  'xp': '×🄴×🅇×🄿×',
+  'sticker': '🅂🅃🄸🄲🄺🄴🅁🅂',
+  'anime': '🄰🄽🄸🄼🄴🅂',
+  'database': '🄳🄰🅃🄰🄱🄰🅂🄴',
+  'fix': '🄵🄸🅇🄼🄴🄽🅂🄰🄹🄴',
+  'grupo': '🄶🅁🅄🄿🄾🅂',
+  'nable': '🄾🄽 / 🄾🄵🄵', 
+  'descargas': '🄳🄴🅂🄲🄰🅁🄶🄰🅂',
+  'youtube': '🅈🄾🅄🅃🅄🄱🄴',
+  'tools': '🄷🄴🅁🅁🄰🄼🄸🄴🄽🅃🄰🅂',
+  'info': '🄸🄽🄵🄾🅁🄼🄰🄲🄸🄾́🄽',
+  'nsfw': '🄽🅂🄵🅆', 
+  'owner': '🄲🅁🄴🄰🄳🄾🅁', 
+  'mods': '🅂🅃🄰🄵🄵 🄽🄴🄶🅄🄽🄸🄽',
+  'audio': '🄰🅄🄳🄸🄾🅂', 
+  'ai': '×🄰×🄸×',
+  'transformador': '🄲🄾🄽🅅🄴🅁🅃🄸🄳🄾🅁🄴🅂',
 }
-const more = String.fromCharCode(8206)
-const readMore = more.repeat(4001)
+
 const defaultMenu = {
-  before: `
-  🔥✩*⢄⢁✧ -------⚠️-------- ✧⡈⡠*✩🔥
-  
-           ✰ 𝐊 𝐀 𝐍 𝐁 𝐎 𝐓 ✰
+  before: `.........․⁀⸱⁀⸱︵⸌⸃૰⳹․💥․⳼૰⸂⸍︵⸱⁀⸱⁀․........
+𔓕꯭  ꯭ 𓏲꯭֟፝੭ ꯭⌑(꯭𝐄).꯭𝐗.꯭𝐏.꯭𝐋.꯭𝐎.꯭𝐒.꯭𝐈.꯭𝐎.꯭𝐍꯭⌑꯭ 𓏲꯭֟፝੭ ꯭  ꯭𔓕
+▬͞▭͞▬͞▭͞▬͞▭͞▬͞▭͞▬͞▭͞▬͞▭͞▬͞▭͞▬͞▭
 
-           𝑩 𝑬 𝑺 𝑻    𝑩 𝑶 𝑻 
-           
-  🔥✩*⢄⢁✧ -------⚠️-------- ✧⡈⡠*✩🔥
-   ${readMore}
-  ✩﻿ ─────── 「 ＵＳＵＡＲＩＯＳ 」─────── ✩
-┌▬▬▬▬▬୧✬୨▬▬▬▬▬▬▬▬
-┇╞ ♋︎ *Nombre :* %name
-┇╞ ♋︎ *Limite :* %diamond
-┇╞ ♋︎ *Nivel :* %level
-┇╞ ♋︎ *Rango :* %role
-┇╞ ♋︎ *Exp :* %exp
-└▬▬▬▬▬୧✬୨▬▬▬▬▬▬▬▬
- ${readMore}
-✩﻿ ─────── 「 ＩＮＦＯＢＯＴ 」─────── ✩
-┌▬▬▬▬▬୧✬୨▬▬▬▬▬▬▬▬
-┇╞ ♋︎ *Creador :* * ⁨𝑺̳̽𝒕̳̽𝒊̳𝒊̳𝒗̳̽𝒙̳̽𝒏̳̽×፝֟͜×* 👑
-┇╞ ♋︎ *Contacto:* Con .sc
-┇╞ ♋︎ *Tiempo Activo:* %uptime
-┇╞ ♋︎ *Channel:* https://whatsapp.com/channel/0029VakhAHc5fM5hgaQ8ed2N
-┇╞ *Registrado :* %rtotalreg de %totalreg usuarios
-└▬▬▬▬▬୧✬୨▬▬▬▬▬▬▬▬
+“ Hola *%name* soy *Megumin-Bot*, %greeting ”
 
-✩﻿ ───── 「  ＨＯＹ 」───── ✩
-┇ *Fecha :* %date
-✩ ━━━━━━ ≪ •❈• ≫ ━━━━━ ✩
- ${readMore}
+.    ╭─ׅ─ׅ┈ ─๋︩︪─☪︎︎︎̸⃘̸࣭ٜ࣪࣪࣪۬◌⃘۪֟፝֯۫۫︎⃪𐇽۫۬🍧⃘⃪۪֟፝֯۫۫۫۬◌⃘࣭ٜ࣪࣪࣪۬☪︎︎︎︎̸─ׅ─ׅ┈ ─๋︩︪─╮
+╭╼☁️⬪࣪ꥈ𑁍⃪࣭۪ٜ݊݊݊݊݊໑ٜ࣪ 🄼🄴🄽🅄-🄱🄾🅃໑⃪࣭۪ٜ݊݊݊݊𑁍ꥈ࣪⬪☁️
+┃֪࣪  ╰─ׅ─ׅ┈ ─๋︩︪─☪︎︎︎̸⃘̸࣭ٜ࣪࣪࣪۬◌⃘۪֟፝֯۫۫︎⃪𐇽۫۬🍧⃘⃪۪֟፝֯۫۫۫۬◌⃘࣭ٜ࣪࣪࣪۬☪︎︎︎︎̸─ׅ─ׅ┈ ─๋︩︪─╯
+├ׁ̟̇❍✎ *🄲ʀᴇᴀᴅᴏʀ:* David Chian
+├ׁ̟̇❍✎ *🄼ᴏᴅᴏ:* Público
+├ׁ̟̇❍✎ *🄱ᴀɪʟᴇʏs:* Multi Device
+├ׁ̟̇❍✎ *🅃ɪᴇᴍᴘᴏ ᴀᴄᴛɪᴠᴏ:* %muptime
+├ׁ̟̇❍✎ *🅄sᴜᴀʀɪᴏs:* %totalreg
+╚▭࣪▬ִ▭࣪▬ִ▭࣪▬ִ▭࣪▬ִ▭࣪▬ִ▭࣪▬▭╝
+
+%readmore
+.    ╭─ׅ─ׅ┈ ─๋︩︪─☪︎︎︎̸⃘̸࣭ٜ࣪࣪࣪۬◌⃘۪֟፝֯۫۫︎⃪𐇽۫۬🍨⃘⃪۪֟፝֯۫۫۫۬◌⃘࣭ٜ࣪࣪࣪۬☪︎︎︎︎̸─ׅ─ׅ┈ ─๋︩︪─╮
+╭╼☁️⬪࣪ꥈ𑁍⃪࣭۪ٜ݊݊݊݊݊໑ٜ࣪ 🅄🅂🅄🄰🅁🄸🄾໑⃪࣭۪ٜ݊݊݊݊𑁍ꥈ࣪⬪☁️
+┃֪࣪  ╰─ׅ─ׅ┈ ─๋︩︪─☪︎︎︎̸⃘̸࣭ٜ࣪࣪࣪۬◌⃘۪֟፝֯۫۫︎⃪𐇽۫۬🍨⃘⃪۪֟፝֯۫۫۫۬◌⃘࣭ٜ࣪࣪࣪۬☪︎︎︎︎̸─ׅ─ׅ┈ ─๋︩︪─╯
+├ׁ̟̇❍✎ *🄲ʟɪᴇɴᴛᴇ:* %name
+├ׁ̟̇❍✎ *🄴xᴘ:* %exp
+├ׁ̟̇❍✎ *🄴sᴛʀᴇʟʟᴀs:* %estrellas
+├ׁ̟̇❍✎ *🄽ɪᴠᴇʟ:* %level
+├ׁ̟̇❍✎ *🅁ᴀɴɢᴏ:* %role
+╚▭࣪▬ִ▭࣪▬ִ▭࣪▬ִ▭࣪▬ִ▭࣪▬ִ▭࣪▬▭╝
+
+%readmore
+*─ׄ─ׄ─⭒─ׄ─ׅ─ׄ⭒─ׄ─ׄ─⭒─ׄ─ׄ─⭒─ׄ─ׅ─*
+
 \t*L I S T A  -  D E  -  C O M A N D O S* 
 `.trimStart(),
-  header: '╒═══════ 『 %category 』 ════════╕',
-  body: '╞ ♋︎  %cmd',
-  footer: '╘═══════ 『★』 ════════╛',
-  after: `
-`,
+      header: '.    ╭─ׅ─ׅ┈ ─๋︩︪─☪︎︎︎̸⃘̸࣭ٜ࣪࣪࣪۬◌⃘۪֟፝֯۫۫︎⃪𐇽۫۬🔥⃘⃪۪֟፝֯۫۫۫۬◌⃘࣭ٜ࣪࣪࣪۬☪︎︎︎︎̸─ׅ─ׅ┈ ─๋︩︪─╮\n╭╼☁️⬪࣪ꥈ𑁍⃪࣭۪ٜ݊݊݊݊݊໑ٜ࣪ %category ໑⃪࣭۪ٜ݊݊݊݊𑁍ꥈ࣪⬪☁️\n┃֪࣪  ╰─ׅ─ׅ┈ ─๋︩︪─☪︎︎︎̸⃘̸࣭ٜ࣪࣪࣪۬◌⃘۪֟፝֯۫۫︎⃪𐇽۫۬🔥⃘⃪۪֟፝֯۫۫۫۬◌⃘࣭ٜ࣪࣪࣪۬☪︎︎︎︎̸─ׅ─ׅ┈ ─๋︩︪─╯',
+  body: '├ׁ̟̇❍✎ %cmd\n',
+  footer: '╚▭࣪▬ִ▭࣪▬ִ▭࣪▬ִ▭࣪▬ִ▭࣪▬ִ▭࣪▬▭╝\n',
+  after: `> ${dev}`,
 }
 let handler = async (m, { conn, usedPrefix: _p, __dirname }) => {
   try {
     let _package = JSON.parse(await promises.readFile(join(__dirname, '../package.json')).catch(_ => ({}))) || {}
-    let { exp, diamond, level, role } = global.db.data.users[m.sender]
+    let { exp, estrellas, level, role } = global.db.data.users[m.sender]
     let { min, xp, max } = xpRange(level, global.multiplier)
     let name = await conn.getName(m.sender)
     let d = new Date(new Date + 3600000)
     let locale = 'es'
-    // d.getTimeZoneOffset()
-    // Offset -420 is 18.00
-    // Offset    0 is  0.00
-    // Offset  420 is  7.00
     let weton = ['Pahing', 'Pon', 'Wage', 'Kliwon', 'Legi'][Math.floor(d / 84600000) % 5]
     let week = d.toLocaleDateString(locale, { weekday: 'long' })
     let date = d.toLocaleDateString(locale, {
@@ -110,7 +111,7 @@ let handler = async (m, { conn, usedPrefix: _p, __dirname }) => {
         help: Array.isArray(plugin.tags) ? plugin.help : [plugin.help],
         tags: Array.isArray(plugin.tags) ? plugin.tags : [plugin.tags],
         prefix: 'customPrefix' in plugin,
-        diamond: plugin.diamond,
+        estrellas: plugin.estrellas,
         premium: plugin.premium,
         enabled: !plugin.disabled,
       }
@@ -143,55 +144,120 @@ let handler = async (m, { conn, usedPrefix: _p, __dirname }) => {
       after
     ].join('\n')
     let text = typeof conn.menu == 'string' ? conn.menu : typeof conn.menu == 'object' ? _text : ''
-    let replace = {
-      '%': '%',
-      p: _p, uptime, muptime,
-      me: conn.getName(conn.user.jid),
-      npmname: _package.name,
-      npmdesc: _package.description,
-      version: _package.version,
-      exp: exp - min,
-      maxexp: xp,
-      totalexp: exp,
-      xp4levelup: max - exp,
-      github: _package.homepage ? _package.homepage.url || _package.homepage : '[unknown github url]',
-      level, diamond, name, weton, week, date, dateIslamic, time, totalreg, rtotalreg, role,
-      readmore: readMore
-    }
-    text = text.replace(new RegExp(`%(${Object.keys(replace).sort((a, b) => b.length - a.length).join`|`})`, 'g'), (_, name) => '' + replace[name])
-    
-    let pp = './storage/logos/Menu2.jpg'
-    // await conn.reply(m.chat, '*Enviando el menu . . .*', ftrol) 
-    conn.sendFile(m.chat, pp, 'menu.jpg', text.trim(), m, null, nnn)
-    /*conn.sendButton(m.chat, text.trim(), '▢ DyLux  ┃ ᴮᴼᵀ\n▢ Sígueme en Instagram\nhttps://www.instagram.com/fg98_ff', pp, [
-      ['ꨄ︎ Apoyar', `${_p}donate`],
-      ['⏍ Info', `${_p}botinfo`],
-      ['⌬ Grupos', `${_p}gpdylux`]
-    ],m, rpl)*/
-  
-    m.react('🚀') 
-    
+let replace = {
+'%': '%',
+p: _p, uptime, muptime,
+me: conn.getName(conn.user.jid),
+taguser: '@' + m.sender.split("@s.whatsapp.net")[0],
+npmname: _package.name,
+npmdesc: _package.description,
+version: _package.version,
+exp: exp - min,
+maxexp: xp,
+botofc: (conn.user.jid == global.conn.user.jid ? '🚩 𝙴𝚂𝚃𝙴 𝙴𝚂 𝙴𝙻 𝙱𝙾𝚃 𝙾𝙵𝙲' : `🚩 𝚂𝚄𝙱-𝙱𝙾𝚃 𝙳𝙴: Wa.me/${global.conn.user.jid.split`@`[0]}`), 
+totalexp: exp,
+xp4levelup: max - exp,
+github: _package.homepage ? _package.homepage.url || _package.homepage : '[unknown github url]',
+greeting, level, estrellas, name, weton, week, date, dateIslamic, time, totalreg, rtotalreg, role,
+readmore: readMore
+}
+text = text.replace(new RegExp(`%(${Object.keys(replace).sort((a, b) => b.length - a.length).join`|`})`, 'g'), (_, name) => '' + replace[name])
+
+const who = m.mentionedJid && m.mentionedJid[0] ? m.mentionedJid[0] : m.fromMe ? conn.user.jid : m.sender
+
+const pp = await conn.profilePictureUrl(who, 'image').catch(_ => 'https://telegra.ph/file/327f6ad853cb4f405aa80.jpg')
+
+  let category = "video"
+  const db = './media/database/db.json'
+  const db_ = JSON.parse(fs.readFileSync(db))
+  const random = Math.floor(Math.random() * db_.links[category].length)
+  const rlink = db_.links[category][random]
+  global.vid = rlink
+  const response = await fetch(vid)
+  const gif = await response.buffer()
+ // const img = imagen1
+
+/*await conn.reply(m.chat, '╭ׅׄ̇─ׅ̻ׄ╮۪̇߭︹ׅ̟ׄ̇︹ׅ۪ׄ̇߭︹ׅ̟ׄ̇⊹۪̇߭︹ׅ̟ׄ̇︹ׅ۪ׄ̇߭︹ׅ̟ׄ̇⊹۪̇߭︹ׅ̟ׄ̇︹ׅ۪ׄ̇߭︹ׅ̟ׄ̇⊹*\n├ ⚘݄𖠵⃕⁖𖥔.Ƈᴀʀɢᴀɴᴅᴏ,  ꪶꪾ❍̵̤̂̂ꫂ\n├Ąɢᴜᴀʀᴅᴇ ᴜɴ ᴍᴏᴍᴇɴᴛᴏ❞\n╰ׁ̻─ׅׄ─۪۬─۟─۪─۟─۪۬─۟─۪─۟─۪۬─۟─۪─۟┄۪۬┄۟┄۪┈۟┈۪', m, { contextInfo:{ forwardingScore: 2024, isForwarded: true, externalAdReply: {title: namechannel, body: '𝐃𝐞𝐯 𝐖𝐨𝐫𝐝 𝐓𝐞𝐚𝐦 𝐎𝐟𝐢𝐜𝐢𝐚𝐥', sourceUrl: channel, thumbnail: icons }}})*/
+
+// await conn.reply(m.chat, '🍟 Enviando el menú.....', m, rcanal)
+
+await m.react('⭐️') 
+
+//await conn.sendFile(m.chat, imagen1, 'yaemori.jpg', text.trim(), fkontak, null, rcanal)
+
+await conn.sendMessage(
+  m.chat,
+  { video: { url: vid }, caption: text.trim(),
+  contextInfo: {
+    mentionedJid: [m.sender],
+    isForwarded: true,
+    forwardedNewsletterMessageInfo: {
+      newsletterJid: '120363307382381547@newsletter',
+      newsletterName: '⏤͟͞ू⃪ ፝͜⁞M͢ᴇɢ፝֟ᴜᴍ⃨ɪɴ⃜✰⃔࿐/ᥫᩣᎠ꯭I𝚫⃥꯭M꯭Ꭷ꯭Ꮑ꯭Ꭰ࠭⋆̟(◣_◢)凸',
+      serverMessageId: -1,
+    },
+    forwardingScore: 999,
+    externalAdReply: {
+      title: '⏤͟͞ू⃪ ፝͜⁞M͢ᴇɢ፝֟ᴜᴍ⃨ɪɴ⃜✰⃔࿐',
+      body: dev,
+      thumbnailUrl: icono,
+      sourceUrl: redes,
+      mediaType: 1,
+      renderLargerThumbnail: false,
+    },
+  },
+
+  gifPlayback: true, gifAttribution: 0 },
+  { quoted: fkontak })
+
   } catch (e) {
-    conn.reply(m.chat, '⚠️ Lo sentimos, el menú tiene un error', m)
+    conn.reply(m.chat, '🔵 Lo sentimos, el menú tiene un error', m, rcanal, )
     throw e
   }
 }
-handler.help = ['help']
+handler.help = ['menu']
 handler.tags = ['main']
-handler.command = ['help',
-'menucompleto', 'menu', 'menú'] 
+handler.command = ['menu', 'menú', 'menuall', 'allmenú', 'allmenu', 'menucompleto'] 
 handler.register = true
-
-handler.exp = 3
 
 export default handler
 
-
+const more = String.fromCharCode(8206)
+const readMore = more.repeat(4001)
 
 function clockString(ms) {
-  let d = isNaN(ms) ? '--' : Math.floor(ms / 86400000)
-  let h = isNaN(ms) ? '--' : Math.floor(ms / 3600000) % 24
+  let h = isNaN(ms) ? '--' : Math.floor(ms / 3600000)
   let m = isNaN(ms) ? '--' : Math.floor(ms / 60000) % 60
   let s = isNaN(ms) ? '--' : Math.floor(ms / 1000) % 60
-  return [d, 'd ', h, 'h ', m, 'm '].map(v => v.toString().padStart(2, 0)).join('')
+  return [h, m, s].map(v => v.toString().padStart(2, 0)).join(':')
 }
+
+  var ase = new Date();
+  var hour = ase.getHours();
+switch(hour){
+  case 0: hour = 'Bᴜᴇɴᴀs Nᴏᴄʜᴇs 🌙'; break;
+  case 1: hour = 'Bᴜᴇɴᴀs Nᴏᴄʜᴇs 💤'; break;
+  case 2: hour = 'Bᴜᴇɴᴀs Nᴏᴄʜᴇs 🦉'; break;
+  case 3: hour = 'Bᴜᴇɴᴏs Dɪᴀs ✨'; break;
+  case 4: hour = 'Bᴜᴇɴᴏs Dɪᴀs 💫'; break;
+  case 5: hour = 'Bᴜᴇɴᴏs Dɪᴀs 🌅'; break;
+  case 6: hour = 'Bᴜᴇɴᴏs Dɪᴀs 🌄'; break;
+  case 7: hour = 'Bᴜᴇɴᴏs Dɪᴀs 🌅'; break;
+  case 8: hour = 'Bᴜᴇɴᴏs Dɪᴀs 💫'; break;
+  case 9: hour = 'Bᴜᴇɴᴏs Dɪᴀs ✨'; break;
+  case 10: hour = 'Bᴜᴇɴᴏs Dɪᴀs 🌞'; break;
+  case 11: hour = 'Bᴜᴇɴᴏs Dɪᴀs 🌨'; break;
+  case 12: hour = 'Bᴜᴇɴᴏs Dɪᴀs ❄'; break;
+  case 13: hour = 'Bᴜᴇɴᴏs Dɪᴀs 🌤'; break;
+  case 14: hour = 'Bᴜᴇɴᴀs Tᴀʀᴅᴇs 🌇'; break;
+  case 15: hour = 'Bᴜᴇɴᴀs Tᴀʀᴅᴇs 🥀'; break;
+  case 16: hour = 'Bᴜᴇɴᴀs Tᴀʀᴅᴇs 🌹'; break;
+  case 17: hour = 'Bᴜᴇɴᴀs Tᴀʀᴅᴇs 🌆'; break;
+  case 18: hour = 'Bᴜᴇɴᴀs Nᴏᴄʜᴇs 🌙'; break;
+  case 19: hour = 'Bᴜᴇɴᴀs Nᴏᴄʜᴇs 🌃'; break;
+  case 20: hour = 'Bᴜᴇɴᴀs Nᴏᴄʜᴇs 🌌'; break;
+  case 21: hour = 'Bᴜᴇɴᴀs Nᴏᴄʜᴇs 🌃'; break;
+  case 22: hour = 'Bᴜᴇɴᴀs Nᴏᴄʜᴇs 🌙'; break;
+  case 23: hour = 'Bᴜᴇɴᴀs Nᴏᴄʜᴇs 🌃'; break;
+}
+  var greeting = hour;

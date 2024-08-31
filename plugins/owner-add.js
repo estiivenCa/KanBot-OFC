@@ -1,33 +1,14 @@
-import fetch from 'node-fetch'
-/**
- * @type {import('@whiskeysockets/baileys')}
- */
-const { getBinaryNodeChild, getBinaryNodeChildren } = (await import('@whiskeysockets/baileys')).default
-let handler = async (m, { conn, text, participants }) => {
-    let _participants = participants.map(user => user.id)
-    let users=(await Promise.all(text.split(',').map(v=>v.replace(/[^0-9]/g,'')).filter(v=>v.length>4&&v.length<20&&!_participants.includes(v+'@s.whatsapp.net')).map(async v=>[v,await conn.onWhatsApp(v+'@s.whatsapp.net')]))).filter(v=>v[1][0]?.exists).map(v=>v[0]+'@c.us')
-    const response=await conn.query({tag:"iq",attrs:{type:"set",xmlns:"w:g2",to:m.chat},content:users.map(t=>({tag:"add",attrs:{},content:[{tag:"participant",attrs:{jid:t}}]}))});
-    const pp = await conn.profilePictureUrl(m.chat).catch(_ => null)
-    const jpegThumbnail = pp ? await (await fetch(pp)).buffer() : Buffer.alloc(0)
-    const add = getBinaryNodeChild(response, 'add')
-    const participant = getBinaryNodeChildren(add, 'participant')
-    for (const user of participant.filter(item => item.attrs.error == 403)) {
-        const jid = user.attrs.jid
-        const content = getBinaryNodeChild(user, 'add_request')
-        const invite_code = content.attrs.code
-        const invite_code_exp = content.attrs.expiration
-        let teks=`*⚠️ NO SE PUEDE AÑADIR A @${jid.split('@')[0]} AL GRUPO*\n\n_Por favor enviale un enlace de invitación manualmente wa.me/${jid.split('@')[0]}_\n`
-m.reply(teks,null,{mentions:conn.parseMention(teks)})
-        /**await conn.sendGroupV4Invite(m.chat, jid, invite_code, invite_code_exp, await conn.getName(m.chat), 'Invitation to join my WhatsApp group', jpegThumbnail)**/
-    }
-}
-
-handler.help = ['add1 @numero']
-handler.tags = ['owner']
-handler.command = /^(add1)$/i
-handler.owner = true
-handler.group = true
-handler.botAdmin = true
-
-
-export default handler
+const handler = async (m, {conn, text, usedPrefix, command}) => {
+  global.db.data.sticker = global.db.data.sticker || {};
+  if (!m.quoted) throw '*[❗𝐈𝐍𝐅𝐎❗] 𝚁𝙴𝚂𝙿𝙾𝙽𝙳𝙴 𝙰𝙻 𝚂𝚃𝙸𝙲𝙺𝙴𝚁 𝙾 𝙸𝙼𝙰𝙶𝙴𝙽 𝙰𝙻 𝙲𝚄𝙰𝙻 𝙳𝙴𝚂𝙴𝙰 𝙰𝙶𝚁𝙴𝙶𝙰𝚁 𝚄𝙽 𝙲𝙾𝙼𝙰𝙽𝙳𝙾 𝙾 𝚃𝙴𝚇𝚃𝙾*';
+  if (!m.quoted.fileSha256) throw '*[❗𝐈𝐍𝐅𝐎❗] 𝚂𝙾𝙻𝙾 𝙿𝚄𝙴𝙳𝙴𝚂 𝙰𝚂𝙸𝙶𝙰𝙽𝙰𝚁 𝙲𝙾𝙼𝙰𝙽𝙳𝙾𝚂 𝙾 𝚃𝙴𝚇𝚃𝙾𝚂 𝙰 𝚂𝚃𝙸𝙲𝙺𝙴𝚁𝚂 𝙴 𝙸𝙼𝙰𝙶𝙴𝙽𝙴𝚂*';
+  if (!text) throw `*[❗𝐈𝐍𝐅𝐎❗] 𝙴𝚁𝚁𝙾𝚁 𝙳𝙴 𝚄𝚂𝙾, 𝚃𝙴𝚇𝚃𝙾 𝙵𝙰𝙻𝚃𝙰𝙽𝚃𝙴*\n\n*𝚄𝚂𝙾 𝙲𝙾𝚁𝚁𝙴𝙲𝚃𝙾 𝙳𝙴𝙻 𝙲𝙾𝙼𝙰𝙽𝙳𝙾:*\n*—◉ ${usedPrefix + command} <texto> <responder a sticker o imagen>*\n\n*𝙴𝙹𝙴𝙼𝙿𝙻𝙾 𝙳𝙴 𝚄𝚂𝙾 𝙲𝙾𝚁𝚁𝙴𝙲𝚃𝙾 𝙳𝙴𝙻 𝙲𝙾𝙼𝙰𝙽𝙳𝙾:*\n*—◉ ${usedPrefix + command} <#menu> <responder a sticker o imagen>*`;
+  const sticker = global.db.data.sticker;
+  const hash = m.quoted.fileSha256.toString('base64');
+  if (sticker[hash] && sticker[hash].locked) throw '*[❗𝐈𝐍𝐅𝐎❗] 𝚂𝙾𝙻𝙾 𝙴𝙻 𝙾𝚆𝙽𝙴𝚁 𝙿𝚄𝙴𝙳𝙴 𝚁𝙴𝙰𝙻𝙸𝚉𝙰𝚁 𝙻𝙰 𝙼𝙾𝙳𝙸𝙵𝙸𝙲𝙰𝙲𝙸𝙾𝙽*';
+  sticker[hash] = {text, mentionedJid: m.mentionedJid, creator: m.sender, at: + new Date, locked: false};
+  m.reply(`*[ ✔ ] 𝙴𝙻 𝚃𝙴𝚇𝚃𝙾/𝙲𝙾𝙼𝙰𝙽𝙳𝙾 𝙰𝚂𝙸𝙶𝙽𝙰𝙳𝙾 𝙰𝙻 𝚂𝚃𝙸𝙲𝙺𝙴𝚁/𝙸𝙼𝙰𝙶𝙴𝙽 𝙵𝚄𝙴 𝙰𝙶𝚁𝙴𝙶𝙰𝙳𝙾 𝙰 𝙻𝙰 𝙱𝙰𝚂𝙴 𝙳𝙴 𝙳𝙰𝚃𝙾𝚂 𝙲𝙾𝚁𝚁𝙴𝙲𝚃𝙰𝙼𝙴𝙽𝚃𝙴*`);
+};
+handler.command = ['setcmd', 'addcmd', 'cmdadd', 'cmdset'];
+handler.rowner = true;
+export default handler;

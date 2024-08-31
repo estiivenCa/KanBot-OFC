@@ -11,9 +11,15 @@ let handler = async (_0x10bd40, {
   command: _0x5ad406
 }) => {
   if (!_0x27db11) {
-    return _0x9c7141.reply(_0x10bd40.chat, "🚀 *¿Que quieres buscar en pinterest?*", _0x10bd40, fake);
+    return _0x9c7141.reply(_0x10bd40.chat, "🍟 *¿Que quieres buscar en pinterest?*", _0x10bd40, rcanal);
   }
     await _0x10bd40.react(rwait);
+ _0x9c7141.reply(_0x10bd40.chat, '🚩 *Descargando su imagen...*', _0x10bd40, {
+ contextInfo: { externalAdReply :{ mediaUrl: null, mediaType: 1, showAdAttribution: true,
+ title: packname,
+ body: wm,
+ previewType: 0, thumbnail: icons,
+ sourceUrl: channel }}})
   async function _0x3f3fc7(_0x5f4723) {
     const {
       imageMessage: _0x14a396
@@ -95,6 +101,7 @@ let handler = async (_0x10bd40, {
 handler.help = ["pinterest"];
 handler.tags = ["buscador"];
 handler.estrellas = 1;
-handler.register = true;
+handler.group = true;
+handler.register = true
 handler.command = ['pinterest'];
 export default handler;
