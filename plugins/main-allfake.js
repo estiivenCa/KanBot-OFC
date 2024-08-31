@@ -32,17 +32,17 @@ let who = m.mentionedJid && m.mentionedJid[0] ? m.mentionedJid[0] : m.fromMe ? c
 //let pp = await conn.profilePictureUrl(who, 'image').catch(_ => 'https://telegra.ph/file/327f6ad853cb4f405aa80.jpg')
 
 //creador y otros
-global.creador = 'Wa.me/5351524614'
+global.creador = 'Wa.me/573204545063'
 global.ofcbot = `${conn.user.jid.split('@')[0]}`
 global.asistencia = 'Wa.me/5351524614'
-global.namechannel = '⏤͟͞ू⃪ ፝͜⁞M͢ᴇɢ፝֟ᴜᴍ⃨ɪɴ⃜✰⃔࿐/ᥫᩣᎠ꯭I𝚫⃥꯭M꯭Ꭷ꯭Ꮑ꯭Ꭰ࠭⋆̟(◣_◢)凸'
-global.namechannel2 = '𝗠𝗼𝗼𝗻𝗹𝗶𝗴𝗵𝘁 - 𝗧𝗲𝗮𝗺'
-global.namegrupo = '⁝̵̓ᝒ̷̸͙🌸̶̩ܻᝒ̷̸꯭͙𝝡꯭𝝣꯭𝗚꯭𝗨꯭𝗠꯭𝗜꯭𝗡'
-global.namecomu = '𝗖𝗼𝗺𝘂𝗻𝗶𝗱𝗮𝗱 𝝡𝝣𝗚𝗨𝗠𝗜𝗡'
-global.namecomu2 = '𝗖𝗼𝗺𝘂𝗻𝗶𝗱𝗮𝗱 𝗠𝗼𝗼𝗻𝗹𝗶𝗴𝗵𝘁'
-global.colab1 = 'Miguelon'
-global.colab2 = 'Steven'
-global.colab3 = 'Dino'
+global.namechannel = '✰ 𝙺𝚊𝚗𝙱𝚘𝚝 ✰'
+global.namechannel2 = '✰ 𝙺𝚊𝚗𝙱𝚘𝚝 ✰'
+global.namegrupo = '✰ 𝙺𝚊𝚗𝙱𝚘𝚝 ✰'
+global.namecomu = '✰ 𝙺𝚊𝚗𝙱𝚘𝚝 ✰'
+global.namecomu2 = '✰ 𝙺𝚊𝚗𝙱𝚘𝚝 ✰'
+global.colab1 = ''
+global.colab2 = ''
+global.colab3 = ''
 
 //Reacciones De Comandos.!
 global.rwait = '🕒'
@@ -57,19 +57,19 @@ global.emoji4 = '🍭'
 global.emojis = [emoji, emoji2, emoji3, emoji4].getRandom()
 
 //mensaje en espera
-global.wait = '🕒 *𝗘𝘀𝗽𝗲𝗿𝗮 𝗨𝗻 𝗠𝗼𝗺𝗲𝗻𝘁𝗼, 𝗦𝗼𝘆 𝗟𝗲𝗻𝘁𝗮 ...*';
-global.waitt = '🕒 *𝗘𝘀𝗽𝗲𝗿𝗮 𝗨𝗻 𝗠𝗼𝗺𝗲𝗻𝘁𝗼, 𝗦𝗼𝘆 𝗟𝗲𝗻𝘁𝗮 ...*';
-global.waittt = '🕒 *𝗘𝘀𝗽𝗲𝗿𝗮 𝗨𝗻 𝗠𝗼𝗺𝗲𝗻𝘁𝗼, 𝗦𝗼𝘆 𝗟𝗲𝗻𝘁𝗮 ...*';
-global.waitttt = '🕒 *𝗘𝘀𝗽𝗲𝗿𝗮 𝗨𝗻 𝗠𝗼𝗺𝗲𝗻𝘁𝗼, 𝗦𝗼𝘆 𝗟𝗲𝗻𝘁𝗮 ...*';
+global.wait = '🕒 *𝗘𝘀𝗽𝗲𝗿𝗮 𝗨𝗻 𝗠𝗼𝗺𝗲𝗻𝘁𝗼.*';
+global.waitt = '🕒 *𝗘𝘀𝗽𝗲𝗿𝗮 𝗨𝗻 𝗠𝗼𝗺𝗲𝗻𝘁𝗼.*';
+global.waittt = '🕒 *𝗘𝘀𝗽𝗲𝗿𝗮 𝗨𝗻 𝗠𝗼𝗺𝗲𝗻𝘁𝗼.*';
+global.waitttt = '🕒 *𝗘𝘀𝗽𝗲𝗿𝗮 𝗨𝗻 𝗠𝗼𝗺𝗲𝗻𝘁𝗼.*';
 
 //Enlaces
-var grupo = 'https://chat.whatsapp.com/H5bw4MJucS1BBHnZ9wv3vI'
-var canal = 'https://whatsapp.com/channel/0029VacDy0R6hENqnTKnG820'  
-var canal2 = 'https://whatsapp.com/channel/0029Vam7yUg77qVaz3sIAp0z'
-var git = 'https://github.com/David-Chian' 
-var youtube = 'https://youtube.com/@davidchian4957' 
-var github = 'https://github.com/David-Chian/Megumin-Bot-MD' 
-let correo = 'noisebot40@gmail.com'
+var grupo = 'https://chat.whatsapp.com/C5xsN9KcmIs8O1wNeOkcX9'
+var canal = 'https://whatsapp.com/channel/0029VakhAHc5fM5hgaQ8ed2N'  
+var canal2 = 'https://whatsapp.com/channel/0029VakhAHc5fM5hgaQ8ed2N'
+var git = 'https://chat.whatsapp.com/C5xsN9KcmIs8O1wNeOkcX9' 
+var youtube = 'https://chat.whatsapp.com/C5xsN9KcmIs8O1wNeOkcX9' 
+var github = 'https://chat.whatsapp.com/C5xsN9KcmIs8O1wNeOkcX9' 
+let correo = ''
 
 global.redes = [canal, canal2, grupo, git, youtube, github, correo].getRandom()
 
@@ -98,18 +98,18 @@ global.fkontak = { key: { participants:"0@s.whatsapp.net", "remoteJid": "status@
 
 // global.estilo = { key: {  fromMe: false, participant: `0@s.whatsapp.net`, ...(false ? { remoteJid: "5219992095479-1625305606@g.us" } : {}) }, message: { orderMessage: { itemCount : -999999, status: 1, surface : 1, message: `${packname}`, orderTitle: 'Bang', thumbnail: icons, sellerJid: '0@s.whatsapp.net'}}}
 
-global.fake = { contextInfo: { isForwarded: true, forwardedNewsletterMessageInfo: { newsletterJid: '120363307382381547@newsletter', newsletterName: "⏤͟͞ू⃪ ፝͜⁞M͢ᴇɢ፝֟ᴜᴍ⃨ɪɴ⃜✰⃔࿐", serverMessageId: -1 }
+global.fake = { contextInfo: { isForwarded: true, forwardedNewsletterMessageInfo: { newsletterJid: '120363307382381547@newsletter', newsletterName: "✰ 𝙺𝚊𝚗𝙱𝚘𝚝 ✰", serverMessageId: -1 }
 }}, { quoted: m }
 
 global.icono = [ 
-'https://telegra.ph/file/1b1e9dc1f68fba7104afe.jpg',
-'https://telegra.ph/file/a60f80a476fffc5ce4db9.jpg',
-'https://telegra.ph/file/bb44e64a5fa8ad458bf19.jpg',
-'https://telegra.ph/file/6c262b841689f9e9837d4.jpg',
-'https://telegra.ph/file/6c262b841689f9e9837d4.jpg',
-'https://telegra.ph/file/e2f5dbd931741402527e3.jpg'
+'https://telegra.ph/file/123417e4c7ab0d575982d.jpg',
+'https://telegra.ph/file/123417e4c7ab0d575982d.jpg',
+'https://telegra.ph/file/123417e4c7ab0d575982d.jpg',
+'https://telegra.ph/file/123417e4c7ab0d575982d.jpg',
+'https://telegra.ph/file/123417e4c7ab0d575982d.jpg',
+'https://telegra.ph/file/123417e4c7ab0d575982d.jpg'
 ].getRandom()
 
-global.rcanal = { contextInfo: { isForwarded: true, forwardedNewsletterMessageInfo: { newsletterJid: "120363307382381547@newsletter", serverMessageId: 100, newsletterName: namechannel, }, externalAdReply: { showAdAttribution: true, title: textbot, body: '💥 ¡El bot mas explosivo!', mediaUrl: null, description: null, previewType: "PHOTO", thumbnailUrl: icono, sourceUrl: redes, mediaType: 1, renderLargerThumbnail: false }, }, }}
+global.rcanal = { contextInfo: { isForwarded: true, forwardedNewsletterMessageInfo: { newsletterJid: "120363307382381547@newsletter", serverMessageId: 100, newsletterName: namechannel, }, externalAdReply: { showAdAttribution: true, title: textbot, body: 'by Stiiven', mediaUrl: null, description: null, previewType: "PHOTO", thumbnailUrl: icono, sourceUrl: redes, mediaType: 1, renderLargerThumbnail: false }, }, }}
 
 export default handler
