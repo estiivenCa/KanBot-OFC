@@ -139,7 +139,8 @@ serbot();
 handler.help = ['code'];
 handler.tags = ['jadibot'];
 handler.command = ['code'];
-// handler.register = true;
+ // handler.register = true
+handler.group = true
 export default handler;
 function sleep(ms) {
 return new Promise(resolve => setTimeout(resolve, ms));

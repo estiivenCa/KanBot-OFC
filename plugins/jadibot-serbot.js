@@ -144,7 +144,8 @@ serbot()
 handler.help = ["serbot"]
 handler.tags = ["jadibot"]
 handler.command = ["serbot", "jadibot", "qr", "botclone"]
- handler.register = true
+ // handler.register = true
+ handler.group = true
 export default handler
 function sleep(ms) {
 return new Promise(resolve => setTimeout(resolve, ms))

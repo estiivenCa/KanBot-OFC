@@ -69,12 +69,12 @@ let fkontak = { key: { fromMe: false, participant: `0@s.whatsapp.net`, ...(m.cha
                                 rows: [
 {
 title: "│🤴│ᴄʀᴇᴀᴅᴏʀ ᴅᴇʟ ʙᴏᴛ", 
-description: "ɴᴜᴍᴇʀᴏs ᴏғɪᴄɪᴀʟᴇs ᴅᴇ ᴅᴀᴠɪᴅ ᴄʜɪᴀɴ",
+description: "ɴᴜᴍᴇʀᴏs ᴏғɪᴄɪᴀʟᴇs",
 id: `${prefijo}owner`
 },
 {
 title: "│🔥│ɢʀᴜᴘᴏs ᴏғᴄ ᴅᴇʟ ʙᴏᴛ", 
-description: "ᴏʙᴛᴇɴ ʟᴀ ʟɪsᴛᴀ ᴅᴇ ʟᴏs ɢʀᴜᴘᴏs ᴏғɪᴄɪᴀʟᴇs ᴅᴇ ᴍᴇɢᴜᴍɪɴ-ʙᴏᴛ",
+description: "ᴏʙᴛᴇɴ ʟᴀ ʟɪsᴛᴀ ᴅᴇ ʟᴏs ɢʀᴜᴘᴏs ᴏғɪᴄɪᴀʟᴇs",
 id: `${prefijo}grupos`
 },
 {
@@ -84,17 +84,12 @@ id: `${prefijo}estado`
 },
 {
 title: "│❔│ɪɴғᴏ ᴅᴇʟ ʙᴏᴛ", 
-description: "ᴏʙᴛᴇɴ ʟᴀ ɪɴғᴏʀᴍᴀᴄɪᴏɴ ᴅᴇ ᴍᴇɢᴜᴍɪɴ-ʙᴏᴛ",
+description: "ᴏʙᴛᴇɴ ʟᴀ ɪɴғᴏʀᴍᴀᴄɪᴏɴ ᴅᴇ ʙᴏᴛ",
 id: `${prefijo}infobot`
 },
 {
-title: "│🏆│ᴀᴘᴏʏᴀʀ ᴀʟ ᴘʀᴏᴘɪᴇᴛᴀʀɪᴏ", 
-description: "sɪ ᴛᴇ ɢᴜsᴛᴀ ᴇʟ ʙᴏᴛ ᴀǫᴜɪ ᴘᴏᴅʀᴀs ᴀʏᴜᴅᴀʀ ᴀ ʟᴏs ǫᴜᴇ ʜɪᴄɪᴇʀᴏɴ ᴇsᴛᴏ ᴘᴏsɪʙʟᴇ",
-id: `${prefijo}donar`
-},
-{
 title: "│🧩│ᴄᴜᴇɴᴛᴀs ᴏғɪᴄɪᴀʟᴇs", 
-description: "ᴏʙᴛᴇɴ ʟᴀ ɪɴғᴏʀᴍᴀᴄɪᴏɴ ᴅᴇ ʟᴀs ᴄᴜᴇɴᴛᴀs ᴏғɪᴄɪᴀʟᴇs ᴅᴇ ʟᴏs ᴄʀᴇᴀᴅᴏʀᴇs ᴅᴇʟ ʙᴏᴛ",
+description: "ᴏʙᴛᴇɴ ʟᴀ ɪɴғᴏʀᴍᴀᴄɪᴏɴ ᴅᴇ ʟᴀs ᴄᴜᴇɴᴛᴀs ᴏғɪᴄɪᴀʟᴇs ᴅᴇʟ ʙᴏᴛ",
 id: `${prefijo}cuentas`
 },
 {
@@ -115,40 +110,6 @@ id: `${prefijo}fixmsgespera`
 title: "│🍹│ᴍᴇɴsᴀᴊᴇs ᴇɴ ᴇsᴘᴇʀᴀ (ᴏᴡɴᴇʀ)", 
 description: "ᴅɪsᴘᴏɴɪʙʟᴇ sᴏʟᴏ ᴘᴀʀᴀ ᴇʟ ᴘʀᴏᴘɪᴇᴛᴀʀɪᴏ ᴅᴇʟ ʙᴏᴛ, sᴇ ᴜsᴀ ᴄᴜᴀɴᴅᴏ ɴᴏ sᴀʟᴇɴ ʟᴏs ᴍᴇɴsᴀᴊᴇs ᴅᴇʟ ʙᴏᴛ",
 id: `${prefijo}ds`
-}
-]},
-{
-title: 'Mᴇɴᴜs ᴅᴇ Kᴏᴛᴏʀɪ-Bᴏᴛ', highlight_label: "Popular",
-rows: [
-{
-title: "│✨│ᴍᴇɴᴜ ᴄᴏᴍᴘʟᴇᴛᴏ", 
-description: "ᴏʙᴛᴇɴ ᴇʟ ᴍᴇɴᴜ ᴄᴏᴍᴘʟᴇᴛᴏ ᴄᴏɴ ᴛᴏᴅᴀs ʟᴀs ғᴜɴᴄɪᴏɴᴇs ᴅᴇ ᴋᴏᴛᴏʀɪ-ʙᴏᴛ",
-id: `${prefijo}menu`
-},
-{
-title: "│🔮│ᴍᴇɴᴜ ᴀɴɪᴍᴇ", 
-description: "ᴏʙᴛᴇɴ ᴇʟ ᴍᴇɴᴜ ᴅᴇ ᴀɴɪᴍᴇs ᴅᴇʟ ʙᴏᴛ",
-id: `${prefijo}menuanimes`
-},
-{
-title: "│🎮│ᴍᴇɴᴜ ᴊᴜᴇɢᴏs", 
-description: "ᴏʙᴛᴇɴ ᴇʟ ᴍᴇɴᴜ ᴅᴇ ᴊᴜᴇɢᴏs ᴅᴇʟ ʙᴏᴛ",
-id: `${prefijo}menujuegos`
-},
-{
-title: "│🎼│ᴍᴇɴᴜ ᴀᴜᴅɪᴏs", 
-description: "ᴏʙᴛᴇɴ ᴇʟ ᴍᴇɴᴜ ᴅᴇ ᴀᴜᴅɪᴏs ᴅᴇʟ ʙᴏᴛ",
-id: `${prefijo}menuaudios`
-},
-{
-title: "│💦│ᴍᴇɴᴜ ᴄᴏᴍᴀɴᴅᴏs +𝟷𝟾", 
-description: "ᴏʙᴛᴇɴ ᴇʟ ᴍᴇɴᴜ ᴅᴇ ᴄᴏᴍᴀɴᴅᴏs +𝟷𝟾 ᴅᴇʟ ʙᴏᴛ",
-id: `${prefijo}hornymenu`
-},
-{
-title: "│⚡│ᴍᴇɴᴜ ᴏᴡɴᴇʀ", 
-description: "ᴏʙᴛᴇɴ ᴇʟ ᴍᴇɴᴜ ᴅᴇʟ ᴘʀᴏᴘɪᴇᴛᴀʀɪᴏ ᴅᴇʟ ʙᴏᴛ",
-id: `${prefijo}menuowner`
 }
 ]},
 {
@@ -497,19 +458,19 @@ let _0x1a2b8a = _0x2dafbc[_0x13bbaf];
 return _0x1a2b8a;
 }, _0x13bb(_0x16c7de, _0x1a27b8);
 }
-let ti1 = '𝐸𝑥𝑝𝑙𝑜𝑠𝑖𝑜𝑛!!'
+let ti1 = '✰ 𝙺𝚊𝚗𝙱𝚘𝚝 ✰'
 let ti2 = '𝐻𝑜𝑙𝑎!!'
-let ti3 = '⏤͟͞ू⃪ ፝͜⁞M͢ᴇɢ፝֟ᴜᴍ⃨ɪɴ⃜✰⃔࿐'
-let ti4 = '͟͞ 𓆩ꪶꪾ𝘿᪶𝙞ᷨ𝙖ᷞ𝙢ͣ𝙤᪶ͨ𝙣ᷜ𝙙ꫂৎ୭࠱࠭ ͟͞'
-let ti5 = '𝐵𝑂𝑂𝑀𝑀!!!!'
-let ti6 = '𝐸𝑙 𝐵𝑜𝑡 𝑀𝑎𝑠 𝐸𝑥𝑝𝑜𝑠𝑖𝑣𝑜!'
+let ti3 = '✰ 𝙺𝚊𝚗𝙱𝚘𝚝 ✰'
+let ti4 = '✰ 𝙺𝚊𝚗𝙱𝚘𝚝 ✰'
+let ti5 = 'by Stiiven'
+let ti6 = '✰ 𝙺𝚊𝚗𝙱𝚘𝚝 ✰'
 let ti = `${pickRandom([ti1,ti2,ti3,ti4,ti5,ti6])}`
 let buttonMessage = {
     'document': {
         'url': md
     },
     'mimetype': td,
-    'fileName': 'E X P L O S I Ó N',
+    'fileName': '✰ 𝙺𝚊𝚗𝙱𝚘𝚝 ✰',
     'fileLength': '99999999999999',
     'pageCount': '999',
     'contextInfo': {

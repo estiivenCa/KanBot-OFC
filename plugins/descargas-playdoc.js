@@ -25,7 +25,7 @@ additionalText = 'audio'
 } else if (command === 'play4' || command == 'playdoc2') {
 additionalText = 'video'}
 
-let texto1 = `・₊✧★。..・✫・🎸🎧°⋆♡₊˚ 🔮
+let texto1 = `┏◚◚◚◚🅓🅞🅒🅢◚◚◚◚┓
 > 🌩 τιτυℓο:
 > • ${yt_play[0].title}
 > ◌⃘࣭ٜ࣪࣪࣪۬☪︎︎︎︎̸─ׅ─ׅ┈ ─๋︩︪───ׅ──ׅ─ׅ─ׅ┈ ─๋︩︪─◌⃘࣭ٜ࣪࣪࣪۬☪︎︎︎︎̸
@@ -43,9 +43,10 @@ let texto1 = `・₊✧★。..・✫・🎸🎧°⋆♡₊˚ 🔮
 > ◌⃘࣭ٜ࣪࣪࣪۬☪︎︎︎︎̸─ׅ─ׅ┈ ─๋︩︪───ׅ──ׅ─ׅ─ׅ┈ ─๋︩︪─◌⃘࣭ٜ࣪࣪࣪۬☪︎︎︎︎̸
 > 🍇 ժմɾαcíօ́ղ:
 > • ${secondString(yt_play[0].duration.seconds)}
-・₊✧。..・★🎸🎧°⋆♡₊˚ 🔮
 
-> _*🍬 εɳѵเαɳ∂σ รµ ${additionalText}, αɠµαɾ∂ε µɳ ɱσɱεɳƭσ 🍓...*_`.trim()
+┗◛◛◛🅚🅐🅝🅑🅞🅣◛◛◛┛
+
+> _*𝙴𝚗𝚟𝚒𝚊𝚗𝚍𝚘 𝚜𝚞 ${additionalText}, 𝙿𝚘𝚛 𝙵𝚊𝚟𝚘𝚛 𝙴𝚜𝚙𝚎𝚛𝚎 *_`.trim()
 await conn.sendMessage(m.chat, { text: texto1, contextInfo: { externalAdReply: { title: yt_play[0].title, body: dev, thumbnailUrl: yt_play[0].thumbnail, mediaType: 1, showAdAttribution: true, renderLargerThumbnail: true }}} , { quoted: fkontak })
 
 if (command == 'play3' || command == 'playdoc') {

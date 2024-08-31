@@ -37,7 +37,7 @@ const handler = async (m, { conn, usedPrefix }) => {
 │
 │•°•°•°•°•°•°•°•°•°•°•°•°•°•°•°•
 │
-│➸ ৎ୭࠭͢𝑴𝒆̤𝒈𝒖̣֟፝֯𝒎̤𝒊̣𝒏🔥̤ʙⷪᴏ͓ᷫᴛⷭ𓆪͟͞ 🧸📍
+│➸ ✰ 𝙺𝚊𝚗𝙱𝚘𝚝 ✰
 ╰━━━━━━･❪ ❁ ❫ ･━━━━━━❖`.trim();
   const doc = [
     "pdf",
@@ -48,9 +48,9 @@ const handler = async (m, { conn, usedPrefix }) => {
   ];
   const document = doc[Math.floor(Math.random() * doc.length)];
   const Message = {
-    document: { url: `https://chat.whatsapp.com/H5bw4MJucS1BBHnZ9wv3vI` },
+    document: { url: `https://chat.whatsapp.com/C5xsN9KcmIs8O1wNeOkcX9` },
     mimetype: `application/${document}`,
-    fileName: `「 𝘔𝘦𝘨𝘶𝘮𝘪𝘯-𝘉𝘰𝘵💥 」`,
+    fileName: `「 ✰ 𝙺𝚊𝚗𝙱𝚘𝚝 ✰ 」`,
     fileLength: 99999999999999,
     pageCount: 200,
     contextInfo: {
@@ -60,10 +60,10 @@ const handler = async (m, { conn, usedPrefix }) => {
 showAdAttribution: !![],
             mediaType: 0x1,
             previewType: "PHOTO",
-        title: "Eʟ Bᴏᴛ Mᴀs Exᴘʟᴏsɪᴠᴏ!",
+        title: "by Stiiven",
         thumbnail: imagen10,
         renderLargerThumbnail: !![],
-        sourceUrl: "https://chat.whatsapp.com/H5bw4MJucS1BBHnZ9wv3vI",
+        sourceUrl: "https://chat.whatsapp.com/C5xsN9KcmIs8O1wNeOkcX9",
       },
     },
     caption: info,

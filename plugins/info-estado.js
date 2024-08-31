@@ -8,14 +8,14 @@ const handler = async (m, {conn}) => {
     await conn.sendMessage(m.chat, { react: { text: '🤠', key: m.key } })
     const str = `
 ┏✧ » ◇ « ✧ » ✦ « ✧ » ◇ « ✧
-┃⍣ 𝙈𝙚𝙜𝙪𝙢𝙞𝙣-𝘽𝙤𝙩✨️🌻
+┃⍣ ✰ 𝙺𝚊𝚗𝙱𝚘𝚝 ✰𝙩✨️
 ┃
 ┃⍣👋🏻𝘏𝘰𝘭𝘢: ${taguser}
 ┃
-┃⍣ *ꨄ︎ ⏳️ 𝘈𝘤𝘵𝘪𝘷𝘰:* ${uptime}
+┃⍣ *ꨄ︎ ⏳️ 𝘈𝘤𝘵𝘪𝘷o:* ${uptime}
 ┃⍣ *ꨄ︎ ✅ 𝘉𝘰𝘵 𝘜𝘴𝘰 𝘗𝘶𝘣𝘭𝘪𝘤𝘰*
-┃⍣ *ꨄ︎ 🦁 𝘖𝘸𝘯𝘦𝘳: David Chian*
-┃⍣ *ꨄ︎ 🔗 𝘊𝘶𝘦𝘯𝘵𝘢𝘴 𝘖𝘧𝘤:* https://chat.whatsapp.com/H5bw4MJucS1BBHnZ9wv3vI
+┃⍣ *ꨄ︎ 👑 𝘖𝘸𝘯𝘦𝘳: Stiiven*
+┃⍣ *ꨄ︎ 🔗 𝘊𝘶𝘦𝘯𝘵𝘢𝘴 𝘖𝘧𝘤:* https://whatsapp.com/channel/0029VakhAHc5fM5hgaQ8ed2N
 ╰✧ » ◇ « ✧ » ✦ « ✧ » ◇ « ✧`.trim();
         const doc = [
     "pdf",
@@ -26,9 +26,9 @@ const handler = async (m, {conn}) => {
   ];
 const document = doc[Math.floor(Math.random() * doc.length)];
   const Message = {
-    document: { url: `https://chat.whatsapp.com/H5bw4MJucS1BBHnZ9wv3vI` },
+    document: { url: `https://chat.whatsapp.com/C5xsN9KcmIs8O1wNeOkcX9` },
     mimetype: `application/${document}`,
-    fileName: `「 𝘔𝘦𝘨𝘶𝘮𝘪𝘯-𝘉𝘰𝘵💥 」`,
+    fileName: `「 ✰ 𝙺𝚊𝚗𝙱𝚘𝚝 ✰ 」`,
     fileLength: 99999999999999,
     pageCount: 200,
     contextInfo: {
@@ -38,10 +38,10 @@ const document = doc[Math.floor(Math.random() * doc.length)];
 showAdAttribution: !![],
             mediaType: 0x1,
             previewType: "PHOTO",
-        title: "Eʟ Bᴏᴛ Mᴀs Exᴘʟᴏsɪᴠᴏ!",
+        title: "by Stiiven",
         thumbnail: imagen10,
         renderLargerThumbnail: !![],
-        sourceUrl: "https://chat.whatsapp.com/H5bw4MJucS1BBHnZ9wv3vI",
+        sourceUrl: "https://chat.whatsapp.com/C5xsN9KcmIs8O1wNeOkcX9",
       },
     },
     caption: str,
