@@ -1,8 +1,8 @@
 import fetch from 'node-fetch';
 let handler = async (m, { conn, usedPrefix, command, text }) => {
-    if (!text) throw `*Error*\n[ 💡 ] Ejemplo ${usedPrefix + command} WhatsApp Plus`
+    if (!text) throw `*Error*\n[ 💡 ] Ejemplo: ${usedPrefix + command} WhatsApp Plus`;
     try {
-        await m.react('🔄')
+        await m.react('🔄');
         await conn.sendMessage(m.chat, 
             { 
                 text: '*🧿 Buscando y descargando el APK, por favor espera...*\n> Mientras esperas, sígueme en mi canal, crack 😎',
@@ -24,23 +24,24 @@ let handler = async (m, { conn, usedPrefix, command, text }) => {
         // Buscar el APK utilizando la API de DeliriusAPI
         const response = await fetch(`https://deliriusapi-official.vercel.app/download/apk?query=${encodeURIComponent(text)}`);
         if (!response.ok) throw `*Error*\nNo se encontró el APK para la consulta: ${text}`;
+        
         const result = await response.json();
-
-        if (result.length === 0) throw `*Error*\nNo se encontraron resultados para la consulta: ${text}`;
+        
+        if (!result || result.length === 0) throw `*Error*\nNo se encontraron resultados para la consulta: ${text}`;
 
         const apkData = result[0];  // Tomar el primer resultado de la búsqueda
 
-        if (apkData.size.includes('GB') || parseFloat(apkData.size.replace(' MB', '')) > 300) {
-            await conn.sendMessage(m.chat, { text: '*El archivo es demasiado pesado por lo que no se enviará.*' }, { quoted: m });
-            await m.react('❌');
-            return;
+        // Validación adicional para asegurar que apkData y apkData.url existan
+        if (!apkData || !apkData.url || !apkData.name) {
+            throw `*Error*\nLa respuesta de la API no contiene los datos esperados.`;
         }
 
+        // Se puede omitir la validación de tamaño si no se proporciona `size` en la respuesta
         // Enviar el archivo APK
         await conn.sendMessage(m.chat, { 
             document: { url: apkData.url }, 
             mimetype: 'application/vnd.android.package-archive', 
-            fileName: apkData.name + '.apk', 
+            fileName: `${apkData.name}.apk`, 
             caption: null 
         }, { quoted: m });
         
