@@ -6,14 +6,14 @@ import {mediafiredl} from '@bochilteam/scraper';
 const handler = async (m, {conn, args, usedPrefix, command}) => {
   const datas = global
 
-  if (!args[0]) throw `_*< DESCARGAS - MEDIAFIRE />*_\n\n*[ ℹ️ ] Ingrese un enlace de MediaFire.*\n\n*[ 💡 ] Ejemplo:* _${usedPrefix + command} https://www.mediafire.com/file/r0lrc9ir5j3e2fs/DOOM_v13_UNCLONE_`;
+  if (!args[0]) throw `*[ ℹ️ ] Ingrese un enlace de MediaFire.*\n\n*[ 💡 ] Ejemplo:* _${usedPrefix + command} https://www.mediafire.com/file/r0lrc9ir5j3e2fs/DOOM_v13_UNCLONE_`;
   try {
     const resEX = await mediafiredl(args[0]);
     const captionES = `_*DESCARGAS - MEDIAFIRE*_\n
     ▢ *Nombre:*  ${resEX.filename}
     ▢ *Tamaño:*  ${resEX.filesizeH}
     ▢ *Extensión:* ${resEX.ext}\n\n
-    *[ ℹ️ ] Se está enviando el archivo. espere...*`.trim();
+    *[ ℹ️ ] Se está enviando el archivo. Por favor espere...*`.trim();
     m.reply(captionES);
     await conn.sendFile(m.chat, resEX.url, resEX.filename, '', m, null, {mimetype: resEX.ext, asDocument: true});
   } catch {
