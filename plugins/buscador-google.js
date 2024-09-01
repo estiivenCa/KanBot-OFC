@@ -9,7 +9,7 @@ conn.reply(m.chat, `🚩 Buscando Su Información...`, m, {
 contextInfo: { externalAdReply :{ mediaUrl: null, mediaType: 1, showAdAttribution: true,
 title: packname,
 body: wm,
-previewType: 0, thumbnail: icons,
+previewType: 0, 
 sourceUrl: channel }}})
 const url = 'https://google.com/search?q=' + encodeURIComponent(text)
 google({'query': text}).then(res => {
