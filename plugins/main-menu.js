@@ -179,7 +179,7 @@ const pp = await conn.profilePictureUrl(who, 'image').catch(_ => 'https://telegr
   global.vid = rlink
   const response = await fetch(vid)
   const gif = await response.buffer()
- // const img = imagen1
+  const img = imagen1
 
 /*await conn.reply(m.chat, '╭ׅׄ̇─ׅ̻ׄ╮۪̇߭︹ׅ̟ׄ̇︹ׅ۪ׄ̇߭︹ׅ̟ׄ̇⊹۪̇߭︹ׅ̟ׄ̇︹ׅ۪ׄ̇߭︹ׅ̟ׄ̇⊹۪̇߭︹ׅ̟ׄ̇︹ׅ۪ׄ̇߭︹ׅ̟ׄ̇⊹*\n├ ⚘݄𖠵⃕⁖𖥔.Ƈᴀʀɢᴀɴᴅᴏ,  ꪶꪾ❍̵̤̂̂ꫂ\n├Ąɢᴜᴀʀᴅᴇ ᴜɴ ᴍᴏᴍᴇɴᴛᴏ❞\n╰ׁ̻─ׅׄ─۪۬─۟─۪─۟─۪۬─۟─۪─۟─۪۬─۟─۪─۟┄۪۬┄۟┄۪┈۟┈۪', m, { contextInfo:{ forwardingScore: 2024, isForwarded: true, externalAdReply: {title: namechannel, body: '𝐃𝐞𝐯 𝐖𝐨𝐫𝐝 𝐓𝐞𝐚𝐦 𝐎𝐟𝐢𝐜𝐢𝐚𝐥', sourceUrl: channel, thumbnail: icons }}})*/
 
@@ -187,9 +187,9 @@ const pp = await conn.profilePictureUrl(who, 'image').catch(_ => 'https://telegr
 
 await m.react('⭐️') 
 
-//await conn.sendFile(m.chat, imagen1, 'yaemori.jpg', text.trim(), fkontak, null, rcanal)
+await conn.sendFile(m.chat, imagen1, 'yaemori.jpg', text.trim(), fkontak, null, rcanal)
 
-await conn.sendMessage(
+/* await conn.sendMessage(
   m.chat,
   { video: { url: vid }, caption: text.trim(),
   contextInfo: {
@@ -212,7 +212,7 @@ await conn.sendMessage(
   },
 
   gifPlayback: true, gifAttribution: 0 },
-  { quoted: fkontak })
+  { quoted: fkontak }) */
 
   } catch (e) {
     conn.reply(m.chat, '🔵 Lo sentimos, el menú tiene un error', m, rcanal, )
