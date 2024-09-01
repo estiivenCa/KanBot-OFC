@@ -1,49 +1,59 @@
-import axios from 'axios';
-import cheerio from 'cheerio';
-
-const apkpureApi = 'https://apkpure.com/api/v2/search?q=';
-const apkpureDownloadApi = 'https://apkpure.com/api/v2/download?id=';
-
-async function searchApk(text) {
-  const response = await axios.get(`${apkpureApi}${encodeURIComponent(text)}`);
-  const data = response.data;
-  return data.results;
-}
-
-async function downloadApk(id) {
-  const response = await axios.get(`${apkpureDownloadApi}${id}`);
-  const data = response.data;
-  return data;
-}
-
+import fetch from 'node-fetch';
 let handler = async (m, { conn, usedPrefix, command, text }) => {
-  if (!text) throw `*ACCIÓN MAL USADA\n\n *ESCRIBA EL NOMBRE DEL APK*, `;
-  try {
-    const searchResults = await searchApk(text);
-    const apkData = await downloadApk(searchResults[0].id);
-    const response = `${packname}
-┃┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈
-┃💫 𝙉𝙤𝙢𝙗𝙧𝙚: ${apkData.name}
-┃📦 𝙋𝘼𝘾𝙆𝘼𝙂𝙀: ${apkData.package}
-┃🕒 𝙐𝙡𝙩𝙞𝙢𝙖 𝘼𝙘𝙩𝙪𝙖𝙡𝙞𝙯𝙖𝙘𝙞𝙤́𝙣: ${apkData.lastup}
-┃💪 𝙏𝙖𝙣𝙖𝙣̃𝙤: ${apkData.size}
-┃┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈
-┃ 𝘿𝙚𝙨𝙘𝙖𝙧𝙜𝙖𝙣𝙙𝙤 𝘼𝙋𝙆 🚀🚀🚀`;
-    await conn.sendMessage(m.chat, { image: { url: apkData.icon }, caption: response }, { quoted: m });
-    if (apkData.size.includes('GB') || apkData.size.replace(' MB', '') > 999) {
-      return await conn.sendMessage(m.chat, { text: 'EL APK ES MUY PESADO.',  }, { quoted: m });
+    if (!text) throw `*Error*\n[ 💡 ] Ejemplo ${usedPrefix + command} WhatsApp Plus`
+    try {
+        await m.react('🔄')
+        await conn.sendMessage(m.chat, 
+            { 
+                text: '*🧿 Buscando y descargando el APK, por favor espera...*\n> Mientras esperas, sígueme en mi canal, crack 😎',
+                contextInfo: {
+                    externalAdReply: {
+                        mediaUrl: null,
+                        mediaType: 1,
+                        showAdAttribution: true,
+                        title: packname,  // Título personalizado
+                        body: wm,         // Texto de cuerpo personalizado
+                        previewType: 0,
+                        sourceUrl: channel // URL del canal
+                    }
+                }
+            }, 
+            { quoted: m }
+        );
+
+        // Buscar el APK utilizando la API de DeliriusAPI
+        const response = await fetch(`https://deliriusapi-official.vercel.app/download/apk?query=${encodeURIComponent(text)}`);
+        if (!response.ok) throw `*Error*\nNo se encontró el APK para la consulta: ${text}`;
+        const result = await response.json();
+
+        if (result.length === 0) throw `*Error*\nNo se encontraron resultados para la consulta: ${text}`;
+
+        const apkData = result[0];  // Tomar el primer resultado de la búsqueda
+
+        if (apkData.size.includes('GB') || parseFloat(apkData.size.replace(' MB', '')) > 300) {
+            await conn.sendMessage(m.chat, { text: '*El archivo es demasiado pesado por lo que no se enviará.*' }, { quoted: m });
+            await m.react('❌');
+            return;
+        }
+
+        // Enviar el archivo APK
+        await conn.sendMessage(m.chat, { 
+            document: { url: apkData.url }, 
+            mimetype: 'application/vnd.android.package-archive', 
+            fileName: apkData.name + '.apk', 
+            caption: null 
+        }, { quoted: m });
+        
+        await m.react('✅');
+    } catch (error) {
+        await conn.sendMessage(m.chat, { text: `*Error*\n${error.message || error}` }, { quoted: m });
+        await m.react('❌');
     }
-    await conn.sendMessage(m.chat, { document: { url: apkData.dllink }, mimetype: 'application/vnd.android.package-archive', fileName: apkData.name + '.apk', caption: null }, { quoted: m });
-  } catch (e) {
-    await conn.reply(m.chat, `𝙊𝙘𝙪𝙧𝙧𝙞𝙤 𝙪𝙣 𝙚𝙧𝙧𝙤𝙧\n\n${e}`, m);
-    console.log(`❗❗𝙀𝙧𝙧𝙤𝙧 ${usedPrefix + command} ❗❗`);
-    console.log(e);
-    handler.limit = false;
-  }
-};
-handler.tags = ['descargas']
-handler.help = ['apk']
-handler.command = /^(apkp|apkpure|apkdl)$/i;
-handler.register = true;
-handler.limit = 2;
+}
+
+handler.help = ['apk']; 
+handler.tags = ['descargas']; 
+handler.command = /^(apk)$/i;
+handler.limit = 5;
+
 export default handler;
