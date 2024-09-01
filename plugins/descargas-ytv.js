@@ -57,7 +57,7 @@ await conn.reply(m.chat, `*[❗𝐈𝐍𝐅𝐎❗] 𝙀𝙎 𝙋𝙊𝙎𝙄�
 }}}
 handler.tags = ['descargas']
 handler.help = ['ytmp4 *<url youtube>*']
-handler.command = ['video', 'fgmp4', 'dlmp4', 'getvid', 'yt', 'ytmp4', 'mp4']
+handler.command = ['video', 'fgmp4', 'dlmp4', 'getvid', 'yt', 'ytmp4', 'mp4', 'ytv']
 export default handler
 
 function bytesToSize(bytes) {
