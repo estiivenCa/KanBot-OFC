@@ -75,7 +75,7 @@ let handler = async (message, { conn, text, usedPrefix, command }) => {
               text: "✨️ RESULTADO DE: " + text
             }),
             footer: proto.Message.InteractiveMessage.Footer.create({
-              text: "ᥫᩣᎠ꯭I𝚫⃥꯭M꯭Ꭷ꯭Ꮑ꯭Ꭰ࠭⋆̟(◣_◢)凸"
+              text: "By ✰ 𝙺𝚊𝚗𝙱𝚘𝚝 ✰"
             }),
             header: proto.Message.InteractiveMessage.Header.create({
               hasMediaAttachment: false
