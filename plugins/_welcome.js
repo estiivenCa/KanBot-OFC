@@ -4,8 +4,6 @@ import fetch from 'node-fetch';
 export async function before(m, { conn, participants, groupMetadata }) {
   if (!m.messageStubType || !m.isGroup) return true;
 
-  let vn = 'https://qu.ax/cTDa.mp3';
-  let vn2 = 'https://qu.ax/xynz.mp3';
   let welc = welcome;
   let adi = adios;
   let chat = global.db.data.chats[m.chat];
@@ -15,12 +13,11 @@ export async function before(m, { conn, participants, groupMetadata }) {
 
   let who = m.messageStubParameters[0] + '@s.whatsapp.net';
   let user = global.db.data.users[who];
-
   let userName = user ? user.name : await conn.getName(who);
 
   if (chat.welcome && m.messageStubType === 27) {
     this.sendMessage(m.chat, {
-      audio: { url: vn },
+      text: `¡Bienvenido/a, ${userName}! Esperamos que disfrutes tu estancia en el grupo.`,
       contextInfo: {
         mentionedJid: getMentionedJid(),
         "externalAdReply": {
@@ -32,16 +29,13 @@ export async function before(m, { conn, participants, groupMetadata }) {
           "showAdAttribution": true,
           sourceUrl: [yt, md, channel].sort(() => 0.5 - Math.random())[0]
         }
-      },
-      ptt: true,
-      mimetype: 'audio/mpeg',
-      fileName: 'welcome.mp3'
+      }
     }, { quoted: fkontak });
   }
 
   if (chat.welcome && (m.messageStubType === 28 || m.messageStubType === 32)) {
     this.sendMessage(m.chat, {
-      audio: { url: vn2 },
+      text: `¡Adiós, ${userName}! Gracias por haber estado con nosotros.`,
       contextInfo: {
         mentionedJid: getMentionedJid(),
         "externalAdReply": {
@@ -55,10 +49,7 @@ export async function before(m, { conn, participants, groupMetadata }) {
           "showAdAttribution": true,
           "sourceUrl": redes
         }
-      },
-      ptt: true,
-      mimetype: 'audio/mpeg',
-      fileName: 'bye.mp3'
+      }
     }, { quoted: fkontak });
   }
 }
