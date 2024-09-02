@@ -17,7 +17,7 @@ export async function before(m, { conn, participants, groupMetadata }) {
 
   if (chat.welcome && m.messageStubType === 27) {
     this.sendMessage(m.chat, {
-      text: `¡Bienvenido/a, ${userName}! Esperamos que disfrutes tu estancia en el grupo.`,
+      text: `╭══•🔥ೋ•✧๑♡๑✧•ೋ🔥•══╮\n¡Bienvenido/a, ${userName}!\n╰══•🔥 ೋ•✧๑♡๑✧•ೋ 🔥•══╯\nEsperamos que disfrutes tu estancia en el grupo.\n🥀*ੈ✩‧₊˚༺☆༻*ੈ✩‧₊˚*ੈ✩‧₊˚༺☆༻*ੈ✩‧₊˚🍁`,
       contextInfo: {
         mentionedJid: getMentionedJid(),
         "externalAdReply": {
@@ -35,7 +35,7 @@ export async function before(m, { conn, participants, groupMetadata }) {
 
   if (chat.welcome && (m.messageStubType === 28 || m.messageStubType === 32)) {
     this.sendMessage(m.chat, {
-      text: `¡Adiós, ${userName}! Gracias por haber estado con nosotros.`,
+      text: `╭══•🔥ೋ•✧๑♡๑✧•ೋ🔥•══╮\n¡Adiós, ${userName}!\n╰══•🔥 ೋ•✧๑♡๑✧•ೋ 🔥•══╯\nGracias por haber estado con nosotros.\n🥀*ੈ✩‧₊˚༺☆༻*ੈ✩‧₊˚*ੈ✩‧₊˚༺☆༻*ੈ✩‧₊˚🍁`,
       contextInfo: {
         mentionedJid: getMentionedJid(),
         "externalAdReply": {
