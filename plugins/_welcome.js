@@ -6,6 +6,7 @@ export async function before(m, { conn, participants, groupMetadata }) {
 
   let welc = welcome;
   let adi = adios;
+   let pp = await conn.profilePictureUrl(m.messageStubParameters[0], 'image').catch(_ => 'https://tinyurl.com/ylgu47w3')
   let chat = global.db.data.chats[m.chat];
   const getMentionedJid = () => {
     return m.messageStubParameters.map(param => `${param}@s.whatsapp.net`);
@@ -23,7 +24,7 @@ export async function before(m, { conn, participants, groupMetadata }) {
 
   if (chat.welcome && m.messageStubType === 27) {
     this.sendMessage(m.chat, {
-      text: `╭══•🔥ೋ•๑♡๑•ೋ🔥•══╮\n¡Bienvenido/a, ${userName}!\n╰══•🔥 ೋ•๑♡๑•ೋ 🔥•══╯\nEsperamos que disfrutes tu estancia en el grupo.\n🥀*ੈ✩‧₊˚༺☆༻*ੈ✩˚🍁`,
+      text: `╭══•🔥ೋ•๑♡๑•ೋ🔥•══╮\n¡Bienvenido/a, @${m.messageStubParameters[0].split`@`[0]}!\n╰══•🔥 ೋ•๑♡๑•ೋ 🔥•══╯\nEsperamos que disfrutes tu estancia en el grupo.\n🥀*ੈ✩‧₊˚༺☆༻*ੈ✩˚🍁`,
       contextInfo: {
         mentionedJid: getMentionedJid(),
         "externalAdReply": {
@@ -41,7 +42,7 @@ export async function before(m, { conn, participants, groupMetadata }) {
 
   if (chat.welcome && (m.messageStubType === 28 || m.messageStubType === 32)) {
     this.sendMessage(m.chat, {
-      text: `╭══•🔥ೋ•๑♡๑•ೋ🔥•══╮\n¡Adiós, ${userName}!\n╰══•🔥 ೋ•๑♡๑•ೋ 🔥•══╯\nGracias por haber estado con nosotros.\n🥀*ੈ✩‧₊˚༺☆༻*ੈ✩˚🍁`,
+      text: `╭══•🔥ೋ•๑♡๑•ೋ🔥•══╮\n¡Adiós, @${m.messageStubParameters[0].split`@`[0]}!\n╰══•🔥 ೋ•๑♡๑•ೋ 🔥•══╯\nGracias por haber estado con nosotros.\n🥀*ੈ✩‧₊˚༺☆༻*ੈ✩˚🍁`,
       contextInfo: {
         mentionedJid: getMentionedJid(),
         "externalAdReply": {
