@@ -12,8 +12,14 @@ export async function before(m, { conn, participants, groupMetadata }) {
   };
 
   let who = m.messageStubParameters[0] + '@s.whatsapp.net';
-  let user = global.db.data.users[who];
-  let userName = user ? user.name : await conn.getName(who);
+  let userName;
+
+  try {
+    userName = global.db.data.users[who]?.name || await conn.getName(who);
+  } catch (error) {
+    console.error('Error al obtener el nombre del usuario:', error);
+    userName = 'Usuario'; // Nombre por defecto en caso de error
+  }
 
   if (chat.welcome && m.messageStubType === 27) {
     this.sendMessage(m.chat, {
@@ -39,13 +45,13 @@ export async function before(m, { conn, participants, groupMetadata }) {
       contextInfo: {
         mentionedJid: getMentionedJid(),
         "externalAdReply": {
-        "thumbnail": adi,
-        "title": '  ͟͞ Ａ Ｄ Ｉ Ｏ Ｓ ͟͞  ',
-        "body": `${userName}, se despide.`,
-        "previewType": "PHOTO",
+          "thumbnail": adi,
+          "title": '  ͟͞ Ａ Ｄ Ｉ Ｏ Ｓ ͟͞  ',
+          "body": `${userName}, se despide.`,
+          "previewType": "PHOTO",
           "showAdAttribution": true,
           "containsAutoReply": true,
-         "thumbnailUrl": null,
+          "thumbnailUrl": null,
           "showAdAttribution": true,
           "sourceUrl": redes
         }
