@@ -30,7 +30,7 @@ export async function before(m, { conn, participants, groupMetadata }) {
         "externalAdReply": {
           "thumbnail": welc,
           "title": "  ͟͞ Ｗ Ｅ Ｌ Ｃ Ｏ Ｍ Ｅ ͟͞  ",
-          "body": `${userName}!`,
+          "body": `Best - Bot`,
           "previewType": "PHOTO",
           "thumbnailUrl": null,
           "showAdAttribution": true,
