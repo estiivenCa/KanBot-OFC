@@ -2,7 +2,7 @@ import fetch from 'node-fetch';
 import cheerio from 'cheerio';
 
 let handler = async (m, { conn, usedPrefix, command, text }) => {
-    if (!text) throw `*Error*\n[ 💡 ] Ejemplo: ${usedPrefix + command} https://en.aptoide.com/app/details?id=com.whatsapp`;
+    if (!text) throw `*Error*\n[ 💡 ] Ejemplo: ${usedPrefix + command} org.mozilla.firefox`;
 
     try {
         await m.react('🔄');
@@ -24,41 +24,21 @@ let handler = async (m, { conn, usedPrefix, command, text }) => {
             { quoted: m }
         );
 
-        // Validar si el texto es una URL
-        let appPageUrl;
-        const urlPattern = /^https?:\/\/(?:www\.)?en\.aptoide\.com\/app\/details\?id=\w+/;
+        // Formar la URL de la aplicación en F-Droid
+        const fDroidUrl = `https://f-droid.org/en/packages/${text}/`;
+        const appPageResponse = await fetch(fDroidUrl);
         
-        if (urlPattern.test(text)) {
-            appPageUrl = text;  // El texto es una URL directa
-        } else {
-            // Realizar búsqueda por nombre si no es URL
-            const searchUrl = `https://en.aptoide.com/search?query=${encodeURIComponent(text)}`;
-            const searchResponse = await fetch(searchUrl);
-            const searchHtml = await searchResponse.text();
-            const $ = cheerio.load(searchHtml);
+        if (appPageResponse.status !== 200) throw `*Error*\nNo se encontró ninguna aplicación con el ID: ${text}`;
 
-            // Obtener el enlace de la primera aplicación encontrada
-            const firstResultLink = $('.search-item a').first().attr('href');
-            if (!firstResultLink) throw `*Error*\nNo se encontró ninguna aplicación con el nombre: ${text}`;
-            appPageUrl = `https://en.aptoide.com${firstResultLink}`;
-        }
-
-        // Navegar a la página de detalles de la aplicación
-        const appPageResponse = await fetch(appPageUrl);
         const appPageHtml = await appPageResponse.text();
-        const $$ = cheerio.load(appPageHtml);
+        const $ = cheerio.load(appPageHtml);
 
-        // Obtener el enlace de descarga del APK
-        const downloadLink = $$('a.download-apk').first().attr('href');
+        // Obtener el enlace de descarga del APK (usualmente la última versión)
+        const downloadLink = $('a.package-version-download').first().attr('href');
         if (!downloadLink) throw `*Error*\nNo se encontró el enlace de descarga del APK.`;
 
-        // Obtener el enlace final de descarga
-        const finalDownloadPageResponse = await fetch(downloadLink);
-        const finalDownloadPageHtml = await finalDownloadPageResponse.text();
-        const $$$ = cheerio.load(finalDownloadPageHtml);
-
-        const finalDownloadLink = $$$('.download-button').attr('href');
-        if (!finalDownloadLink) throw `*Error*\nNo se encontró el enlace final de descarga.`;
+        // URL final de descarga
+        const finalDownloadLink = `https://f-droid.org${downloadLink}`;
 
         // Enviar el archivo APK
         await conn.sendMessage(m.chat, { 
