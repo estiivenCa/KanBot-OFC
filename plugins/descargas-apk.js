@@ -1,4 +1,6 @@
 import fetch from 'node-fetch';
+import cheerio from 'cheerio';
+
 let handler = async (m, { conn, usedPrefix, command, text }) => {
     if (!text) throw `*Error*\n[ 💡 ] Ejemplo: ${usedPrefix + command} WhatsApp Plus`;
     try {
@@ -21,27 +23,40 @@ let handler = async (m, { conn, usedPrefix, command, text }) => {
             { quoted: m }
         );
 
-        // Buscar el APK utilizando la API de DeliriusAPI
-        const response = await fetch(`https://deliriusapi-official.vercel.app/download/apk?query=${encodeURIComponent(text)}`);
-        if (!response.ok) throw `*Error*\nNo se encontró el APK para la consulta: ${text}`;
-        
-        const result = await response.json();
-        
-        if (!result || result.length === 0) throw `*Error*\nNo se encontraron resultados para la consulta: ${text}`;
+        // Hacer la búsqueda en APKMirror
+        const searchUrl = `https://www.apkmirror.com/?post_type=app_release&search=${encodeURIComponent(text)}`;
+        const searchResponse = await fetch(searchUrl);
+        const searchHtml = await searchResponse.text();
+        const $ = cheerio.load(searchHtml);
 
-        const apkData = result[0];  // Tomar el primer resultado de la búsqueda
+        // Obtener el enlace de la primera aplicación encontrada
+        const firstResultLink = $('.appRowTitle a').first().attr('href');
+        if (!firstResultLink) throw `*Error*\nNo se encontró ninguna aplicación con el nombre: ${text}`;
 
-        // Validación adicional para asegurar que apkData y apkData.url existan
-        if (!apkData || !apkData.url || !apkData.name) {
-            throw `*Error*\nLa respuesta de la API no contiene los datos esperados.`;
-        }
+        // Navegar a la página de detalles de la aplicación
+        const appPageUrl = `https://www.apkmirror.com${firstResultLink}`;
+        const appPageResponse = await fetch(appPageUrl);
+        const appPageHtml = await appPageResponse.text();
+        const $$ = cheerio.load(appPageHtml);
 
-        // Se puede omitir la validación de tamaño si no se proporciona `size` en la respuesta
+        // Obtener el enlace de descarga del APK
+        const downloadLink = $$('a.accent_color').first().attr('href');
+        if (!downloadLink) throw `*Error*\nNo se encontró el enlace de descarga del APK.`;
+
+        // Navegar a la página final de descarga
+        const downloadPageUrl = `https://www.apkmirror.com${downloadLink}`;
+        const downloadPageResponse = await fetch(downloadPageUrl);
+        const downloadPageHtml = await downloadPageResponse.text();
+        const $$$ = cheerio.load(downloadPageHtml);
+
+        const finalDownloadLink = $$$('.downloadLink a').first().attr('href');
+        if (!finalDownloadLink) throw `*Error*\nNo se encontró el enlace final de descarga.`;
+
         // Enviar el archivo APK
         await conn.sendMessage(m.chat, { 
-            document: { url: apkData.url }, 
+            document: { url: finalDownloadLink }, 
             mimetype: 'application/vnd.android.package-archive', 
-            fileName: `${apkData.name}.apk`, 
+            fileName: `${text}.apk`, 
             caption: null 
         }, { quoted: m });
         
