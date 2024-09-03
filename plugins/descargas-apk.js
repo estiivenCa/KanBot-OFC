@@ -2,7 +2,8 @@ import fetch from 'node-fetch';
 import cheerio from 'cheerio';
 
 let handler = async (m, { conn, usedPrefix, command, text }) => {
-    if (!text) throw `*Error*\n[ 💡 ] Ejemplo: ${usedPrefix + command} WhatsApp Plus`;
+    if (!text) throw `*Error*\n[ 💡 ] Ejemplo: ${usedPrefix + command} https://en.aptoide.com/app/details?id=com.whatsapp`;
+
     try {
         await m.react('🔄');
         await conn.sendMessage(m.chat, 
@@ -23,18 +24,26 @@ let handler = async (m, { conn, usedPrefix, command, text }) => {
             { quoted: m }
         );
 
-        // Hacer la búsqueda en Aptoide
-        const searchUrl = `https://en.aptoide.com/search?query=${encodeURIComponent(text)}`;
-        const searchResponse = await fetch(searchUrl);
-        const searchHtml = await searchResponse.text();
-        const $ = cheerio.load(searchHtml);
+        // Validar si el texto es una URL
+        let appPageUrl;
+        const urlPattern = /^https?:\/\/(?:www\.)?en\.aptoide\.com\/app\/details\?id=\w+/;
+        
+        if (urlPattern.test(text)) {
+            appPageUrl = text;  // El texto es una URL directa
+        } else {
+            // Realizar búsqueda por nombre si no es URL
+            const searchUrl = `https://en.aptoide.com/search?query=${encodeURIComponent(text)}`;
+            const searchResponse = await fetch(searchUrl);
+            const searchHtml = await searchResponse.text();
+            const $ = cheerio.load(searchHtml);
 
-        // Obtener el enlace de la primera aplicación encontrada
-        const firstResultLink = $('.search-item a').first().attr('href');
-        if (!firstResultLink) throw `*Error*\nNo se encontró ninguna aplicación con el nombre: ${text}`;
+            // Obtener el enlace de la primera aplicación encontrada
+            const firstResultLink = $('.search-item a').first().attr('href');
+            if (!firstResultLink) throw `*Error*\nNo se encontró ninguna aplicación con el nombre: ${text}`;
+            appPageUrl = `https://en.aptoide.com${firstResultLink}`;
+        }
 
         // Navegar a la página de detalles de la aplicación
-        const appPageUrl = `https://en.aptoide.com${firstResultLink}`;
         const appPageResponse = await fetch(appPageUrl);
         const appPageHtml = await appPageResponse.text();
         const $$ = cheerio.load(appPageHtml);
