@@ -13,43 +13,43 @@ let handler = async (m, { conn, usedPrefix, command, text }) => {
                         mediaUrl: null,
                         mediaType: 1,
                         showAdAttribution: true,
-                        title: packname,  // Título personalizado
-                        body: wm,         // Texto de cuerpo personalizado
+                        title: 'APK Downloader',  // Título personalizado
+                        body: 'Descargando APK...', // Texto de cuerpo personalizado
                         previewType: 0,
-                        sourceUrl: channel // URL del canal
+                        sourceUrl: 'https://t.me/mi_canal' // URL del canal (personaliza con tu enlace)
                     }
                 }
             }, 
             { quoted: m }
         );
 
-        // Hacer la búsqueda en APKMirror
-        const searchUrl = `https://www.apkmirror.com/?post_type=app_release&search=${encodeURIComponent(text)}`;
+        // Hacer la búsqueda en APKPure
+        const searchUrl = `https://apkpure.com/es/search?q=${encodeURIComponent(text)}`;
         const searchResponse = await fetch(searchUrl);
         const searchHtml = await searchResponse.text();
         const $ = cheerio.load(searchHtml);
 
         // Obtener el enlace de la primera aplicación encontrada
-        const firstResultLink = $('.appRowTitle a').first().attr('href');
+        const firstResultLink = $('.search-title a').first().attr('href');
         if (!firstResultLink) throw `*Error*\nNo se encontró ninguna aplicación con el nombre: ${text}`;
 
         // Navegar a la página de detalles de la aplicación
-        const appPageUrl = `https://www.apkmirror.com${firstResultLink}`;
+        const appPageUrl = `https://apkpure.com${firstResultLink}`;
         const appPageResponse = await fetch(appPageUrl);
         const appPageHtml = await appPageResponse.text();
         const $$ = cheerio.load(appPageHtml);
 
         // Obtener el enlace de descarga del APK
-        const downloadLink = $$('a.accent_color').first().attr('href');
+        const downloadLink = $$('a.da').attr('href');
         if (!downloadLink) throw `*Error*\nNo se encontró el enlace de descarga del APK.`;
 
         // Navegar a la página final de descarga
-        const downloadPageUrl = `https://www.apkmirror.com${downloadLink}`;
+        const downloadPageUrl = `https://apkpure.com${downloadLink}`;
         const downloadPageResponse = await fetch(downloadPageUrl);
         const downloadPageHtml = await downloadPageResponse.text();
         const $$$ = cheerio.load(downloadPageHtml);
 
-        const finalDownloadLink = $$$('.downloadLink a').first().attr('href');
+        const finalDownloadLink = $$$('.fast-download a').attr('href');
         if (!finalDownloadLink) throw `*Error*\nNo se encontró el enlace final de descarga.`;
 
         // Enviar el archivo APK
@@ -57,7 +57,7 @@ let handler = async (m, { conn, usedPrefix, command, text }) => {
             document: { url: finalDownloadLink }, 
             mimetype: 'application/vnd.android.package-archive', 
             fileName: `${text}.apk`, 
-            caption: null 
+            caption: `Aquí está el APK solicitado: ${text}` 
         }, { quoted: m });
         
         await m.react('✅');
