@@ -18,7 +18,7 @@ let handler = async (_0x10bd40, {
  contextInfo: { externalAdReply :{ mediaUrl: null, mediaType: 1, showAdAttribution: true,
  title: packname,
  body: wm,
- previewType: 0, thumbnail: icons,
+ previewType: 0, 
  sourceUrl: channel }}})
   async function _0x3f3fc7(_0x5f4723) {
     const {
