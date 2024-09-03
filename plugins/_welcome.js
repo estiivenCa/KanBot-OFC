@@ -25,7 +25,7 @@ export async function before(m, { conn, participants, groupMetadata }) {
 
   if (chat.welcome && m.messageStubType === 27) {
     this.sendMessage(m.chat, {
-      text: `╭══•🔥ೋ•๑♡๑•ೋ🔥•══╮\n¡Bienvenido/a,  @${userName}!\n╰══•🔥 ೋ•๑♡๑•ೋ 🔥•══╯\n\nEsperamos que disfrutes tu estancia en el grupo.\n🥀*ੈ✩‧₊˚༺☆༻*ੈ✩˚🍁`,
+      text: `╭══•🔥ೋ•๑♡๑•ೋ🔥•══╮\n¡Bienvenido/a,  @${m.messageStubParameters[0].split`@`[0]}!\n╰══•🔥 ೋ•๑♡๑•ೋ 🔥•══╯\n\nEsperamos que disfrutes tu estancia en el grupo.\n🥀*ੈ✩‧₊˚༺☆༻*ੈ✩˚🍁`,
       contextInfo: {
         mentionedJid: getMentionedJid(),
         "externalAdReply": {
@@ -43,7 +43,7 @@ export async function before(m, { conn, participants, groupMetadata }) {
 
   if (chat.welcome && (m.messageStubType === 28 || m.messageStubType === 32)) {
     this.sendMessage(m.chat, {
-      text: `╭══•🔥ೋ•๑♡๑•ೋ🔥•══╮\n¡Adiós, @${userName}!\n╰══•🔥 ೋ•๑♡๑•ೋ 🔥•══╯\n\nGracias por haber estado con nosotros.\n🥀*ੈ✩‧₊˚༺☆༻*ੈ✩˚🍁`,
+      text: `╭══•🔥ೋ•๑♡๑•ೋ🔥•══╮\n¡Adiós, @${m.messageStubParameters[0].split`@`[0]}!\n╰══•🔥 ೋ•๑♡๑•ೋ 🔥•══╯\n\nGracias por haber estado con nosotros.\n🥀*ੈ✩‧₊˚༺☆༻*ੈ✩˚🍁`,
       contextInfo: {
         mentionedJid: getMentionedJid(),
         "externalAdReply": {
