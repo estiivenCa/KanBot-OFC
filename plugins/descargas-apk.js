@@ -13,43 +13,42 @@ let handler = async (m, { conn, usedPrefix, command, text }) => {
                         mediaUrl: null,
                         mediaType: 1,
                         showAdAttribution: true,
-                        title: 'APK Downloader',  // Título personalizado
-                        body: 'Descargando APK...', // Texto de cuerpo personalizado
+                        title: packname,  // Título personalizado
+                        body: wm,         // Texto de cuerpo personalizado
                         previewType: 0,
-                        sourceUrl: 'https://t.me/mi_canal' // URL del canal (personaliza con tu enlace)
+                        sourceUrl: channel // URL del canal
                     }
                 }
             }, 
             { quoted: m }
         );
 
-        // Hacer la búsqueda en APKPure
-        const searchUrl = `https://apkpure.com/es/search?q=${encodeURIComponent(text)}`;
+        // Hacer la búsqueda en Aptoide
+        const searchUrl = `https://en.aptoide.com/search?query=${encodeURIComponent(text)}`;
         const searchResponse = await fetch(searchUrl);
         const searchHtml = await searchResponse.text();
         const $ = cheerio.load(searchHtml);
 
         // Obtener el enlace de la primera aplicación encontrada
-        const firstResultLink = $('.search-title a').first().attr('href');
+        const firstResultLink = $('.search-item a').first().attr('href');
         if (!firstResultLink) throw `*Error*\nNo se encontró ninguna aplicación con el nombre: ${text}`;
 
         // Navegar a la página de detalles de la aplicación
-        const appPageUrl = `https://apkpure.com${firstResultLink}`;
+        const appPageUrl = `https://en.aptoide.com${firstResultLink}`;
         const appPageResponse = await fetch(appPageUrl);
         const appPageHtml = await appPageResponse.text();
         const $$ = cheerio.load(appPageHtml);
 
         // Obtener el enlace de descarga del APK
-        const downloadLink = $$('a.da').attr('href');
+        const downloadLink = $$('a.download-apk').first().attr('href');
         if (!downloadLink) throw `*Error*\nNo se encontró el enlace de descarga del APK.`;
 
-        // Navegar a la página final de descarga
-        const downloadPageUrl = `https://apkpure.com${downloadLink}`;
-        const downloadPageResponse = await fetch(downloadPageUrl);
-        const downloadPageHtml = await downloadPageResponse.text();
-        const $$$ = cheerio.load(downloadPageHtml);
+        // Obtener el enlace final de descarga
+        const finalDownloadPageResponse = await fetch(downloadLink);
+        const finalDownloadPageHtml = await finalDownloadPageResponse.text();
+        const $$$ = cheerio.load(finalDownloadPageHtml);
 
-        const finalDownloadLink = $$$('.fast-download a').attr('href');
+        const finalDownloadLink = $$$('.download-button').attr('href');
         if (!finalDownloadLink) throw `*Error*\nNo se encontró el enlace final de descarga.`;
 
         // Enviar el archivo APK
@@ -57,7 +56,7 @@ let handler = async (m, { conn, usedPrefix, command, text }) => {
             document: { url: finalDownloadLink }, 
             mimetype: 'application/vnd.android.package-archive', 
             fileName: `${text}.apk`, 
-            caption: `Aquí está el APK solicitado: ${text}` 
+            caption: null 
         }, { quoted: m });
         
         await m.react('✅');
