@@ -91,7 +91,7 @@ var handler = async (m, { conn, args, usedPrefix, command, isOwner, isPrems }) =
 
 handler.help = ['gdrive'];
 handler.tags = ['descargas'];
-handler.command = ['gdrive'];
+handler.command = ['gdrive', 'drive'];
 handler.diamond = true;
 handler.register = true;
 
