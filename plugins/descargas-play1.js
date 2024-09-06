@@ -17,60 +17,57 @@ const handler = async (m, { conn, command, args, text, usedPrefix }) => {
 ├ ⚘݄𖠵⃕⁖𖥔. _*🅃𝕚𝕥𝕦𝕝𝕠*_
 ├» ${yt_play[0].title}
 ├╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌┄
-├ ⚘݄𖠵⃕⁖𖥔. _*🄿𝕦𝕓𝕝𝕚𝕔𝕒𝕝𝕠*_
+├ ⚘݄𖠵⃕⁖𖥔. _*🄿𝕦𝕓𝕝𝕚𝕔𝕒𝕕𝕠*_
 ├» ${yt_play[0].ago}
-├╌╌╌╌╌╌╌╌╌╌╌╌┄
+├╌╌╌╌╌╌╌╌╌╌╌╌╌╌┈
 ├ ⚘݄𖠵⃕⁖𖥔. _*🄳𝕦𝕣𝕒𝕔𝕚𝕠𝕟*_
 ├» ${secondString(yt_play[0].duration.seconds)}
 ├╌╌╌╌╌╌╌╌╌╌╌╌┄
 ├ ⚘݄𖠵⃕⁖𖥔. _*🅅𝕚𝕤𝕥𝕒𝕤*_
 ├» ${MilesNumber(yt_play[0].views)}
-├╌╌╌╌╌╌╌╌╌╌┄
-├ ⚘݄𖠵⃕⁖𖥔. _*🄰𝕦𝕥𝕼𝕣(𝕒)*_
+├╌╌╌╌╌╌╌╌┈
+├ ⚘݄𖠵⃕⁖𖥔. _*🄰𝕦𝕥𝕠𝕣(𝕒)*_
 ├» ${yt_play[0].author.name}
 ├╌╌╌╌╌╌╌╌┈
 ├ ⚘݄𖠵⃕⁖𖥔. _*🄴𝕟𝕝𝕒𝕔𝕖*_
 ├» ${yt_play[0].url}
 ╰ׁ̻۫─۪۬─۟─۪─۫─۪۬─۟─۪─۟─۪۬─۟─۪─۟─۪۬─۟─۪─۟┄۪۬┄۟┄۪┈۟┈۪`.trim();
 
-    // Array para controlar qué botones están deshabilitados
-    let botonesDeshabilitados = ['menu', 'audio', 'video'];
+    // Almacenar el estado de los botones
+    let buttons = [
+      { buttonId: `${usedPrefix}menu`, buttonText: { displayText: '𝐌 𝐄 𝐍 𝐔 📌' }, type: 1 },
+      { buttonId: `${usedPrefix}play5 ${yt_play[0].url}`, buttonText: { displayText: '🎧 𝗔 𝗨 𝗗 𝗜 𝗢' }, type: 1 },
+      { buttonId: `${usedPrefix}play6 ${yt_play[0].url}`, buttonText: { displayText: '📽 𝗩 𝗜 𝗗 𝗘 𝗢' }, type: 1 }
+    ];
 
-    // Lógica para desactivar botones
-    const desactivarBoton = (boton) => {
-      botonesDeshabilitados = botonesDeshabilitados.filter(b => b !== boton);
+    await conn.sendMessage(m.chat, { text: texto1, footer: wm, buttons: buttons, headerType: 4, image: { url: yt_play[0].thumbnail } }, { quoted: m });
+
+    const listener = async (message) => {
+      const buttonId = message.buttonId;
+      // Desactivar el botón presionado
+      buttons = buttons.map(btn => btn.buttonId === buttonId ? { ...btn, buttonText: { displayText: 'Desactivado' } } : btn);
+      await conn.sendMessage(m.chat, { text: 'Este botón ya ha sido usado.', buttons: buttons, headerType: 4 }, { quoted: m });
+      
+      // Dejar de escuchar después de la primera interacción
+      conn.off('chat-update', listener);
     };
 
-    await conn.sendButton(
-      m.chat,
-      wm,
-      texto1,
-      yt_play[0].thumbnail,
-      [
-        ['𝐌 𝐄 𝐍 𝐔 📌', `${usedPrefix}menu`, botonesDeshabilitados.includes('menu') ? 'disabled' : null],
-        ['🎧 𝗔 𝗨 𝗗 𝗜 𝗢', `${usedPrefix}play5 ${yt_play[0].url}`, botonesDeshabilitados.includes('audio') ? 'disabled' : null],
-        ['📽 𝗩 𝗜 𝗗 𝗘 𝗢', `${usedPrefix}play6 ${yt_play[0].url}`, botonesDeshabilitados.includes('video') ? 'disabled' : null],
-      ],
-      null,
-      null,
-      fgif2
-    );
-
-    // Desactivar el botón cuando se presione
-    const botonPresionado = args[0]; // Supón que envías el nombre del botón presionado en los argumentos
-    desactivarBoton(botonPresionado);
+    // Escuchar la interacción de los botones
+    conn.on('chat-update', listener);
 
     await m.react('✅'); // Emoji de check
   } catch (e) {
-    await conn.reply(m.chat, `*[ ! ] ʜᴜʙᴏ ᴜɴ ᴇʀʀᴏʀ ᴇɴ ᴇʟ ᴄᴏᴍᴀɴ𝐝𝐨 ᴘᴏʀ ғᴀᴠᴏʀ ɪɴᴛᴇɴᴛ𝐚 ᴍᴀs ᴛ𝐚ʀ𝐝𝐞..*`, fkontak, m, rcanal);
-    console.log(`❗❗ᴇʀʀᴏʀ ${usedPrefix + command} ❗❗`);
+    await conn.reply(m.chat, `*[ ! ] Hubo un error en el comando, por favor intenta más tarde..*`, null, m);
+    console.log(`❗❗Error ${usedPrefix + command} ❗❗`);
     console.log(e);
+    handler.limit = 0;
   }
 };
 
 handler.command = ['play', 'play2', 'play3', 'play4'];
 handler.register = true;
 handler.group = true;
+
 export default handler;
 
 async function search(query, options = {}) {
@@ -97,4 +94,4 @@ function secondString(seconds) {
   const mDisplay = m > 0 ? m + (m == 1 ? ' minuto, ' : ' minutos, ') : '';
   const sDisplay = s > 0 ? s + (s == 1 ? ' segundo' : ' segundos') : '';
   return dDisplay + hDisplay + mDisplay + sDisplay;
-}
+                                    }
