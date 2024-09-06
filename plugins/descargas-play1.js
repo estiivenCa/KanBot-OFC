@@ -7,7 +7,7 @@ import {youtubedl, youtubedlv2} from '@bochilteam/scraper';
 const buttonsState = {};  // Variable para almacenar el estado de los botones por chat ID
 
 const handler = async (m, { conn, command, args, text, usedPrefix }) => {
-  if (!text) throw _𝐄𝐬𝐜𝐫𝐢𝐛𝐞 𝐮𝐧𝐚 𝐩𝐞𝐭𝐢𝐜𝐢𝐨́𝐧 𝐥𝐮𝐞𝐠𝐨 𝐝𝐞𝐥 𝐜𝐨𝐦𝐚𝐧𝐝𝐨 𝐞𝐣𝐞𝐦𝐩𝐥𝐨:_ \n*${usedPrefix + command} Daniel Trevor - Falling*;
+  if (!text) throw `_𝐄𝐬𝐜𝐫𝐢𝐛𝐞 𝐮𝐧𝐚 𝐩𝐞𝐭𝐢𝐜𝐢𝐨́𝐧 𝐥𝐮𝐞𝐠𝐨 𝐝𝐞𝐥 𝐜𝐨𝐦𝐚𝐧𝐝𝐨 𝐞𝐣𝐞𝐦𝐩𝐥𝐨:_ \n*${usedPrefix + command} Daniel Trevor - Falling*`;
 
   try {
     await m.react('⏳');
@@ -16,7 +16,13 @@ const handler = async (m, { conn, command, args, text, usedPrefix }) => {
     const chatId = m.chat;  // Identificar el chat para gestionar el estado de los botones
     buttonsState[chatId] = buttonsState[chatId] || { audio: false, video: false };  // Estado inicial de los botones si no existe
 
-    const texto1 = 
+    // Deshabilitar botones si ya están en uso
+    if (buttonsState[chatId].audio || buttonsState[chatId].video) {
+      await conn.reply(m.chat, "Espere a que se complete la reproducción actual antes de usar otro botón.", null);
+      return;
+    }
+
+    const texto1 = `
 ┏─۟─۪─۫─۪۬─۟─۪─۟─۪۬─۟─۪─۟─۪۬─۟─۪─۟┄۪۬┄۟┄۪┈۟┈۪
 │
 ├ ⚘݄𖠵⃕⁖𖥔. _*🅃𝕚𝕥𝕦𝕝𝕠*_
@@ -36,11 +42,10 @@ const handler = async (m, { conn, command, args, text, usedPrefix }) => {
 ├╌╌╌╌╌╌╌╌┈
 ├ ⚘݄𖠵⃕⁖𖥔. _*🄴𝕟𝕝𝕒𝕔𝕖*_
 ├» ${yt_play[0].url}
-╰ׁ̻۫─۪۬─۟─۪─۫─۪۬─۟─۪─۟─۪۬─۟─۪─۟─۪۬─۟─۪─۟┄۪۬┄۟┄۪┈۟┈۪.trim();
+╰ׁ̻۫─۪۬─۟─۪─۫─۪۬─۟─۪─۟─۪۬─۟─۪─۟─۪۬─۟─۪─۟┄۪۬┄۟┄۪┈۟┈۪`.trim();
 
-    // Definir el estado de los botones basados en el estado guardado
-    const audioButton = buttonsState[chatId].audio ? 'disable' : ${usedPrefix}play5 ${yt_play[0].url};
-    const videoButton = buttonsState[chatId].video ? 'disable' : ${usedPrefix}play6 ${yt_play[0].url};
+    const audioButton = buttonsState[chatId].audio ? 'disable' : `${usedPrefix}play5 ${yt_play[0].url}`;
+    const videoButton = buttonsState[chatId].video ? 'disable' : `${usedPrefix}play6 ${yt_play[0].url}`;
 
     await conn.sendButton(
       m.chat,
@@ -48,7 +53,7 @@ const handler = async (m, { conn, command, args, text, usedPrefix }) => {
       texto1,
       yt_play[0].thumbnail,
       [
-        ['𝐌 𝐄 𝐍 𝐔 📌', ${usedPrefix}menu, 'disable'],
+        ['𝐌 𝐄 𝐍 𝐔 📌', `${usedPrefix}menu`, 'disable'],
         ['🎧 𝗔 𝗨 𝗗 𝗜 𝗢', audioButton, 'disable'],
         ['📽 𝗩 𝗜 𝗗 𝗘 𝗢', videoButton, 'disable']
       ],
@@ -57,25 +62,21 @@ const handler = async (m, { conn, command, args, text, usedPrefix }) => {
       fgif2
     );
 
+    // Desactivar el botón correspondiente basado en lo que se seleccione
+    buttonsState[chatId].audio = true;
+    buttonsState[chatId].video = true;
+
     await m.react('✅');  // Emoji de check
   } catch (e) {
-    await conn.reply(m.chat, *[ ! ] Hubo un error en el comando. Intenta más tarde.*, fkontak, m, rcanal);
-    console.log(❗❗ Error en ${usedPrefix + command} ❗❗);
+    await conn.reply(m.chat, `*[ ! ] Hubo un error en el comando. Intenta más tarde.*`, fkontak, m, rcanal);
+    console.log(`❗❗ Error en ${usedPrefix + command} ❗❗`);
     console.log(e);
     handler.limit = 0;
-  }
-};
-
-// Agregar lógica para desactivar botones cuando son presionados
-handler.before = async (m) => {
-  const chatId = m.chat;
-  if (buttonsState[chatId]) {
-    if (m.text.includes('🎧 𝗔 𝗨 𝗗 𝗜 𝗢')) {
-      buttonsState[chatId].audio = true;
-    }
-    if (m.text.includes('📽 𝗩 𝗜 𝗗 𝗘 𝗢')) {
-      buttonsState[chatId].video = true;
-    }
+  } finally {
+    // Reactivar los botones al terminar
+    const chatId = m.chat;
+    buttonsState[chatId].audio = false;
+    buttonsState[chatId].video = false;
   }
 };
 
@@ -109,4 +110,4 @@ function secondString(seconds) {
   const mDisplay = m > 0 ? m + (m == 1 ? ' minuto, ' : ' minutos, ') : '';
   const sDisplay = s > 0 ? s + (s == 1 ? ' segundo' : ' segundos') : '';
   return dDisplay + hDisplay + mDisplay + sDisplay;
-    }
+}
