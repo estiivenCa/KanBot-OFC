@@ -2,7 +2,9 @@ import fetch from 'node-fetch';
 import yts from 'yt-search';
 import ytdl from 'ytdl-core';
 import axios from 'axios';
-import { youtubedl, youtubedlv2 } from '@bochilteam/scraper';
+import {youtubedl, youtubedlv2} from '@bochilteam/scraper';
+
+const buttonsState = {};  // Variable para almacenar el estado de los botones por chat ID
 
 const handler = async (m, { conn, command, args, text, usedPrefix }) => {
   if (!text) throw `_𝐄𝐬𝐜𝐫𝐢𝐛𝐞 𝐮𝐧𝐚 𝐩𝐞𝐭𝐢𝐜𝐢𝐨́𝐧 𝐥𝐮𝐞𝐠𝐨 𝐝𝐞𝐥 𝐜𝐨𝐦𝐚𝐧𝐝𝐨 𝐞𝐣𝐞𝐦𝐩𝐥𝐨:_ \n*${usedPrefix + command} Daniel Trevor - Falling*`;
@@ -10,57 +12,77 @@ const handler = async (m, { conn, command, args, text, usedPrefix }) => {
   try {
     await m.react('⏳');
     const yt_play = await search(args.join(' '));
+    
+    const chatId = m.chat;  // Identificar el chat para gestionar el estado de los botones
+    buttonsState[chatId] = buttonsState[chatId] || { audio: false, video: false };  // Estado inicial de los botones si no existe
 
     const texto1 = `
-    ┏─۟─۪─۫─۪۬─۟─۪─۟─۪۬─۟─۪─۟─۪۬─۟─۪─۟┄۪۬┄۟┄۪┈۟┈۪
-    │
-    ├ ⚘݄𖠵⃕⁖𖥔. _*🅃𝕚𝕥𝕦𝕝𝕠*_
-    ├» ${yt_play[0].title}
-    ├╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌┄
-    ├ ⚘݄𖠵⃕⁖𖥔. _*🄿𝕦𝕓𝕝𝕚𝕔𝕒𝕕𝕠*_
-    ├» ${yt_play[0].ago}
-    ├╌╌╌╌╌╌╌╌╌╌╌╌╌╌┈
-    ├ ⚘݄𖠵⃕⁖𖥔. _*🄳𝕦𝕣𝕒𝕔𝕚𝕠𝕟*_
-    ├» ${secondString(yt_play[0].duration.seconds)}
-    ├╌╌╌╌╌╌╌╌╌╌╌╌┄
-    ├ ⚘݄𖠵⃕⁖𖥔. _*🅅𝕚𝕤𝕥𝕒𝕤*_
-    ├» ${MilesNumber(yt_play[0].views)}
-    ├╌╌╌╌╌╌╌╌╌╌┄
-    ├ ⚘݄𖠵⃕⁖𖥔. _*🄰𝕦𝕥𝕠𝕣(𝕒)*_
-    ├» ${yt_play[0].author.name}
-    ├╌╌╌╌╌╌╌╌┈
-    ├ ⚘݄𖠵⃕⁖𖥔. _*🄴𝕟𝕝𝕒𝕔𝕖*_
-    ├» ${yt_play[0].url}
-    ╰ׁ̻۫─۪۬─۟─۪─۫─۪۬─۟─۪─۟─۪۬─۟─۪─۟─۪۬─۟─۪─۟┄۪۬┄۟┄۪┈۟┈۪`.trim();
+┏─۟─۪─۫─۪۬─۟─۪─۟─۪۬─۟─۪─۟─۪۬─۟─۪─۟┄۪۬┄۟┄۪┈۟┈۪
+│
+├ ⚘݄𖠵⃕⁖𖥔. _*🅃𝕚𝕥𝕦𝕝𝕠*_
+├» ${yt_play[0].title}
+├╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌┄
+├ ⚘݄𖠵⃕⁖𖥔. _*🄿𝕦𝕓𝕝𝕚𝕔𝕒𝕕𝕠*_
+├» ${yt_play[0].ago}
+├╌╌╌╌╌╌╌╌╌╌╌╌╌╌┈
+├ ⚘݄𖠵⃕⁖𖥔. _*🄳𝕦𝕣𝕒𝕔𝕚𝕠𝕟*_
+├» ${secondString(yt_play[0].duration.seconds)}
+├╌╌╌╌╌╌╌╌╌╌╌╌┄
+├ ⚘݄𖠵⃕⁖𖥔. _*🅅𝕚𝕤𝕥𝕒𝕤*_
+├» ${MilesNumber(yt_play[0].views)}
+├╌╌╌╌╌╌╌╌┄
+├ ⚘݄𖠵⃕⁖𖥔. _*🄰𝕦𝕥𝕠𝕣(𝕒)*_
+├» ${yt_play[0].author.name}
+├╌╌╌╌╌╌╌╌┈
+├ ⚘݄𖠵⃕⁖𖥔. _*🄴𝕟𝕝𝕒𝕔𝕖*_
+├» ${yt_play[0].url}
+╰ׁ̻۫─۪۬─۟─۪─۫─۪۬─۟─۪─۟─۪۬─۟─۪─۟─۪۬─۟─۪─۟┄۪۬┄۟┄۪┈۟┈۪`.trim();
 
-    // Enviar los botones
-    await conn.sendButton(m.chat, wm, texto1, yt_play[0].thumbnail, [
-      ['𝐌 𝐄 𝐍 𝐔 📌', `${usedPrefix}menu`, 'disable'],
-      ['🎧 𝗔 𝗨 𝗗 𝗜 𝗢', `${usedPrefix}play5 ${yt_play[0].url}`, 'disable'],
-      ['📽 𝗩 𝗜 𝗗 𝗘 𝗢', `${usedPrefix}play6 ${yt_play[0].url}`, 'disable']
-    ], null, null, fgif2);
+    // Definir el estado de los botones basados en el estado guardado
+    const audioButton = buttonsState[chatId].audio ? 'disable' : `${usedPrefix}play5 ${yt_play[0].url}`;
+    const videoButton = buttonsState[chatId].video ? 'disable' : `${usedPrefix}play6 ${yt_play[0].url}`;
 
-    // Esperar respuesta para desactivar botones
-    await m.react('✅'); // Emoji de check
+    await conn.sendButton(
+      m.chat,
+      wm,
+      texto1,
+      yt_play[0].thumbnail,
+      [
+        ['𝐌 𝐄 𝐍 𝐔 📌', `${usedPrefix}menu`, 'disable'],
+        ['🎧 𝗔 𝗨 𝗗 𝗜 𝗢', audioButton, 'disable'],
+        ['📽 𝗩 𝗜 𝗗 𝗘 𝗢', videoButton, 'disable']
+      ],
+      null,
+      null,
+      fgif2
+    );
 
-    // Desactivar los botones tras el primer uso
-    setTimeout(async () => {
-      await conn.sendButton(m.chat, wm, texto1, yt_play[0].thumbnail, [
-        ['𝐌 𝐄 𝐍 𝐔 📌 (Deshabilitado)', '', 'disabled'],
-        ['🎧 𝗔 𝗨 𝗗 𝗜 𝗢 (Deshabilitado)', '', 'disabled'],
-        ['📽 𝗩 𝗜 𝗗 𝗘 𝗢 (Deshabilitado)', '', 'disabled']
-      ], null, null, fgif2);
-    }, 1000); // Timeout para dar tiempo a la primera interacción
+    await m.react('✅');  // Emoji de check
   } catch (e) {
-    await conn.reply(m.chat, `*[ ! ] ʜᴜʙᴏ ᴜɴ ᴇʀʀᴏʀ ᴇɴ ᴇʟ ᴄᴏᴍᴀɴᴅᴏ ᴘᴏʀ ғᴀᴠᴏʀ ɪɴᴛᴇɴᴛᴀ ᴍᴀs ᴛᴀʀᴅᴇ..*`, fkontak, m, rcanal);
-    console.log(`❗❗ᴇʀʀᴏʀ ${usedPrefix + command} ❗❗`);
+    await conn.reply(m.chat, `*[ ! ] Hubo un error en el comando. Intenta más tarde.*`, fkontak, m, rcanal);
+    console.log(`❗❗ Error en ${usedPrefix + command} ❗❗`);
     console.log(e);
+    handler.limit = 0;
+  }
+};
+
+// Agregar lógica para desactivar botones cuando son presionados
+handler.before = async (m) => {
+  const chatId = m.chat;
+  if (buttonsState[chatId]) {
+    if (m.text.includes('🎧 𝗔 𝗨 𝗗 𝗜 𝗢')) {
+      buttonsState[chatId].audio = true;
+    }
+    if (m.text.includes('📽 𝗩 𝗜 𝗗 𝗘 𝗢')) {
+      buttonsState[chatId].video = true;
+    }
   }
 };
 
 handler.command = ['play', 'play2', 'play3', 'play4'];
 handler.register = true;
 handler.group = true;
+
 export default handler;
 
 async function search(query, options = {}) {
