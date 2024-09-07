@@ -171,8 +171,8 @@ if (!('audios' in chat)) chat.audios = false
 if (!('antiBot' in chat)) chat.antiBot = false               
 if (!('antiver' in chat)) chat.antiver = false 
 if (!('antiPorn' in chat)) chat.antiPorn = false     
-if (!('antiLink' in chat)) chat.antiLink = false     
-if (!('antiLink2' in chat)) chat.antiLink2 = false
+if (!('antiLink' in chat)) chat.antiLink = true    
+if (!('antiLink2' in chat)) chat.antiLink2 = true
 if (!('antiTiktok' in chat)) chat.antiTiktok = false
 if (!('antiYoutube' in chat)) chat.antiYoutube = false
 if (!('antiTelegram' in chat)) chat.antiTelegram = false
@@ -208,8 +208,8 @@ audios: false,
 antiBot: false,
 antiver: false,
 antiPorn: false,
-antiLink: false,
-antiLink2: false,
+antiLink: true,
+antiLink2: true,
 antiTiktok: false,
 antiYoutube: false,
 antiTelegram: false,
