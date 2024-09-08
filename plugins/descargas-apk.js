@@ -1,5 +1,4 @@
 import fetch from 'node-fetch';
-import cheerio from 'cheerio';
 
 let handler = async (m, { conn, usedPrefix, command, text }) => {
     if (!text) throw `*Error*\n[ 💡 ] Ejemplo: ${usedPrefix + command} org.mozilla.firefox`;
@@ -24,28 +23,20 @@ let handler = async (m, { conn, usedPrefix, command, text }) => {
             { quoted: m }
         );
 
-        // Formar la URL de la aplicación en F-Droid
-        const fDroidUrl = `https://f-droid.org/en/packages/${text}/`;
-        const appPageResponse = await fetch(fDroidUrl);
-        
-        if (appPageResponse.status !== 200) throw `*Error*\nNo se encontró ninguna aplicación con el ID: ${text}`;
+        // Usar la API de Delirius para buscar el APK
+        const apiUrl = `https://deliriusapi-official.vercel.app/download/apk?query=${text}`;
+        const response = await fetch(apiUrl);
+        if (!response.ok) throw `*Error*\nNo se encontró ninguna aplicación con el ID: ${text}`;
 
-        const appPageHtml = await appPageResponse.text();
-        const $ = cheerio.load(appPageHtml);
-
-        // Obtener el enlace de descarga del APK (usualmente la última versión)
-        const downloadLink = $('a.package-version-download').first().attr('href');
-        if (!downloadLink) throw `*Error*\nNo se encontró el enlace de descarga del APK.`;
-
-        // URL final de descarga
-        const finalDownloadLink = `https://f-droid.org${downloadLink}`;
+        const data = await response.json();
+        if (!data || !data.apkUrl) throw `*Error*\nNo se encontró el enlace de descarga del APK.`;
 
         // Enviar el archivo APK
         await conn.sendMessage(m.chat, { 
-            document: { url: finalDownloadLink }, 
+            document: { url: data.apkUrl }, 
             mimetype: 'application/vnd.android.package-archive', 
-            fileName: `${text}.apk`, 
-            caption: null 
+            fileName: `${data.name || text}.apk`, 
+            caption: `*Nombre*: ${data.name || text}\n*Tamaño*: ${data.size || 'Desconocido'}`
         }, { quoted: m });
         
         await m.react('✅');
