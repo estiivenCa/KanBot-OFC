@@ -11,6 +11,15 @@ async function fetchLyrics(songName) {
   for (const api of apis) {
     try {
       const response = await fetch(api);
+      
+      // Verifica si el contenido de la respuesta es JSON antes de intentar parsearlo
+      const contentType = response.headers.get('content-type');
+      
+      if (!contentType || !contentType.includes('application/json')) {
+        console.error(`La API ${api} no devolvió un JSON válido. Se recibió: ${contentType}`);
+        continue; // Pasa a la siguiente API si la respuesta no es JSON
+      }
+
       const result = await response.json();
       
       // Comprueba si la API devuelve un formato conocido de letras
