@@ -1,23 +1,46 @@
 import fetch from 'node-fetch';
 
+// Función para buscar la letra usando diferentes APIs
+async function fetchLyrics(songName) {
+  const apis = [
+    `https://deliriusapi-official.vercel.app/search/letra?query=${encodeURIComponent(songName)}`,
+    `https://api.lyrics.ovh/v1/${encodeURIComponent(songName)}`,
+    `https://some-random-api.ml/lyrics?title=${encodeURIComponent(songName)}`
+  ];
+
+  for (const api of apis) {
+    try {
+      const response = await fetch(api);
+      const result = await response.json();
+      
+      // Comprueba si la API devuelve un formato conocido de letras
+      if (result && result.letra) {
+        return result.letra;
+      } else if (result && result.lyrics) {
+        return result.lyrics;
+      }
+    } catch (error) {
+      console.error(`Error al consultar la API ${api}:`, error);
+      continue; // Si una API falla, intenta con la siguiente
+    }
+  }
+
+  // Si todas las APIs fallan
+  return null;
+}
+
 const handler = async (m, { text, command, conn }) => {
-  // Verifica si el comando es ".letra" y si el usuario proporcionó un nombre de canción
   if (!text) {
     return conn.sendMessage(m.chat, { text: 'Por favor, proporciona el nombre de una canción.' });
   }
 
   const songName = text.trim();
   
-  // URL de la API con el nombre de la canción proporcionado por el usuario
-  const apiUrl = `https://deliriusapi-official.vercel.app/search/letra?query=${encodeURIComponent(songName)}`;
-  
   try {
-    // Realiza la petición a la API para obtener la letra
-    const response = await fetch(apiUrl);
-    const result = await response.json();
+    // Buscar la letra usando las múltiples APIs
+    const lyrics = await fetchLyrics(songName);
     
-    if (result && result.letra) {
-      const lyrics = result.letra;
+    if (lyrics) {
       await conn.sendMessage(m.chat, { text: `Letra de *${songName}*:\n\n${lyrics}` });
     } else {
       await conn.sendMessage(m.chat, { text: 'Lo siento, no pude encontrar la letra de esa canción.' });
