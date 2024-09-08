@@ -3,7 +3,7 @@ import fetch from 'node-fetch';
 const handler = async (m, { text, command, conn }) => {
   // Verifica si el comando es ".letra" y si el usuario proporcionó un nombre de canción
   if (!text) {
-    return conn.sendMessage(m.chat, 'Por favor, proporciona el nombre de una canción.', 'conversation');
+    return conn.sendMessage(m.chat, { text: 'Por favor, proporciona el nombre de una canción.' });
   }
 
   const songName = text.trim();
@@ -18,13 +18,13 @@ const handler = async (m, { text, command, conn }) => {
     
     if (result && result.letra) {
       const lyrics = result.letra;
-      await conn.sendMessage(m.chat, `Letra de *${songName}*:\n\n${lyrics}`, 'conversation');
+      await conn.sendMessage(m.chat, { text: `Letra de *${songName}*:\n\n${lyrics}` });
     } else {
-      await conn.sendMessage(m.chat, 'Lo siento, no pude encontrar la letra de esa canción.', 'conversation');
+      await conn.sendMessage(m.chat, { text: 'Lo siento, no pude encontrar la letra de esa canción.' });
     }
   } catch (error) {
     console.error('Error al buscar la letra:', error);
-    await conn.sendMessage(m.chat, 'Hubo un error al buscar la letra de la canción.', 'conversation');
+    await conn.sendMessage(m.chat, { text: 'Hubo un error al buscar la letra de la canción.' });
   }
 };
 
