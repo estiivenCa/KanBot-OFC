@@ -1,7 +1,7 @@
 import fetch from 'node-fetch';
 
 // Token de acceso a la API de Genius
-const accessToken = 'IlsBu-BDYAl4AXpYmFLd7euL1pATYjQjH5-aSS4IupmDB6ssypSksmb6HZN54Xu';
+const accessToken = 'y8zKszFh7WflT33NaOeGnGlOrfViwrymiwsYD-6T4D54Fk3n7hUIjYoBjZUhPJo1';
 
 // Función para buscar la canción en Genius
 async function searchSongOnGenius(artist, songName) {
