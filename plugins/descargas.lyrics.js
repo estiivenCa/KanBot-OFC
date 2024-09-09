@@ -1,56 +1,52 @@
 import fetch from 'node-fetch';
+import cheerio from 'cheerio';
 
-// Función para buscar la letra usando diferentes APIs
-async function fetchLyrics(songName) {
-  const apis = [
-    `https://deliriusapi-official.vercel.app/search/letra?query=${encodeURIComponent(songName)}`,
-    `https://api.lyrics.ovh/v1/${encodeURIComponent(songName)}`,
-    `https://some-random-api.ml/lyrics?title=${encodeURIComponent(songName)}`
-  ];
-
-  for (const api of apis) {
-    try {
-      const response = await fetch(api);
-      
-      // Verifica si el contenido de la respuesta es JSON antes de intentar parsearlo
-      const contentType = response.headers.get('content-type');
-      
-      if (!contentType || !contentType.includes('application/json')) {
-        console.error(`La API ${api} no devolvió un JSON válido. Se recibió: ${contentType}`);
-        continue; // Pasa a la siguiente API si la respuesta no es JSON
-      }
-
-      const result = await response.json();
-      
-      // Comprueba si la API devuelve un formato conocido de letras
-      if (result && result.letra) {
-        return result.letra;
-      } else if (result && result.lyrics) {
-        return result.lyrics;
-      }
-    } catch (error) {
-      console.error(`Error al consultar la API ${api}:`, error);
-      continue; // Si una API falla, intenta con la siguiente
-    }
-  }
-
-  // Si todas las APIs fallan
-  return null;
-}
-
-const handler = async (m, { text, command, conn }) => {
-  if (!text) {
-    return conn.sendMessage(m.chat, { text: 'Por favor, proporciona el nombre de una canción.' });
-  }
-
-  const songName = text.trim();
+// Función para obtener la letra desde letras.com
+async function fetchLyricsFromLetras(artist, songTitle) {
+  const baseUrl = `https://www.letras.com/${encodeURIComponent(artist)}/${encodeURIComponent(songTitle)}`;
   
   try {
-    // Buscar la letra usando las múltiples APIs
-    const lyrics = await fetchLyrics(songName);
+    // Hacer la petición HTTP a la página de la canción
+    const response = await fetch(baseUrl);
+    const html = await response.text();
+    
+    // Cargar el HTML usando cheerio para analizarlo
+    const $ = cheerio.load(html);
+
+    // Buscar el contenido de la letra dentro del HTML
+    const lyrics = $('.cnt-letra').text().trim();
     
     if (lyrics) {
-      await conn.sendMessage(m.chat, { text: `Letra de *${songName}*:\n\n${lyrics}` });
+      return lyrics;
+    } else {
+      console.error('No se pudo encontrar la letra en la página.');
+      return null;
+    }
+  } catch (error) {
+    console.error('Error al obtener la letra:', error);
+    return null;
+  }
+}
+
+// Handler del comando para el bot
+const handler = async (m, { text, conn }) => {
+  if (!text) {
+    return conn.sendMessage(m.chat, { text: 'Por favor, proporciona el nombre del artista y la canción en formato "artista - canción".' });
+  }
+
+  // Separar el texto en artista y título de la canción
+  const [artist, songTitle] = text.split('-').map(s => s.trim());
+
+  if (!artist || !songTitle) {
+    return conn.sendMessage(m.chat, { text: 'Por favor, proporciona el nombre del artista y la canción en formato "artista - canción".' });
+  }
+
+  try {
+    // Buscar la letra en letras.com
+    const lyrics = await fetchLyricsFromLetras(artist, songTitle);
+    
+    if (lyrics) {
+      await conn.sendMessage(m.chat, { text: `Letra de *${songTitle}* por *${artist}*:\n\n${lyrics}` });
     } else {
       await conn.sendMessage(m.chat, { text: 'Lo siento, no pude encontrar la letra de esa canción.' });
     }
