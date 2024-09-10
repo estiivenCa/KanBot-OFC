@@ -168,7 +168,7 @@ if (!('delete' in chat)) chat.delete = false
 if (!('modohorny' in chat)) chat.modohorny = false                   
 if (!('autosticker' in chat)) chat.autosticker = false      
 if (!('audios' in chat)) chat.audios = false
-if (!('antiBot' in chat)) chat.antiBot = false               
+if (!('antiBot' in chat)) chat.antiBot = true               
 if (!('antiver' in chat)) chat.antiver = false 
 if (!('antiPorn' in chat)) chat.antiPorn = false     
 if (!('antiLink' in chat)) chat.antiLink = true    
@@ -205,7 +205,7 @@ delete: false,
 modohorny: false,
 autosticker: false,
 audios: false,
-antiBot: false,
+antiBot: true,
 antiver: false,
 antiPorn: false,
 antiLink: true,
@@ -235,7 +235,7 @@ if (settings) {
 if (!('self' in settings)) settings.self = false
 if (!('autoread' in settings)) settings.autoread = false
 if (!('autoread2' in settings)) settings.autoread2 = false
-if (!('restrict' in settings)) settings.restrict = false
+if (!('restrict' in settings)) settings.restrict = true
 if (!('antiPrivate' in settings)) settings.antiPrivate = false
 if (!('antiCall' in settings)) settings.antiCall = true
 if (!('antiSpam' in settings)) settings.antiSpam = true
@@ -246,7 +246,7 @@ if (!('autobio' in settings)) settings.autobio = false
 self: false,
 autoread: false,
 autoread2: false,
-restrict: false,
+restrict: true,
 antiPrivate: false,
 antiCall: true,
 antiSpam: true,
