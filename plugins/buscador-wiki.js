@@ -10,16 +10,17 @@ let handler = async (m, { conn, args }) => {
         // Llama a la API de Delirius para buscar en Wikipedia
         const url = `https://deliriusapi-official.vercel.app/search/wiki?q=${encodeURIComponent(text)}`;
         const res = await axios.get(url);
-        const results = res.data;  // Asegúrate de que la respuesta es un array de resultados
+        const results = res.data;  // Los resultados deben estar en un array
 
-        if (results.length > 0) {
-            let teks = `🍟 *Resultado de* : ${text}\n\n`;
-            for (let r of results) {
-                teks += `🐢 *Titulo ∙* ${r.name}\n`;
-                teks += `🚩 *Descripción ∙* ${r.description || 'No hay descripción'}\n`;
-                teks += `🔗 *Url ∙* ${r.link}\n`;
-                teks += `📷 *Imagen ∙* ${r.image}\n`;
-                teks += `✏️ *Autor ∙* ${r.author} - ${r.author_url}\n\n`;
+        if (results && results.length > 0) {
+            let teks = `🍟 *Resultados de* : ${text}\n\n`;
+            for (let result of results) {
+                teks += `🐢 *Nombre:* ${result.name}\n`;
+                teks += `🚩 *Descripción:* ${result.description || 'No hay descripción'}\n`;
+                teks += `🔗 *Enlace:* ${result.link}\n`;
+                teks += `🖼️ *Imagen:* ${result.image || 'No hay imagen'}\n`;
+                teks += `📝 *Autor:* ${result.author || 'Desconocido'}\n`;
+                teks += `🔗 *URL del Autor:* ${result.author_url || 'No disponible'}\n\n`;
             }
             conn.reply(m.chat, teks, m);
         } else {
