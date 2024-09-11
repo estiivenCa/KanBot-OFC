@@ -10,9 +10,14 @@ let handler = async (m, { conn, args }) => {
         // Llama a la API de Delirius para buscar en Wikipedia
         const url = `https://deliriusapi-official.vercel.app/search/wiki?q=${encodeURIComponent(text)}`;
         const res = await axios.get(url);
-        const result = res.data;  // La respuesta de la API es un objeto único
 
-        if (result && result.title) {
+        // Registro de la respuesta de la API para comprobar la estructura
+        console.log(res.data);
+
+        const result = res.data;  // La respuesta de la API
+
+        // Verificamos si la respuesta contiene un título y un enlace
+        if (result && result.title && result.link) {
             let teks = `🍟 *Resultado de* : ${text}\n\n`;
             teks += `🐢 *Titulo ∙* ${result.title}\n🚩 *Descripción ∙* ${result.snippet || 'No hay descripción disponible'}\n🔗 *Url ∙* ${result.link}\n\n`;
             conn.reply(m.chat, teks, m);
