@@ -10,28 +10,23 @@ let handler = async (m, { conn, args }) => {
         // Llama a la API de Delirius para buscar en Wikipedia
         const url = `https://deliriusapi-official.vercel.app/search/wiki?q=${encodeURIComponent(text)}`;
         const res = await axios.get(url);
+        const results = res.data;  // Asegúrate de que la respuesta es un array de resultados
 
-        // Registro de la respuesta de la API para comprobar la estructura
-        console.log(res.data);
-
-        const results = res.data;  // La respuesta de la API es una lista de resultados
-
-        // Verificamos si la lista de resultados no está vacía
-        if (results && results.length > 0) {
-            let teks = `🍟 *Resultados de la búsqueda para* : ${text}\n\n`;
-            for (const result of results) {
-                teks += `🐢 *Título:* ${result.name}\n`;
-                teks += `🚩 *Descripción:* ${result.description || 'No hay descripción disponible'}\n`;
-                teks += `🔗 *Enlace:* ${result.link}\n`;
-                teks += `🖼️ *Imagen:* ${result.image || 'No hay imagen disponible'}\n\n`;  // Incluye la URL de la imagen si deseas mostrarla
+        if (results.length > 0) {
+            let teks = `🍟 *Resultado de* : ${text}\n\n`;
+            for (let r of results) {
+                teks += `🐢 *Titulo ∙* ${r.name}\n`;
+                teks += `🚩 *Descripción ∙* ${r.description || 'No hay descripción'}\n`;
+                teks += `🔗 *Url ∙* ${r.link}\n`;
+                teks += `📷 *Imagen ∙* ${r.image}\n`;
+                teks += `✏️ *Autor ∙* ${r.author} - ${r.author_url}\n\n`;
             }
-
             conn.reply(m.chat, teks, m);
         } else {
             conn.reply(m.chat, '❌ No se encontraron resultados.', m);
         }
     } catch (error) {
-        console.error('Error al buscar en Wikipedia:', error);
+        console.error(error);
         conn.reply(m.chat, '❌ Error al buscar en Wikipedia.', m);
     }
 };
