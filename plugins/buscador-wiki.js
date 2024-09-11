@@ -32,7 +32,7 @@ let handler = async (m, { conn, args }) => {
             conn.reply(m.chat, '❌ No se encontraron resultados.', m);
         }
     } catch (error) {
-        console.error('Error al buscar en Wikipedia:', error);  // Imprime el error para depuración
+        console.log('Error al buscar en Wikipedia:', error);  // Imprime el error para depuración
         conn.reply(m.chat, '❌ Error al buscar en Wikipedia.', m);
     }
 };
