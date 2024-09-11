@@ -14,12 +14,16 @@ let handler = async (m, { conn, args }) => {
         // Registro de la respuesta de la API para comprobar la estructura
         console.log(res.data);
 
-        const result = res.data;  // La respuesta de la API
+        const results = res.data;  // La respuesta de la API es una lista de resultados
 
-        // Verificamos si la respuesta contiene un título y un enlace
-        if (result && result.title && result.link) {
-            let teks = `🍟 *Resultado de* : ${text}\n\n`;
-            teks += `🐢 *Titulo ∙* ${result.title}\n🚩 *Descripción ∙* ${result.snippet || 'No hay descripción disponible'}\n🔗 *Url ∙* ${result.link}\n\n`;
+        // Verificamos si la lista de resultados no está vacía
+        if (results && results.length > 0) {
+            let teks = `🍟 *Resultados de la búsqueda para* : ${text}\n\n`;
+            for (const result of results) {
+                teks += `🐢 *Titulo ∙* ${result.name}\n🚩 *Descripción ∙* ${result.description || 'No hay descripción disponible'}\n🔗 *Url ∙* ${result.link}\n\n`;
+               // teks += `🖼️ *Imagen ∙* ${result.image}\n\n`;  // Incluye la URL de la imagen si deseas mostrarla
+            }
+
             conn.reply(m.chat, teks, m);
         } else {
             conn.reply(m.chat, '❌ No se encontraron resultados.', m);
