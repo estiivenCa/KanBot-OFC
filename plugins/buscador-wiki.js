@@ -15,7 +15,7 @@ let handler = async (m, { conn, args }) => {
         if (results && results.length > 0) {
             let teks = `🍟 *Resultado de* : ${text}\n\n`;
             for (let r of results) {
-                teks += `🐢 *Titulo ∙* ${r.name}\n🚩 *Descripción ∙* ${r.description || 'No hay descripción'}\n🔗 *Url ∙* ${r.link}\n📷 *Imagen ∙* ${r.image || 'No hay imagen'}\n✍ *Autor ∙* ${r.author || 'No disponible'}\n\n`;
+                teks += `🐢 *Titulo ∙* ${r.name}\n🚩 *Descripción ∙* ${r.description || 'No hay descripción'}\n🔗 *Url ∙* ${r.link}\n✍ *Autor ∙* ${r.author || 'No disponible'}\n\n`;
             }
             conn.reply(m.chat, teks, m);
         } else {
