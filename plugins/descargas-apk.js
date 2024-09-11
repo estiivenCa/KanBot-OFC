@@ -29,16 +29,16 @@ let handler = async (m, { conn, usedPrefix, command, text }) => {
         if (!response.ok) throw `*Error*\nNo se encontró ninguna aplicación con el ID: ${text}`;
 
         const data = await response.json();
-        if (!data || !data.apkUrl) throw `*Error*\nNo se encontró el enlace de descarga del APK.`;
+        if (!data || !data.download) throw `*Error*\nNo se encontró el enlace de descarga del APK.`;
 
-        // Enviar el archivo APK
+        // Enviar el archivo APK con la información obtenida
         await conn.sendMessage(m.chat, { 
-            document: { url: data.apkUrl }, 
+            document: { url: data.download }, 
             mimetype: 'application/vnd.android.package-archive', 
             fileName: `${data.name || text}.apk`, 
-            caption: `*Nombre*: ${data.name || text}\n*Tamaño*: ${data.size || 'Desconocido'}`
+            caption: `*Nombre*: ${data.name || text}\n*ID*: ${data.id || 'Desconocido'}\n*Tamaño*: ${data.size || 'Desconocido'}\n*Fecha de publicación*: ${data.publish || 'Desconocida'}\n\nDescarga el APK y disfrútalo 😎`
         }, { quoted: m });
-        
+
         await m.react('✅');
     } catch (error) {
         await conn.sendMessage(m.chat, { text: `*Error*\n${error.message || error}` }, { quoted: m });
