@@ -10,7 +10,7 @@ let handler = async (m, { conn, args }) => {
         // Llama a la API de Delirius para buscar en Wikipedia
         const url = `https://deliriusapi-official.vercel.app/search/wiki?q=${encodeURIComponent(text)}`;
         const res = await axios.get(url);
-        const results = res.data;  // Los resultados deben estar en un array
+        const results = res.data;  // La respuesta es un array de resultados
 
         if (results && results.length > 0) {
             let teks = `🍟 *Resultados de* : ${text}\n\n`;
@@ -27,7 +27,7 @@ let handler = async (m, { conn, args }) => {
             conn.reply(m.chat, '❌ No se encontraron resultados.', m);
         }
     } catch (error) {
-        console.error(error);
+        console.error('Error al buscar en Wikipedia:', error);
         conn.reply(m.chat, '❌ Error al buscar en Wikipedia.', m);
     }
 };
