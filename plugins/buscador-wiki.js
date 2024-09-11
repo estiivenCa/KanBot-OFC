@@ -20,8 +20,10 @@ let handler = async (m, { conn, args }) => {
         if (results && results.length > 0) {
             let teks = `🍟 *Resultados de la búsqueda para* : ${text}\n\n`;
             for (const result of results) {
-                teks += `🐢 *Titulo ∙* ${result.name}\n🚩 *Descripción ∙* ${result.description || 'No hay descripción disponible'}\n🔗 *Url ∙* ${result.link}\n\n`;
-               // teks += `🖼️ *Imagen ∙* ${result.image}\n\n`;  // Incluye la URL de la imagen si deseas mostrarla
+                teks += `🐢 *Título:* ${result.name}\n`;
+                teks += `🚩 *Descripción:* ${result.description || 'No hay descripción disponible'}\n`;
+                teks += `🔗 *Enlace:* ${result.link}\n`;
+                teks += `🖼️ *Imagen:* ${result.image || 'No hay imagen disponible'}\n\n`;  // Incluye la URL de la imagen si deseas mostrarla
             }
 
             conn.reply(m.chat, teks, m);
@@ -29,7 +31,7 @@ let handler = async (m, { conn, args }) => {
             conn.reply(m.chat, '❌ No se encontraron resultados.', m);
         }
     } catch (error) {
-        console.error(error);
+        console.error('Error al buscar en Wikipedia:', error);
         conn.reply(m.chat, '❌ Error al buscar en Wikipedia.', m);
     }
 };
