@@ -7,15 +7,14 @@ let handler = async (m, { conn, args }) => {
     conn.reply(m.chat, `🚩 Buscando en Wikipedia...`, m);
 
     try {
-        // Llamada a la API de Delirius para buscar en Wikipedia (un único resultado)
-        const url = `https://deliriusapi-official.vercel.app/search/wiki?q=${encodeURIComponent(text)}&language=en`;
+        // Llama a la API de Delirius para buscar en Wikipedia
+        const url = `https://deliriusapi-official.vercel.app/search/wiki?q=${encodeURIComponent(text)}`;
         const res = await axios.get(url);
-        const result = res.data; // Se espera un único objeto de resultado
+        const result = res.data;  // La respuesta de la API es un objeto único
 
         if (result && result.title) {
             let teks = `🍟 *Resultado de* : ${text}\n\n`;
-            teks += `🐢 *Título ∙* ${result.title}\n🚩 *Descripción ∙* ${result.snippet || 'No hay descripción disponible'}\n🔗 *Url ∙* ${result.link}\n\n`;
-
+            teks += `🐢 *Titulo ∙* ${result.title}\n🚩 *Descripción ∙* ${result.snippet || 'No hay descripción disponible'}\n🔗 *Url ∙* ${result.link}\n\n`;
             conn.reply(m.chat, teks, m);
         } else {
             conn.reply(m.chat, '❌ No se encontraron resultados.', m);
