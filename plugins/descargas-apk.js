@@ -27,24 +27,19 @@ let handler = async (m, { conn, usedPrefix, command, text }) => {
         const apiUrl = `https://deliriusapi-official.vercel.app/download/apk?query=${text}`;
         const response = await fetch(apiUrl);
         
-        // Verificar si la respuesta es válida
         if (!response.ok) throw `*Error*\nNo se pudo obtener la aplicación con el ID: ${text}.`;
 
         const data = await response.json();
 
-        // Imprimir la respuesta completa para depurar
-        console.log('Respuesta de la API:', data);
-        await conn.sendMessage(m.chat, { text: `Datos recibidos:\n${JSON.stringify(data, null, 2)}` }, { quoted: m });
-
-        // Verificar si la API devuelve los datos esperados
-        if (!data || !data.download) throw `*Error*\nNo se encontró el enlace de descarga del APK.`;
+        // Asegurarnos de que el campo de descarga existe dentro de "data.data"
+        if (!data || !data.data || !data.data.download) throw `*Error*\nNo se encontró el enlace de descarga del APK.`;
 
         // Enviar el archivo APK con los datos obtenidos
         await conn.sendMessage(m.chat, { 
-            document: { url: data.download }, 
+            document: { url: data.data.download }, 
             mimetype: 'application/vnd.android.package-archive', 
-            fileName: `${data.name || text}.apk`, 
-            caption: `*Nombre*: ${data.name || text}\n*ID*: ${data.id || 'Desconocido'}\n*Tamaño*: ${data.size || 'Desconocido'}\n*Fecha de publicación*: ${data.publish || 'Desconocida'}\n\nDescarga el APK y disfrútalo 😎`
+            fileName: `${data.data.name || text}.apk`, 
+            caption: `*Nombre*: ${data.data.name || text}\n*ID*: ${data.data.id || 'Desconocido'}\n*Tamaño*: ${data.data.size || 'Desconocido'}\n*Fecha de publicación*: ${data.data.publish || 'Desconocida'}\n\nDescarga el APK y disfrútalo 😎`
         }, { quoted: m });
 
         await m.react('✅');
