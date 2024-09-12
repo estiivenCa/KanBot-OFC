@@ -39,7 +39,7 @@ let handler = async (m, { conn, usedPrefix, command, text }) => {
             document: { url: data.data.download }, 
             mimetype: 'application/vnd.android.package-archive', 
             fileName: `${data.data.name || text}.apk`, 
-            caption: `*Nombre*: ${data.data.name || text}\n*ID*: ${data.data.id || 'Desconocido'}\n*Tamaño*: ${data.data.size || 'Desconocido'}\n*Fecha de publicación*: ${data.data.publish || 'Desconocida'}\n\nDescarga el APK y disfrútalo 😎`
+            caption: `*Nombre*: ${data.data.name || text}\n*Paquete*: ${data.data.id || 'Desconocido'}\n*Tamaño*: ${data.data.size || 'Desconocido'}\n*Fecha de publicación*: ${data.data.publish || 'Desconocida'}\n\nDescarga el APK y disfrútalo by ✰ 𝙺𝚊𝚗𝙱𝚘𝚝 ✰ 😎`
         }, { quoted: m });
 
         await m.react('✅');
