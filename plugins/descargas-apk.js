@@ -31,7 +31,11 @@ let handler = async (m, { conn, usedPrefix, command, text }) => {
         if (!response.ok) throw `*Error*\nNo se pudo obtener la aplicación con el ID: ${text}.`;
 
         const data = await response.json();
-        
+
+        // Imprimir la respuesta completa para depurar
+        console.log('Respuesta de la API:', data);
+        await conn.sendMessage(m.chat, { text: `Datos recibidos:\n${JSON.stringify(data, null, 2)}` }, { quoted: m });
+
         // Verificar si la API devuelve los datos esperados
         if (!data || !data.download) throw `*Error*\nNo se encontró el enlace de descarga del APK.`;
 
