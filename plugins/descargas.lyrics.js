@@ -10,7 +10,7 @@ const handler = async (m, { conn, text, usedPrefix, command }) => {
         // Enviar una reacción de "await" para indicar que el bot está procesando
         await conn.sendMessage(m.chat, { react: { text: '⏳', key: m.key } });
 
-        await conn.reply(m.chat, global.cargando, m);
+       // await conn.reply(m.chat, global.cargando, m);
 
         // Llamada a la API para obtener la letra de la canción
         let response = await fetch(`https://deliriusapi-official.vercel.app/search/letra?query=${encodeURIComponent(text)}`);
@@ -37,7 +37,7 @@ const handler = async (m, { conn, text, usedPrefix, command }) => {
         // Enviar una reacción de "done" para indicar que el bot terminó de procesar
         await conn.sendMessage(m.chat, { react: { text: '✅', key: m.key } });
 
-        await conn.reply(m.chat, global.listo, m);
+       // await conn.reply(m.chat, global.listo, m);
     } catch (error) {
         console.error(error);
 
