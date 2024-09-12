@@ -23,15 +23,19 @@ let handler = async (m, { conn, usedPrefix, command, text }) => {
             { quoted: m }
         );
 
-        // Usar la API de Delirius para buscar el APK
+        // Llamada a la API de Delirius para buscar el APK
         const apiUrl = `https://deliriusapi-official.vercel.app/download/apk?query=${text}`;
         const response = await fetch(apiUrl);
-        if (!response.ok) throw `*Error*\nNo se encontró ninguna aplicación con el ID: ${text}`;
+        
+        // Verificar si la respuesta es válida
+        if (!response.ok) throw `*Error*\nNo se pudo obtener la aplicación con el ID: ${text}.`;
 
         const data = await response.json();
+        
+        // Verificar si la API devuelve los datos esperados
         if (!data || !data.download) throw `*Error*\nNo se encontró el enlace de descarga del APK.`;
 
-        // Enviar el archivo APK con la información obtenida
+        // Enviar el archivo APK con los datos obtenidos
         await conn.sendMessage(m.chat, { 
             document: { url: data.download }, 
             mimetype: 'application/vnd.android.package-archive', 
@@ -41,6 +45,7 @@ let handler = async (m, { conn, usedPrefix, command, text }) => {
 
         await m.react('✅');
     } catch (error) {
+        console.error('Error durante la descarga:', error);
         await conn.sendMessage(m.chat, { text: `*Error*\n${error.message || error}` }, { quoted: m });
         await m.react('❌');
     }
