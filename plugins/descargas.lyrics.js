@@ -3,7 +3,7 @@ import fetch from 'node-fetch';
 
 const handler = async (m, { conn, text, usedPrefix, command }) => {
     if (!text) {
-        return conn.reply(m.chat, `> *\`${usedPrefix + command}\` Ingresa el texto de lo que quieres buscar*\n\n> *Ejemplo :*\n> _${usedPrefix + command} Siempre Lo Mismo - Ysy A_`, m);
+        return conn.reply(m.chat, ` Ingrese el nombre de una cancion 🎶*\n\n> *Ejemplo :*\n> _${usedPrefix + command} Falling - Daniel trevor_`, m);
     }
 
     try {
