@@ -12,7 +12,7 @@ let handler = async (m) => {
   contextInfo: { externalAdReply :{ mediaUrl: null, mediaType: 1, showAdAttribution: true,
   title: packname,
   body: wm,
-  previewType: 0, thumbnail: icons,
+  previewType: 0, 
   sourceUrl: channel }}})
   let media = await q.download()
   let isTele = /image\/(png|jpe?g|gif)|video\/mp4/.test(mime)
