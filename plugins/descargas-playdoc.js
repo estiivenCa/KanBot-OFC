@@ -8,24 +8,26 @@ const lolkeysapi = '8fdb6bf3e9d527f7a6476f4b'; // Aquí defines tu clave API
 
 const handler = async (m, {conn, command, args, text, usedPrefix}) => {
 
-if (!text) return conn.reply(m.chat, `🧿 *Ingrese un nombre de una cancion de YouTube*\n\nEjemplo, !${command} falling - Daniel Trevor`,  m, fake, )
+if (!text) return conn.reply(m.chat, `🧿 *Ingrese un nombre de una cancion de YouTube*\n\nEjemplo, !${command} falling - Daniel Trevor`, m, fake)
 m.react(rwait)
 
 try {
 
 conn.reply(m.chat, wait, m, {
-contextInfo: { externalAdReply :{ mediaUrl: null, mediaType: 1, showAdAttribution: true,
-title: packname,
-body: wm,
-previewType: 0, 
-sourceUrl: channel }}})
+  contextInfo: { externalAdReply: { mediaUrl: null, mediaType: 1, showAdAttribution: true,
+  title: packname,
+  body: wm,
+  previewType: 0, 
+  sourceUrl: channel }}}
+)
 
 const yt_play = await search(args.join(' '))
 let additionalText = ''
 if (command === 'play7' || command == 'playdoc') {
-additionalText = 'audio'
+  additionalText = 'audio'
 } else if (command === 'play8' || command == 'playdoc2') {
-additionalText = 'video'}
+  additionalText = 'video'
+}
 
 let texto1 = `
 ┏◚◚◚◚🅓🅞🅒🅢◚◚◚◚┓
@@ -49,80 +51,79 @@ ${secondString(yt_play[0].duration.seconds)}
 
 ┗◛◛◛🅚🅐🅝🅑🅞🅣◛◛◛┛
 
-𝙴𝚗𝚟𝚒𝚊𝚗𝚍𝚘 𝚜𝚞  ${additionalText}, 𝙿𝚘𝚛 𝙵𝚊𝚟𝚘𝚛 𝙴𝚜𝚙𝚎𝚛𝚎 
-
+𝙴𝚗𝚟𝚒𝚊𝚗𝚍𝚘 𝚜𝚞 ${additionalText}, 𝙿𝚘𝚛 𝙵𝚊𝚟𝚘𝚛 𝙴𝚜𝚙𝚎𝚛𝚎 
 `.trim()
-await conn.sendMessage(m.chat, { text: texto1, contextInfo: { externalAdReply: { title: yt_play[0].title, body: dev, thumbnailUrl: yt_play[0].thumbnail, mediaType: 1, showAdAttribution: true, renderLargerThumbnail: true }}} , { quoted: fkontak })
+
+await conn.sendMessage(m.chat, { text: texto1, contextInfo: { externalAdReply: { title: yt_play[0].title, body: dev, thumbnailUrl: yt_play[0].thumbnail, mediaType: 1, showAdAttribution: true, renderLargerThumbnail: true }}}, { quoted: fkontak })
 
 if (command == 'play7' || command == 'playdoc') {
-
-try {
-
-let q = '128kbps'
-let v = yt_play[0].url
-let yt = await youtubedl(v).catch(async (_) => await youtubedlv2(v))
-let dl_url = await yt.audio[q].download()
-let ttl = await yt.title
-let size = await yt.audio[q].fileSizeH
-await conn.sendMessage(m.chat, {document: {url: dl_url}, mimetype: 'audio/mpeg', fileName: `${ttl}.mp3`}, {quoted: fkontak})
-} catch {
-
-try {
-
-let lolhuman = await fetch(`https://api.lolhuman.xyz/api/ytaudio2?apikey=${lolkeysapi}&url=${yt_play[0].url}`)
-let lolh = await lolhuman.json()
-let n = lolh.result.title || 'error'
-await conn.sendMessage(m.chat, {document: {url: lolh.result.link}, fileName: `${n}.mp3`, mimetype: 'audio/mpeg'}, {quoted: fkontak})
-} catch {
-
-try {
-
-const searchh = await yts(yt_play[0].url);
-const __res = searchh.all.map((v) => v).filter((v) => v.type == 'video')
-const infoo = await ytdl.getInfo('https://youtu.be/' + __res[0].videoId)
-const ress = await ytdl.chooseFormat(infoo.formats, {filter: 'audioonly'})
-conn.sendMessage(m.chat, {audio: {url: ress.url}, fileName: __res[0].title + '.mp3', mimetype: 'audio/mp4'}, {quoted: fkontak})
-} catch {
-await conn.reply(m.chat, '*❌ Ocurrió un error, intente de nuevo*', m, fake, )
-}}}}
+  try {
+    let q = '128kbps'
+    let v = yt_play[0].url
+    let yt = await youtubedl(v).catch(async (_) => await youtubedlv2(v))
+    let dl_url = await yt.audio[q].download()
+    let ttl = await yt.title
+    let size = await yt.audio[q].fileSizeH
+    await conn.sendMessage(m.chat, { document: { url: dl_url }, mimetype: 'audio/mpeg', fileName: `${ttl}.mp3` }, { quoted: fkontak })
+  } catch {
+    try {
+      let lolhuman = await fetch(`https://api.lolhuman.xyz/api/ytaudio2?apikey=${lolkeysapi}&url=${yt_play[0].url}`)
+      let lolh = await lolhuman.json()
+      let n = lolh.result.title || 'error'
+      await conn.sendMessage(m.chat, { document: { url: lolh.result.link }, fileName: `${n}.mp3`, mimetype: 'audio/mpeg' }, { quoted: fkontak })
+    } catch {
+      try {
+        // Intento con la API alternativa delirius para play7
+        let deliriusResponse = await fetch(`https://deliriusapi-official.vercel.app/download/ytmp3?url=${yt_play[0].url}`)
+        let delirius = await deliriusResponse.json()
+        let title = delirius.title || 'error'
+        let link = delirius.link
+        await conn.sendMessage(m.chat, { document: { url: link }, fileName: `${title}.mp3`, mimetype: 'audio/mpeg' }, { quoted: fkontak })
+      } catch {
+        await conn.reply(m.chat, '*❌ Ocurrió un error, intente de nuevo*', m, fake)
+      }
+    }
+  }
+}
 
 if (command == 'play8' || command == 'playdoc2') {
-
-try {
-const qu = '360'
-const q = qu + 'p'
-const v = yt_play[0].url
-const yt = await youtubedl(v).catch(async (_) => await youtubedlv2(v))
-const dl_url = await yt.video[q].download()
-const ttl = await yt.title
-const size = await yt.video[q].fileSizeH
-await await conn.sendMessage(m.chat, {document: {url: dl_url}, fileName: `${ttl}.mp4`, mimetype: 'video/mp4', thumbnail: await fetch(yt.thumbnail)}, {quoted: fkontak})
-} catch {
-
-try {
-
-let mediaa = await ytMp4(yt_play[0].url)
-await await conn.sendMessage(m.chat, {document: {url: dl_url}, mimetype: 'video/mp4', fileName: ttl + `.mp4`}, {quoted: fkontak})
-} catch {
-
-try {
-
-const lolhuman = await fetch(`https://api.lolhuman.xyz/api/ytvideo2?apikey=${lolkeysapi}&url=${yt_play[0].url}`)
-const lolh = await lolhuman.json()
-const n = lolh.result.title || 'error'
-const n2 = lolh.result.link
-const n3 = lolh.result.size
-const n4 = lolh.result.thumbnail
-await conn.sendMessage(m.chat, {document: {url: n2}, fileName: `${n}.mp4`, mimetype: 'video/mp4', thumbnail: await fetch(n4)}, {quoted: fkontak})
-} catch {
-
-await conn.reply(m.chat, '*❌ Ocurrió un error, intente de nuevo*', m, fake,  )
-}}}}
-
-} catch {
-return conn.reply(m.chat, '*❌ Ocurrió un error, intente de nuevo*', m, fake )}
-
+  try {
+    const qu = '360'
+    const q = qu + 'p'
+    const v = yt_play[0].url
+    const yt = await youtubedl(v).catch(async (_) => await youtubedlv2(v))
+    const dl_url = await yt.video[q].download()
+    const ttl = await yt.title
+    const size = await yt.video[q].fileSizeH
+    await conn.sendMessage(m.chat, { document: { url: dl_url }, fileName: `${ttl}.mp4`, mimetype: 'video/mp4', thumbnail: await fetch(yt.thumbnail) }, { quoted: fkontak })
+  } catch {
+    try {
+      let lolhuman = await fetch(`https://api.lolhuman.xyz/api/ytvideo2?apikey=${lolkeysapi}&url=${yt_play[0].url}`)
+      let lolh = await lolhuman.json()
+      let n = lolh.result.title || 'error'
+      let n2 = lolh.result.link
+      let n4 = lolh.result.thumbnail
+      await conn.sendMessage(m.chat, { document: { url: n2 }, fileName: `${n}.mp4`, mimetype: 'video/mp4', thumbnail: await fetch(n4) }, { quoted: fkontak })
+    } catch {
+      try {
+        // Intento con la API alternativa delirius para play8
+        let deliriusResponse = await fetch(`https://deliriusapi-official.vercel.app/download/ytmp4v2?url=${yt_play[0].url}`)
+        let delirius = await deliriusResponse.json()
+        let title = delirius.title || 'error'
+        let link = delirius.link
+        await conn.sendMessage(m.chat, { document: { url: link }, fileName: `${title}.mp4`, mimetype: 'video/mp4' }, { quoted: fkontak })
+      } catch {
+        await conn.reply(m.chat, '*❌ Ocurrió un error, intente de nuevo*', m, fake)
+      }
+    }
+  }
 }
+
+} catch {
+  return conn.reply(m.chat, '*❌ Ocurrió un error, intente de nuevo*', m, fake)
+}
+}
+
 handler.help = ['play3', 'play4']
 handler.tags = ['descargas']
 handler.command = ['playdoc', 'playdoc2', 'play7', 'play8']
@@ -131,6 +132,9 @@ handler.command = ['playdoc', 'playdoc2', 'play7', 'play8']
 handler.register = true
 
 export default handler
+
+// Funciones auxiliares como search(), secondString(), bytesToSize(), ytMp3(), ytMp4(), ytPlay(), ytPlayVid()
+
 
 async function search(query, options = {}) {
 var search = await yts.search({query, hl: 'es', gl: 'ES', ...options})
