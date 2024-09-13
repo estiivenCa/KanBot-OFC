@@ -168,11 +168,11 @@ if (!('delete' in chat)) chat.delete = false
 if (!('modohorny' in chat)) chat.modohorny = false                   
 if (!('autosticker' in chat)) chat.autosticker = false      
 if (!('audios' in chat)) chat.audios = false
-if (!('antiBot' in chat)) chat.antiBot = true               
+if (!('antiBot' in chat)) chat.antiBot = false               
 if (!('antiver' in chat)) chat.antiver = false 
 if (!('antiPorn' in chat)) chat.antiPorn = false     
 if (!('antiLink' in chat)) chat.antiLink = true    
-if (!('antiLink2' in chat)) chat.antiLink2 = true
+if (!('antiLink2' in chat)) chat.antiLink2 = false
 if (!('antiTiktok' in chat)) chat.antiTiktok = false
 if (!('antiYoutube' in chat)) chat.antiYoutube = false
 if (!('antiTelegram' in chat)) chat.antiTelegram = false
@@ -205,11 +205,11 @@ delete: false,
 modohorny: false,
 autosticker: false,
 audios: false,
-antiBot: true,
+antiBot: false,
 antiver: false,
 antiPorn: false,
 antiLink: true,
-antiLink2: true,
+antiLink2: false,
 antiTiktok: false,
 antiYoutube: false,
 antiTelegram: false,
