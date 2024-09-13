@@ -6,6 +6,7 @@ import { sticker } from '../lib/sticker.js'
 let handler = async (m, { conn, args, usedPrefix, command }) => {
     let stiker = false
     try {
+         await m.reply('✨ *Creando sticker papu... Por favor, espere un momento.*')
         let q = m.quoted ? m.quoted : m
         let mime = (q.msg || q).mimetype || q.mediaType || ''
         
