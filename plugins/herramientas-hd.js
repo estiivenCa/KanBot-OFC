@@ -10,7 +10,7 @@ const handler = async (m, {conn, usedPrefix, command}) => {
   contextInfo: { externalAdReply :{ mediaUrl: null, mediaType: 1, showAdAttribution: true,
   title: packname,
   body: wm,
-  previewType: 0, thumbnail: icons,
+  previewType: 0, 
   sourceUrl: channel }}})
   let img = await q.download?.();
   let pr = await remini(img, "enhance");
