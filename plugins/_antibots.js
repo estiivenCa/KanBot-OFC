@@ -1,4 +1,4 @@
-export async function before(m, { conn, isAdmin, isBotAdmin }) {
+/* export async function before(m, { conn, isAdmin, isBotAdmin }) {
     if (!m.isGroup) return;
     let chat = global.db.data.chats[m.chat]
     let delet = m.key.participant
@@ -19,4 +19,4 @@ await conn.groupParticipantsUpdate(m.chat, [m.sender], 'remove')
             }
         }
     }
-}
+} */
