@@ -4,6 +4,8 @@ import ytdl from 'ytdl-core'
 import axios from 'axios'
 import {youtubedl, youtubedlv2} from '@bochilteam/scraper'
 
+const lolkeysapi = '8fdb6bf3e9d527f7a6476f4b'; // Aquí defines tu clave API
+
 const handler = async (m, {conn, command, args, text, usedPrefix}) => {
 
 if (!text) return conn.reply(m.chat, `🧿 *Ingrese un nombre de una cancion de YouTube*\n\nEjemplo, !${command} falling - Daniel Trevor`,  m, fake, )
