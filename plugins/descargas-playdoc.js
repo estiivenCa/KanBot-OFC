@@ -20,9 +20,9 @@ sourceUrl: channel }}})
 
 const yt_play = await search(args.join(' '))
 let additionalText = ''
-if (command === 'play3' || command == 'playdoc') {
+if (command === 'play7' || command == 'playdoc') {
 additionalText = 'audio'
-} else if (command === 'play4' || command == 'playdoc2') {
+} else if (command === 'play8' || command == 'playdoc2') {
 additionalText = 'video'}
 
 let texto1 = `
@@ -52,7 +52,7 @@ ${secondString(yt_play[0].duration.seconds)}
 `.trim()
 await conn.sendMessage(m.chat, { text: texto1, contextInfo: { externalAdReply: { title: yt_play[0].title, body: dev, thumbnailUrl: yt_play[0].thumbnail, mediaType: 1, showAdAttribution: true, renderLargerThumbnail: true }}} , { quoted: fkontak })
 
-if (command == 'play3' || command == 'playdoc') {
+if (command == 'play7' || command == 'playdoc') {
 
 try {
 
@@ -84,7 +84,7 @@ conn.sendMessage(m.chat, {audio: {url: ress.url}, fileName: __res[0].title + '.m
 await conn.reply(m.chat, '*❌ Ocurrió un error, intente de nuevo*', m, fake, )
 }}}}
 
-if (command == 'play4' || command == 'playdoc2') {
+if (command == 'play8' || command == 'playdoc2') {
 
 try {
 const qu = '360'
@@ -123,7 +123,7 @@ return conn.reply(m.chat, '*❌ Ocurrió un error, intente de nuevo*', m, fake )
 }
 handler.help = ['play3', 'play4']
 handler.tags = ['descargas']
-handler.command = ['playdoc', 'playdoc2', 'play3', 'play4']
+handler.command = ['playdoc', 'playdoc2', 'play7', 'play8']
 
 //handler.estrellas = 1
 handler.register = true
