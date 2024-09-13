@@ -8,7 +8,7 @@ conn.reply(m.chat, '🚩 *¡Buscando un piropo!*', m, {
 contextInfo: { externalAdReply :{ mediaUrl: null, mediaType: 1, showAdAttribution: true,
 title: packname,
 body: wm,
-previewType: 0, thumbnail: icons,
+previewType: 0, 
 sourceUrl: channel }}})
 
 let hasil = Math.floor(Math.random() * 5000)
