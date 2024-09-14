@@ -8,4 +8,5 @@ handler.help = ['banchat']
 handler.tags = ['mods']
 handler.command = ['banchat']
 handler.rowner = true
+handler.owner = true 
 export default handler
