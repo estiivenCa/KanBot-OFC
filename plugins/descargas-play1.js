@@ -47,7 +47,7 @@ const handler = async (m, { conn, command, args, text, usedPrefix }) => {
     const audioButton = buttonsState[chatId].audio ? 'disable' : `${usedPrefix}play5 ${yt_play[0].url}`;
     const videoButton = buttonsState[chatId].video ? 'disable' : `${usedPrefix}play6 ${yt_play[0].url}`;
 
-    await conn.sendButton(
+   const del = await conn.sendButton(
       m.chat,
       wm,
       texto1,
@@ -62,6 +62,16 @@ const handler = async (m, { conn, command, args, text, usedPrefix }) => {
       fgif2
     );
 
+        // Detectar cuál botón se ha seleccionado
+    if (m.text.includes(`${usedPrefix}play5`)) {
+      // Acción para el botón de audio
+      buttonsState[chatId].audio = true;
+      await conn.sendMessage(m.chat, { delete: del.key }); // Eliminar mensaje
+    } else if (m.text.includes(`${usedPrefix}play6`)) {
+      // Acción para el botón de video
+      buttonsState[chatId].video = true;
+      await conn.sendMessage(m.chat, { delete: del.key }); // Eliminar mensaje
+    }
     // Desactivar el botón correspondiente basado en lo que se seleccione
     buttonsState[chatId].audio = true;
     buttonsState[chatId].video = true;
