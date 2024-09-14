@@ -3,12 +3,14 @@ if (!(m.chat in global.db.data.chats)) return conn.reply(m.chat, '🍭 *¡ESTE C
 let chat = global.db.data.chats[m.chat]
 if (!chat.isBanned) return conn.reply(m.chat, '🍟 *¡KANBOT NO ESTÁ BANEADA EN ESTE CHAT!*', m, fake)
 chat.isBanned = false
-await conn.reply(m.chat, '🚩 *¡KANBOT YA FUÉ DESBANEADA EN ESTE CHAT!*', m, fake)
+await conn.reply(m.chat, '🚩 *¡KANBOT YA FUÉ DESBANEADO EN ESTE CHAT!*', m, fake)
 }
 handler.help = ['unbanchat'];
 handler.tags = ['mods'];
 handler.command = ['unbanchat','desbanearchat','desbanchat']
 handler.mods = true 
+handler.owner = true 
+
 //handler.group = true
 
 export default handler
