@@ -6,16 +6,20 @@ import { sticker } from '../lib/sticker.js'
 let handler = async (m, { conn, args, usedPrefix, command }) => {
     let stiker = false
     try {
-         await m.reply('✨ *Creando sticker papu... Por favor, espere un momento.*')
         let q = m.quoted ? m.quoted : m
         let mime = (q.msg || q).mimetype || q.mediaType || ''
         
         if (/webp|image|video/g.test(mime)) {
+            // Si el archivo es un video, verificar duración
             if (/video/g.test(mime)) if ((q.msg || q).seconds > 8) return m.reply(`☁️ *¡El video no puede durar más de 8 segundos!*`)
             
+            // Descargar imagen/video
             let img = await q.download?.()
             
-            if (!img) return conn.reply(m.chat, `⚠️ *_La conversión ha fallado, intenta enviar primero imagen/video/gif y luego responde con el comando._*`, m, rcanal)
+            if (!img) return conn.reply(m.chat, `⚠️ *_La conversión ha fallado, intenta enviar primero imagen/video/gif y luego responde con el comando._*`, m)
+            
+            // Enviar mensaje de espera solo si se descarga la imagen/video
+            await m.reply('✨ *Creando sticker papu... Por favor, espere un momento.*')
             
             let out
             try {
@@ -32,8 +36,16 @@ let handler = async (m, { conn, args, usedPrefix, command }) => {
                 }
             }
         } else if (args[0]) {
-            if (isUrl(args[0])) stiker = await sticker(false, args[0], global.packsticker, global.author)
-            else return m.reply(`💫 El URL es incorrecto`)
+            // Si se pasa un URL
+            if (isUrl(args[0])) {
+                await m.reply('✨ *Creando sticker papu... Por favor, espere un momento.*')
+                stiker = await sticker(false, args[0], global.packsticker, global.author)
+            } else {
+                return m.reply(`💫 El URL es incorrecto`)
+            }
+        } else {
+            // Si no se detecta ni imagen, video ni URL válido
+            return conn.reply(m.chat, '⚠️ *_La conversión ha fallado, intenta enviar primero imagen/video/gif y luego responde con el comando._*', m)
         }
     } catch (e) {
         console.error(e)
@@ -42,7 +54,7 @@ let handler = async (m, { conn, args, usedPrefix, command }) => {
         if (stiker) {
             conn.sendFile(m.chat, stiker, 'sticker.webp', '', m, true, { contextInfo: { 'forwardingScore': 200, 'isForwarded': false, externalAdReply: { showAdAttribution: false, title: packname, body: `by Stiiven`, mediaType: 2, sourceUrl: redes } } })
         } else {
-            return conn.reply(m.chat, '⚠️ *_La conversión ha fallado, intenta enviar primero imagen/video/gif y luego responde con el comando._*', m, rcanal)
+            return conn.reply(m.chat, '⚠️ *_La conversión ha fallado, intenta enviar primero imagen/video/gif y luego responde con el comando._*', m)
         }
     }
 }
@@ -57,4 +69,4 @@ export default handler
 
 const isUrl = (text) => {
     return text.match(new RegExp(/https?:\/\/(www\.)?[-a-zA-Z0-9@:%._+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_+.~#?&/=]*)(jpe?g|gif|png)/, 'gi'))
-}
+                    }
