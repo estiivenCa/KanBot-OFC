@@ -50,6 +50,6 @@ const handler = async (m, { conn, text, usedPrefix, command }) => {
 
 // Define el comando que activará el handler
 handler.command = /^letra$/i;
-
+handler.group = true;
 // Exporta el handler
 export default handler;
