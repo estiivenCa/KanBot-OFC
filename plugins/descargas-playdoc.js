@@ -127,7 +127,7 @@ if (command == 'play8' || command == 'playdoc2') {
 handler.help = ['play3', 'play4']
 handler.tags = ['descargas']
 handler.command = ['playdoc', 'playdoc2', 'play7', 'play8']
-
+handler.group = true;
 //handler.estrellas = 1
 handler.register = true
 
