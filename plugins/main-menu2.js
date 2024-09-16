@@ -172,6 +172,7 @@ handler.tags = ['main']
 handler.help = ['menu2']
 handler.command = ['menu2','menuaudios'];
 handler.register = true
+handler.group = true;
 handler.exp = 50;
 handler.fail = null;
 export default handler;
