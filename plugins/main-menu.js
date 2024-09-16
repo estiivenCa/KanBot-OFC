@@ -224,6 +224,7 @@ handler.help = ['menu']
 handler.tags = ['main']
 handler.command = ['menu', 'menú', 'menuall', 'allmenú', 'allmenu', 'menucompleto'] 
 handler.register = true
+handler.group = true;
 
 export default handler
 
