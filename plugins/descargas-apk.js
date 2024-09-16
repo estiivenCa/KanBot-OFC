@@ -54,5 +54,6 @@ handler.help = ['apk'];
 handler.tags = ['descargas']; 
 handler.command = /^(apk)$/i;
 handler.limit = 5;
+handler.group = true
 
 export default handler;
