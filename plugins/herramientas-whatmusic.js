@@ -27,4 +27,5 @@ m.reply(txt)
 }
 handler.tags = ['herramientas']
 handler.command = ['quemusica','quemusicaes','whatmusic']
+handler.group = true;
 export default handler
