@@ -18,10 +18,10 @@ const handler = async (m, { conn, command, args, text, usedPrefix }) => {
                     mediaUrl: null,
                     mediaType: 1,
                     showAdAttribution: true,
-                    title: 'Procesando...',
+                    title: '✰ 𝙺𝚊𝚗𝙱𝚘𝚝 ✰',
                     body: 'Espere un momento por favor...',
                     previewType: 0,
-                    sourceUrl: 'https://youtube.com'
+                    sourceUrl: channel
                 }
             }
         });
