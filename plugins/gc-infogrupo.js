@@ -37,7 +37,7 @@ ${listAdmin}
 };
 handler.help = ['infogrupo'];
 handler.tags = ['grupo'];
-handler.command = ['infogrupo', 'gp'];
+handler.command = ['infogrupo', 'igp'];
 handler.register = true
 handler.group = true;
 export default handler;
