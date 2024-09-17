@@ -73,7 +73,7 @@ ${secondString(yt_play[0].duration.seconds)}
 
                 // Comprobación del tamaño del archivo
                 if (size > MAX_FILE_SIZE_MB) {
-                    return conn.reply(m.chat, `❌ El archivo es demasiado pesado (${size} MB). El límite es de ${MAX_FILE_SIZE_MB} MB.`, m);
+                    return conn.reply(m.chat, `❌ El archivo es demasiado pesado (${size} MB). El límite es de ${MAX_FILE_SIZE_MB} MB.`, m, rcanal);
                 }
 
                 await conn.sendMessage(m.chat, { document: { url: dl_url }, mimetype: 'audio/mpeg', fileName: `${ttl}.mp3` }, { quoted: m });
