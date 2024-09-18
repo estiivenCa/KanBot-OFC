@@ -1,7 +1,7 @@
 import fetch from 'node-fetch';
 
 let handler = async (m, { conn, usedPrefix, command, text }) => {
-    if (!text) throw `*Error*\n[ 💡 ] Ejemplo: ${usedPrefix + command} org.mozilla.firefox`;
+    if (!text) throw `*Error*\n[ 💡 ] Ejemplo: ${usedPrefix + command} com.whatsapp`;
 
     try {
         await m.react('🔄');
@@ -24,22 +24,30 @@ let handler = async (m, { conn, usedPrefix, command, text }) => {
         );
 
         // Llamada a la API de Delirius para buscar el APK
-        const apiUrl = `https://deliriusapi-official.vercel.app/download/apk?query=${text}`;
-        const response = await fetch(apiUrl);
+        let apiUrl = `https://deliriusapi-official.vercel.app/download/apk?query=${text}`;
+        let response = await fetch(apiUrl);
         
-        if (!response.ok) throw `*Error*\nNo se pudo obtener la aplicación con el ID: ${text}.`;
+        if (!response.ok) {
+            // Si la API de Delirius falla, usamos la API de Lolhuman usando el nombre del paquete
+            apiUrl = `https://api.lolhuman.xyz/api/apkdownloader?apikey=8fdb6bf3e9d527f7a6476f4b&package=${text}`;
+            response = await fetch(apiUrl);
+
+            if (!response.ok) throw `*Error*\nNo se pudo obtener la aplicación con el ID: ${text} en ninguna API.`;
+        }
 
         const data = await response.json();
 
-        // Asegurarnos de que el campo de descarga existe dentro de "data.data"
-        if (!data || !data.data || !data.data.download) throw `*Error*\nNo se encontró el enlace de descarga del APK.`;
+        // Verificar la respuesta de la API de Lolhuman
+        if (data.status !== 200 || !data.result || !data.result.apk_link) throw `*Error*\nNo se encontró el enlace de descarga del APK.`;
+
+        const { apk_name, apk_version, apk_author, apk_link } = data.result;
 
         // Enviar el archivo APK con los datos obtenidos
         await conn.sendMessage(m.chat, { 
-            document: { url: data.data.download }, 
+            document: { url: apk_link }, 
             mimetype: 'application/vnd.android.package-archive', 
-            fileName: `${data.data.name || text}.apk`, 
-            caption: `*Nombre*: ${data.data.name || text}\n*Paquete*: ${data.data.id || 'Desconocido'}\n*Tamaño*: ${data.data.size || 'Desconocido'}\n*Fecha de publicación*: ${data.data.publish || 'Desconocida'}\n\nDescarga el APK y disfrútalo by ✰ 𝙺𝚊𝚗𝙱𝚘𝚝 ✰ 😎`
+            fileName: `${apk_name || text}.apk`, 
+            caption: `*Nombre*: ${apk_name || text}\n*Versión*: ${apk_version || 'Desconocida'}\n*Autor*: ${apk_author || 'Desconocido'}\n\nDescarga el APK y disfrútalo by ✰ 𝙺𝚊𝚗𝙱𝚘𝚝 ✰ 😎`
         }, { quoted: m });
 
         await m.react('✅');
