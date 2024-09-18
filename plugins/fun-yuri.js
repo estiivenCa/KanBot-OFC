@@ -1,4 +1,4 @@
-//Codígo creado por David Chian wa.me/5351524614
+/* //Codígo creado por David Chian wa.me/5351524614
 
 import fs from 'fs';
 import path from 'path';
@@ -40,4 +40,4 @@ handler.tags = ['fun'];
 handler.command = ['lesbiana','tijeras'];
 handler.group = true;
 
-export default handler;
+export default handler; */
