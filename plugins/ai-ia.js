@@ -64,16 +64,16 @@ async function fetchFromAPIs(query) {
             const data = await response.json();
 
             if (api.includes('bingia') && data.status) {
-                return `Bing: ${data.message}`;
+                return `Hola!👋 soy KanBot Provieded By Stiiven: ${data.message}`; //bing
             }
             if (api.includes('gemini') && data.status) {
-                return `Gemini: ${data.message}`;
+                return `Hola!👋 soy KanBot Provieded By Stiiven: ${data.message}`; // gemini
             }
             if (api.includes('gpt-pro') && data.status) {
-                return `GPT-Pro: ${data.data.message}`;
+                return `Hola!👋 soy KanBot Provieded By Stiiven: ${data.data.message}`; //gpt-pro
             }
             if (api.includes('gpt4-mini') && data.status) {
-                return `GPT-4 Mini: ${data.data.message}`;
+                return `Hola!👋 soy KanBot Provieded By Stiiven: ${data.data.message}`; // gptmini
             }
         } catch (error) {
             console.error(`🚩 Error al obtener respuesta de ${api}:`, error);
