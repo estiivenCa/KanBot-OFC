@@ -1,4 +1,4 @@
-//Codígo creado por DAVID CHIAN!! PERRAS wa.me/5351524614
+/* //Codígo creado por DAVID CHIAN!! PERRAS wa.me/5351524614
 
 import fs from 'fs';
 import path from 'path';
@@ -46,4 +46,4 @@ handler.command = ['cum'];
 handler.register = true;
 handler.group = true;
 
-export default handler;
+export default handler; */
