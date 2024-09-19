@@ -2,9 +2,9 @@ import axios from 'axios';
 
 let handler = async (m, { conn, args }) => {
     const text = args.join(' ');
-    if (!text) return conn.reply(m.chat, '🍟 Ingresa el nombre de la aplicación que deseas buscar.', m);
+    if (!text) return conn.reply(m.chat, '🍟 Ingresa el nombre de la aplicación que deseas buscar.', m, rcanal);
 
-    conn.reply(m.chat, `🚩 Buscando en la Play Store...`, m);
+    conn.reply(m.chat, `🚩 Buscando espere...`, m, rcanal);
 
     try {
         // Llama a la API de Delirius para buscar en la Play Store
@@ -19,7 +19,7 @@ let handler = async (m, { conn, args }) => {
                 const idApp = r.link.match(/id=([^&]*)/)[1];
                 teks += `🐢 *Nombre* ∙ ${r.name}\n🔗 *ID de la App* ∙ ${idApp}\n\n`;
             }
-            conn.reply(m.chat, teks, m);
+            conn.reply(m.chat, teks, m, rcanal);
         } else {
             conn.reply(m.chat, '❌ No se encontraron aplicaciones.', m);
         }
