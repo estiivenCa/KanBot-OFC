@@ -1,4 +1,4 @@
-/* import fetch from 'node-fetch';
+ import fetch from 'node-fetch';
 
 let handler = async (m, { conn, usedPrefix, command, text }) => {
     if (!text) throw `*Error*\n[ 💡 ] Ejemplo: ${usedPrefix + command} com.whatsapp`;
@@ -65,10 +65,10 @@ handler.limit = 5;
 handler.group = true;
 
 export default handler;
- */
+ 
 
 // envia el primer resultado obtenido 
-  import fetch from 'node-fetch';
+ /* import fetch from 'node-fetch';
 
 let handler = async (m, { conn, usedPrefix, command, text }) => {
     if (!text) throw `*Error*\n[ 💡 ] Ejemplo: ${usedPrefix + command} com.whatsapp`;
@@ -129,7 +129,7 @@ handler.command = /^(apk)$/i;
 handler.limit = 5;
 handler.group = true;
 
-export default handler; 
+export default handler;  */
 
 
 
