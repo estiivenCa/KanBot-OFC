@@ -68,7 +68,7 @@ export default handler;
  */
 
 // envia el primer resultado obtenido 
- /* import fetch from 'node-fetch';
+  import fetch from 'node-fetch';
 
 let handler = async (m, { conn, usedPrefix, command, text }) => {
     if (!text) throw `*Error*\n[ 💡 ] Ejemplo: ${usedPrefix + command} com.whatsapp`;
@@ -129,85 +129,7 @@ handler.command = /^(apk)$/i;
 handler.limit = 5;
 handler.group = true;
 
-export default handler; */
+export default handler; 
 
-import { prepareWAMessageMedia, generateWAMessageFromContent } from '@whiskeysockets/baileys';
-import fetch from 'node-fetch';
-
-const handler = async (m, { conn, text, usedPrefix: prefijo }) => {
-  if (!text) throw `⚠️ *_Por favor, ingresa el nombre o ID de la aplicación que deseas buscar_*`;
-
-  try {
-    // Llamada a la API de Neoxr para buscar el APK
-    let apiUrl = `https://api.neoxr.eu/api/apk?q=${text}&apikey=GoKVcs`;
-    let response = await fetch(apiUrl);
-
-    if (!response.ok) throw `*Error*\nNo se pudo obtener la aplicación con el nombre o ID: ${text}.`;
-
-    const data = await response.json();
-
-    // Verificar si los datos son válidos
-    if (!data.status || !data.data || data.data.length === 0) throw `*Error*\nNo se encontraron resultados.`;
-
-    const apps = data.data;
-
-    // Crear la lista interactiva de opciones con los resultados obtenidos
-    let sections = apps.map((app, index) => ({
-      title: `${app.name}`,
-      rows: [{
-        title: `${app.name}`,
-        description: `Versión: ${app.version}\nTamaño: ${app.size}\nDesarrollador: ${app.developer}`,
-        rowId: `${prefijo}apkdownload ${app.url}`
-      }]
-    }));
-
-    let listMessage = {
-      text: `Resultados obtenidos: ${apps.length}\nSelecciona una aplicación para descargar`,
-      footer: 'Bot APK Downloader',
-      title: 'Resultados de la búsqueda',
-      buttonText: 'Ver aplicaciones',
-      sections
-    };
-
-    // Enviar el mensaje interactivo
-    const msg = generateWAMessageFromContent(m.chat, { listMessage }, { userJid: conn.user.jid, quoted: m });
-    await conn.relayMessage(m.chat, msg.message, { messageId: msg.key.id });
-
-  } catch (error) {
-    console.error('Error durante la búsqueda:', error);
-    await conn.sendMessage(m.chat, { text: `*Error*\n${error.message || error}` }, { quoted: m });
-  }
-};
-
-// Nuevo handler para descargar el APK seleccionado
-const apkDownloadHandler = async (m, { conn, text }) => {
-  if (!text) throw `⚠️ *_No se proporcionó una URL válida para descargar el APK_*`;
-
-  try {
-    await conn.sendMessage(m.chat, { 
-      document: { url: text }, 
-      mimetype: 'application/vnd.android.package-archive', 
-      fileName: `app.apk`, 
-      caption: `Aquí tienes tu APK solicitado:\n${text}`
-    }, { quoted: m });
-
-  } catch (error) {
-    console.error('Error durante la descarga del APK:', error);
-    await conn.sendMessage(m.chat, { text: `*Error*\nNo se pudo descargar el APK.` }, { quoted: m });
-  }
-};
-
-handler.help = ['apk'];
-handler.tags = ['descargas'];
-handler.command = /^(apk)$/i;
-handler.limit = 5;
-handler.group = true;
-
-apkDownloadHandler.command = /^(apkdownload)$/i;
-
-export default handler;
-export { apkDownloadHandler };
-
- 
 
 
