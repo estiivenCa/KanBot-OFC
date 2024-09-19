@@ -159,13 +159,15 @@ let handler = async (m, { conn, usedPrefix, command, text }) => {
             { quoted: m }
         );
 
-        // Llamada a la nueva API de Neoxr para buscar el APK
+        // Llamada a la API de Neoxr para buscar el APK
         let apiUrl = `https://api.neoxr.eu/api/apk?q=${text}&apikey=GoKVcs`;
         let response = await fetch(apiUrl);
 
         if (!response.ok) throw `*Error*\nNo se pudo obtener los resultados para: ${text}.`;
 
         const data = await response.json();
+        
+        console.log('Respuesta de API:', data); // Registrar la respuesta de la API
 
         // Verificar si los datos son válidos y si hay resultados
         if (!data.status || !data.data || data.data.length === 0) throw `*Error*\nNo se encontraron resultados para: ${text}.`;
@@ -204,14 +206,15 @@ let handler = async (m, { conn, usedPrefix, command, text }) => {
             }
 
             const selectedResult = results[selectedIndex];
-            const { name, version, developer, size, url } = selectedResult;
+            const { name, version, size, url, thumbnail } = selectedResult;
 
             // Enviar el APK del resultado seleccionado
             await conn.sendMessage(m.chat, { 
                 document: { url }, 
                 mimetype: 'application/vnd.android.package-archive', 
                 fileName: `${name || text}.apk`, 
-                caption: `*Nombre*: ${name || text}\n*Versión*: ${version || 'Desconocida'}\n*Desarrollador*: ${developer || 'Desconocido'}\n*Tamaño*: ${size || 'Desconocido'}\n\nDescarga el APK y disfrútalo by ✰ 𝙺𝚊𝚗𝙱𝚘𝚝 ✰ 😎`
+                caption: `*Nombre*: ${name || text}\n*Versión*: ${version || 'Desconocida'}\n*Tamaño*: ${size || 'Desconocido'}\n\nDescarga el APK y disfrútalo by ✰ 𝙺𝚊𝚗𝙱𝚘𝚝 ✰ 😎`,
+                thumbnail: { url: thumbnail }
             }, { quoted: msg });
 
             await m.react('✅');
