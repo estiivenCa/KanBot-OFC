@@ -133,9 +133,8 @@ export default handler;
  */
 
 // envia botones 
-
 import fetch from 'node-fetch';
-// import { MessageType } from '@adiwajshing/baileys';
+import { prepareWAMessageMedia, generateWAMessageFromContent } from '@whiskeysockets/baileys';
 
 let handler = async (m, { conn, usedPrefix, command, text }) => {
     if (!text) throw `*Error*\n[ 💡 ] Ejemplo: ${usedPrefix + command} whatsapp`;
@@ -160,57 +159,64 @@ let handler = async (m, { conn, usedPrefix, command, text }) => {
             { quoted: m }
         );
 
-        // Llamada a la API de Neoxr para buscar los APKs
+        // Llamada a la nueva API de Neoxr para buscar el APK
         let apiUrl = `https://api.neoxr.eu/api/apk?q=${text}&apikey=GoKVcs`;
         let response = await fetch(apiUrl);
 
-        if (!response.ok) throw `*Error*\nNo se pudo obtener la aplicación con el ID: ${text}.`;
+        if (!response.ok) throw `*Error*\nNo se pudo obtener los resultados para: ${text}.`;
 
         const data = await response.json();
 
-        // Verificar si los datos son válidos
-        if (!data.status || !data.data || data.data.length === 0) throw `*Error*\nNo se encontraron resultados.`; 
+        // Verificar si los datos son válidos y si hay resultados
+        if (!data.status || !data.data || data.data.length === 0) throw `*Error*\nNo se encontraron resultados para: ${text}.`;
 
-        // Crear un array de botones con las opciones de los resultados
-        let buttons = data.data.map((app, index) => ({
-            buttonId: `${index}`, // Identificador único para cada botón
-            buttonText: { displayText: app.name }, // Texto que se muestra en el botón
+        // Crear una lista desplegable con todos los resultados
+        let results = data.data;
+        let buttons = results.map((result, index) => ({
+            buttonId: `${index}`,
+            buttonText: { displayText: result.name },
             type: 1
         }));
 
-        // Enviar el mensaje con botones de opciones
-        await conn.sendMessage(m.chat, {
-            text: '*Seleccione el APK que desea descargar:*',
+        // Crear el mensaje de la lista desplegable
+        let buttonMessage = {
+            text: `*Selecciona un APK para descargar:*`,
+            footer: `Resultados para: ${text}`,
             buttons,
-            footer: 'Seleccione una opción:',
             headerType: 1
-        }, { quoted: m });
+        };
 
-        // Función para manejar la selección de botones
+        // Preparar el mensaje con botones
+        const buttonMessageMedia = await prepareWAMessageMedia(buttonMessage, { upload: conn.waUploadToServer });
+
+        // Enviar el mensaje con la lista desplegable
+        const message = generateWAMessageFromContent(m.chat, buttonMessageMedia, { quoted: m });
+        await conn.relayMessage(m.chat, message.message, { messageId: message.key.id });
+
+        // Manejar la respuesta del usuario
         conn.on('message', async (msg) => {
-            if (msg.key.fromMe || !msg.message.buttonsResponseMessage) return;
-
+            if (msg.key.fromMe) return;
+            
             let selectedIndex = parseInt(msg.message.buttonsResponseMessage.selectedButtonId);
-            let selectedApp = data.data[selectedIndex];
-
-            // Verificar que el índice sea válido
-            if (!selectedApp) {
-                await conn.sendMessage(m.chat, { text: '*Error*\nSelección no válida.' }, { quoted: m });
+            if (isNaN(selectedIndex) || selectedIndex < 0 || selectedIndex >= results.length) {
+                await conn.sendMessage(m.chat, { text: `*Error*\nSelección inválida.` }, { quoted: msg });
                 return;
             }
 
-            const { name, url } = selectedApp;
+            const selectedResult = results[selectedIndex];
+            const { name, version, developer, size, url } = selectedResult;
 
-            // Enviar el archivo APK con los datos obtenidos
+            // Enviar el APK del resultado seleccionado
             await conn.sendMessage(m.chat, { 
                 document: { url }, 
                 mimetype: 'application/vnd.android.package-archive', 
-                fileName: `${name}.apk`, 
-                caption: `*Nombre*: ${name}\n*Versión*: ${selectedApp.version || 'Desconocida'}\n*Tamaño*: ${selectedApp.size || 'Desconocido'}\n\nDescarga el APK y disfrútalo by ✰ 𝙺𝚊𝚗𝙱𝚘𝚝 ✰ 😎`
-            }, { quoted: m });
+                fileName: `${name || text}.apk`, 
+                caption: `*Nombre*: ${name || text}\n*Versión*: ${version || 'Desconocida'}\n*Desarrollador*: ${developer || 'Desconocido'}\n*Tamaño*: ${size || 'Desconocido'}\n\nDescarga el APK y disfrútalo by ✰ 𝙺𝚊𝚗𝙱𝚘𝚝 ✰ 😎`
+            }, { quoted: msg });
+
+            await m.react('✅');
         });
 
-        await m.react('✅');
     } catch (error) {
         console.error('Error durante la descarga:', error);
         await conn.sendMessage(m.chat, { text: `*Error*\n${error.message || error}` }, { quoted: m });
@@ -225,3 +231,4 @@ handler.limit = 5;
 handler.group = true;
 
 export default handler;
+
