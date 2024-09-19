@@ -135,7 +135,7 @@ export default handler;
 // envia botones 
 
 import fetch from 'node-fetch';
-import { MessageType } from '@adiwajshing/baileys';
+// import { MessageType } from '@adiwajshing/baileys';
 
 let handler = async (m, { conn, usedPrefix, command, text }) => {
     if (!text) throw `*Error*\n[ 💡 ] Ejemplo: ${usedPrefix + command} whatsapp`;
