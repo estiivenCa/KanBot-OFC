@@ -66,7 +66,6 @@ handler.group = true;
 
 export default handler;
  */
-
 import fetch from 'node-fetch';
 
 let handler = async (m, { conn, usedPrefix, command, text }) => {
@@ -93,7 +92,7 @@ let handler = async (m, { conn, usedPrefix, command, text }) => {
         );
 
         // Llamada a la nueva API de Neoxr para buscar el APK
-        let apiUrl = `https://api.neoxr.eu/api/apkpure?q=${text}`;
+        let apiUrl = `https://api.neoxr.eu/api/apk?q=${text}&apikey=GoKVcs`;
         let response = await fetch(apiUrl);
 
         if (!response.ok) throw `*Error*\nNo se pudo obtener la aplicación con el ID: ${text}.`;
@@ -129,5 +128,3 @@ handler.limit = 5;
 handler.group = true;
 
 export default handler;
-
-
