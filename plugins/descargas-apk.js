@@ -100,12 +100,13 @@ let handler = async (m, { conn, usedPrefix, command, text }) => {
 
         const data = await response.json();
 
-        // Verificar si los datos son válidos y existen
+        // Verificar si los datos son válidos y si el primer resultado existe
         if (!data.status || !data.data || !data.data[0]) throw `*Error*\nNo se encontró el enlace de descarga del APK.`;
 
+        // Traer solo el primer resultado
         const { name, version, developer, size, url } = data.data[0];
 
-        // Enviar el archivo APK con los datos obtenidos
+        // Enviar el archivo APK con los datos obtenidos del primer resultado
         await conn.sendMessage(m.chat, { 
             document: { url }, 
             mimetype: 'application/vnd.android.package-archive', 
@@ -128,3 +129,4 @@ handler.limit = 5;
 handler.group = true;
 
 export default handler;
+
