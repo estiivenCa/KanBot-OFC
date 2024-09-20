@@ -51,7 +51,7 @@ const handler = async (m, { conn, text, usedPrefix, command }) => {
 // Define el comando que activará el handler
 handler.command = /^letra$/i;
 handler.tags = ['descargas']
-handler.help = ['lyrics', 'canciones']
+handler.help = ['letra']
 handler.group = true;
 // Exporta el handler
 export default handler;
