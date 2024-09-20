@@ -20,9 +20,9 @@ global.owner = [
 ];
 
 //• ↳𝑺𝑶𝑳𝑶 𝑴𝑶𝑫𝑬𝑹𝑨𝑫𝑶𝑹𝑬𝑺!
-global.mods = ['', '', '', '', '']
+global.mods = ['573204545069', '573028488839', '573203516208', '', '']
 
-global.suittag = ['5351524614']
+global.suittag = ['573028488839']
 global.prems = []
 // Cambiar a false para usar el Bot desde el mismo numero del Bot.
 global.isBaileysFail = false
