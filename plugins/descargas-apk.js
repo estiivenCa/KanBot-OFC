@@ -32,7 +32,7 @@ let handler = async (m, { conn, usedPrefix, command, text }) => {
             apiUrl = `https://api.lolhuman.xyz/api/apkdownloader?apikey=8fdb6bf3e9d527f7a6476f4b&package=${text}`;
             response = await fetch(apiUrl);
 
-            if (!response.ok) throw `*Error*\nNo se pudo obtener la aplicación con el ID: ${text} en ninguna API.`;
+            if (!response.ok) throw `*Error*\nNo se pudo obtener la aplicación con el ID: ${text} en ninguna API.\n*NOTA:*Si el comando utilice el nombre del paquete para descargarlo, _si no conoce el nombre del paquete de la App use /pck y el nombre de la App_\n*Ejemplo* .apk com.whatsapp`;
         }
 
         const data = await response.json();
