@@ -38,7 +38,7 @@ const handler = async (m, { conn, command, args, text, usedPrefix }) => {
   const externalAdReply = {
     title: '♡  ͜ ۬︵࣪᷼⏜݊᷼𝘿𝙚𝙨𝙘𝙖𝙧𝙜𝙖𝙨⏜࣪᷼︵۬ ͜ ',
     body: '✰ 𝙺𝚊𝚗𝙱𝚘𝚝 ✰',
-    sourceUrl: global.cn,
+    sourceUrl: global.channel,
     thumbnail: global.logo7
   };
 
