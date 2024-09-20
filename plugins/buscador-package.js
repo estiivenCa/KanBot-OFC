@@ -31,7 +31,7 @@ let handler = async (m, { conn, args }) => {
 
 handler.help = ['package <App>'];
 handler.tags = ['buscador'];
-handler.command = ['pck'];
+handler.command = ['pck', 'package'];
 handler.group = true;
 handler.register = true;
 
