@@ -25,7 +25,7 @@ export async function before(m, { conn, participants, groupMetadata }) {
 
   if (chat.welcome && m.messageStubType === 27) {
     this.sendMessage(m.chat, {
-      text: `╭══•🔥ೋ•๑♡๑•ೋ🔥•══╮\n¡Bienvenido/a,  @${m.messageStubParameters[0].split`@`[0]}!\n╰══•🔥 ೋ•๑♡๑•ೋ 🔥•══╯\n\nEsperamos que disfrutes tu estancia en el grupo.\n🥀*ੈ✩‧₊˚༺☆༻*ੈ✩˚🍁`,
+      text: `╭══•🔥ೋ•๑♡๑•ೋ🔥•══╮\n¡Bienvenido/a,  @${m.messageStubParameters[0].split`@`[0]}!\n╰══•🔥 ೋ•๑♡๑•ೋ 🔥•══╯\n\nEsperamos que disfrutes tu estancia en el grupo.\n*_Recuerda leer la descripción_*\n🥀*ੈ✩‧₊˚༺☆༻*ੈ✩˚🍁`,
       contextInfo: {
         mentionedJid: getMentionedJid(),
         "externalAdReply": {
