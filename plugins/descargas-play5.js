@@ -162,7 +162,6 @@ handler.help = ['play5', 'play6'];
 handler.tags = ['downloader'];
 handler.command = /^play5|play6$/i;
 handler.limit = 3;
-handler.level = 8;
 
 export default handler;
 
