@@ -59,43 +59,43 @@ handler.command = ['video', 'fgmp4', 'dlmp4', 'getvid', 'yt', 'ytmp4', 'mp4', 'y
 handler.group = true;
 export default handler
  */
-import { youtubedl, youtubedlv2 } from '@bochilteam/scraper'
-import fetch from 'node-fetch'
-import yts from 'yt-search'
-import ytdl from 'ytdl-core'
-import axios from 'axios'
+import { youtubedl, youtubedlv2 } from '@bochilteam/scraper';
+import fetch from 'node-fetch';
+import yts from 'yt-search';
+import ytdl from 'ytdl-core';
+import axios from 'axios';
 
 let handler = async (m, { conn, args, usedPrefix, command }) => {
-    let fkontak = { 
-        "key": { "participants": "0@s.whatsapp.net", "remoteJid": "status@broadcast", "fromMe": false, "id": "Halo" }, 
-        "message": { 
-            "contactMessage": { 
-                "vcard": `BEGIN:VCARD\nVERSION:3.0\nN:Sy;Bot;;;\nFN:y\nitem1.TEL;waid=${m.sender.split('@')[0]}:${m.sender.split('@')[0]}\nitem1.X-ABLabel:Ponsel\nEND:VCARD`
+    let fkontak = {
+        key: {
+            participants: "0@s.whatsapp.net",
+            remoteJid: "status@broadcast",
+            fromMe: false,
+            id: "Halo"
+        },
+        message: {
+            contactMessage: {
+                vcard: `BEGIN:VCARD\nVERSION:3.0\nN:Sy;Bot;;;\nFN:y\nitem1.TEL;waid=${m.sender.split('@')[0]}:${m.sender.split('@')[0]}\nitem1.X-ABLabel:Ponsel\nEND:VCARD`
             }
-        }, 
-        "participant": "0@s.whatsapp.net" 
-    }
+        },
+        participant: "0@s.whatsapp.net"
+    };
 
     if (!args[0]) {
-    return conn.reply(m.chat, 
-        `*[❗𝐈𝐍𝐅𝐎❗] 𝙄𝙉𝙂𝙍𝙀𝙎𝙀 𝙐𝙉 𝙀𝙉𝙇𝘼𝘾𝙀 𝘿𝙀 𝙔𝙊𝙐𝙏𝙐𝘽𝙀 𝙋𝘼𝙍𝘼 𝘿𝙀𝙎𝘾𝘼𝙍𝙂𝘼𝙍 𝙀𝙇 𝙑𝙄𝘿𝙀𝙊* \n\n❕ 𝙀𝙅𝙀𝙈𝙋𝙇𝙊\n*${usedPrefix + command} https://youtu.be/85xI8WFMIUY*`, 
-        m, 
-        { 
-            contextInfo: { 
-                'forwardingScore': 0, 
-                'isForwarded': false, 
-                externalAdReply: { 
-                    showAdAttribution: false, 
-                    title: packname, 
-                    body: `👋 Hola ${nombre}`, 
-                    mediaType: 3, 
-                    sourceUrl: global.channel 
+        return conn.reply(m.chat, `*[❗𝐈𝐍𝐅𝐎❗] 𝙄𝙉𝙂𝙍𝙀𝙎𝙀 𝙐𝙉 𝙀𝙉𝙇𝘼𝘾𝙀 𝘿𝙀 𝙔𝙊𝙐𝙏𝙐𝘽𝙀 𝙋𝘼𝙍𝘼 𝘿𝙀𝙎𝘾𝘼𝙍𝙂𝘼𝙍 𝙀𝙇 𝙑𝙄𝘿𝙀𝙊*\n\n❕ 𝙀𝙅𝙀𝙈𝙋𝙇𝙊\n*${usedPrefix + command} https://youtu.be/85xI8WFMIUY*`, m, {
+            contextInfo: {
+                'forwardingScore': 0,
+                'isForwarded': false,
+                externalAdReply: {
+                    showAdAttribution: false,
+                    title: packname,
+                    body: `👋 Hola ${nombre}`,
+                    mediaType: 3,
+                    sourceUrl: global.channel
                 }
             }
-        }
-    );
-}
-
+        });
+    }
 
     let youtubeLink = '';
     if (args[0].includes('you')) {
@@ -109,85 +109,75 @@ let handler = async (m, { conn, args, usedPrefix, command }) => {
                     if (index < matchingItem.urls.length) {
                         youtubeLink = matchingItem.urls[index];
                     } else {
-                        throw 🌀 *no se encontró*;
+                        throw '🌀 *no se encontró*';
                     }
                 } else {
-                    throw 𝙋𝘼𝙍𝘼 𝙋𝙊𝘿𝙀𝙍 𝙐𝙎𝘼𝙍 𝙀𝙎𝙏𝙀 𝘾𝙊𝙈𝘼𝙉𝘿𝙊 𝘿𝙀 𝙀𝙎𝙏𝘼 𝙁𝙊𝙍𝙈𝘼 (${usedPrefix + command} <numero>), 𝙋𝙊𝙍 𝙁𝘼𝙑𝙊𝙍 𝙍𝙀𝘼𝙇𝙄𝙕𝘼𝙍 𝙇𝘼 𝘽𝙐́𝙎𝙌𝙐𝙀𝘿𝘼 𝘿𝙀 𝙑𝙄́𝘿𝙀𝙊𝙎 𝘾𝙊𝙉 𝙀𝙇 𝘾𝙊𝙈𝘼𝙉𝘿𝙊  ${usedPrefix}playlist <texto>*;
+                    throw `𝙋𝘼𝙍𝘼 𝙋𝙊𝘿𝙀𝙍 𝙐𝙎𝘼𝙍 𝙀𝙎𝙏𝙀 𝘾𝙊𝙈𝘼𝙉𝘿𝙊 𝘿𝙀 𝙀𝙎𝙏𝘼 𝙁𝙊𝙍𝙈𝘼 (${usedPrefix + command} <numero>), 𝙋𝙊𝙍 𝙁𝘼𝙑𝙊𝙍 𝙍𝙀𝘼𝙇𝙄𝙕𝘼𝙍 𝙇𝘼 𝘽𝙐́𝙎𝙌𝙐𝙀𝘿𝘼 𝘿𝙀 𝙑𝙄́𝘿𝙀𝙊𝙎 𝘾𝙊𝙉 𝙀𝙇 𝘾𝙊𝙈𝘼𝙉𝘿𝙊 ${usedPrefix}playlist <texto>*`;
                 }
             } else {
-                throw 𝙋𝘼𝙍𝘼 𝙋𝙊𝘿𝙀𝙍 𝙐𝙎𝘼𝙍 𝙀𝙎𝙏𝙀 𝘾𝙊𝙈𝘼𝙉𝘿𝙊 𝘿𝙀 𝙀𝙎𝙏𝘼 𝙁𝙊𝙍𝙈𝘼 (${usedPrefix + command} <numero>), 𝙋𝙊𝙍 𝙁𝘼𝙑𝙊𝙍 𝙍𝙀𝘼𝙇𝙄𝙕𝘼𝙍 𝙇𝘼 𝘽𝙐́𝙎𝙌𝙐𝙀𝘿𝘼 𝘿𝙀 𝙑𝙄́𝘿𝙀𝙊𝙎 𝘾𝙊𝙉 𝙀𝙇 𝘾𝙊𝙈𝘼𝙉𝘿𝙊  ${usedPrefix}playlist <texto>*;
+                throw `𝙋𝘼𝙍𝘼 𝙋𝙊𝘿𝙀𝙍 𝙐𝙎𝘼𝙍 𝙀𝙎𝙏𝙀 𝘾𝙊𝙈𝘼𝙉𝘿𝙊 𝘿𝙀 𝙀𝙎𝙏𝘼 𝙁𝙊𝙍𝙈𝘼 (${usedPrefix + command} <numero>), 𝙋𝙊𝙍 𝙁𝘼𝙑𝙊𝙍 𝙍𝙀𝘼𝙇𝙄𝙕𝘼𝙍 𝙇𝘼 𝘽𝙐́𝙎𝙌𝙐𝙀𝘿𝘼 𝘿𝙀 𝙑𝙄́𝘿𝙀𝙊𝙎 𝘾𝙊𝙉 𝙀𝙇 𝘾𝙊𝙈𝘼𝙉𝘿𝙊 ${usedPrefix}playlist <texto>*`;
             }
+        } else {
+            throw `𝙋𝘼𝙍𝘼 𝙋𝙊𝘿𝙀𝙍 𝙐𝙎𝘼𝙍 𝙀𝙎𝙏𝙀 𝘾𝙊𝙈𝘼𝙉𝘿𝙊 𝘿𝙀 𝙀𝙎𝙏𝘼 𝙁𝙊𝙍𝙈𝘼 (${usedPrefix + command} <numero>), 𝙋𝙊𝙍 𝙁𝘼𝙑𝙊𝙍 𝙍𝙀𝘼𝙇𝙄𝙕𝘼𝙍 𝙇𝘼 𝘽𝙐́𝙎𝙌𝙐𝙀𝘿𝘼 𝘿𝙀 𝙑𝙄́𝘿𝙀𝙊𝙎 𝘾𝙊𝙉 𝙀𝙇 𝘾𝙊𝙈𝘼𝙉𝘿𝙊 ${usedPrefix}playlist <texto>*`;
         }
     }
 
-    await conn.reply(m.chat, *🚀 𝙎𝙀 𝙀𝙎𝙏𝘼 𝘿𝙀𝙎𝘾𝘼𝙍𝙂𝘼𝙉𝘿𝙊 𝙎𝙐 𝙑𝙄𝘿𝙀𝙊, 𝙀𝙎𝙋𝙀𝙍𝙀 𝙐𝙉 𝙈𝙊𝙈𝙀𝙉𝙏𝙊*, m, fake)
+    await conn.reply(m.chat, `🚀 𝙎𝙀 𝙀𝙎𝙏𝘼 𝘿𝙀𝙎𝘾𝘼𝙍𝙂𝘼𝙉𝘿𝙊 𝙎𝙐 𝙑𝙄𝘿𝙀𝙊, 𝙀𝙎𝙋𝙀𝙍𝙀 𝙐𝙉 𝙈𝙊𝙈𝙀𝙉𝙏𝙊`, m, fake);
 
     try {
-        let qu = args[1] || '360'
-        let q = qu + 'p'
-        let v = youtubeLink
+        let qu = args[1] || '360';
+        let q = qu + 'p';
+        let v = youtubeLink;
 
-        // Intentar descargar el video con youtubedl o youtubedlv2
         const yt = await youtubedl(v).catch(async _ => await youtubedlv2(v));
         const dl_url = await yt.video[q].download();
         const ttl = await yt.title;
         const size = await yt.video[q].fileSizeH;
-        await conn.sendMessage(m.chat, { 
-            video: { url: dl_url }, 
-            fileName: `${ttl}.mp4`, 
-            mimetype: 'video/mp4', 
-            caption: `😎 Su video by ✰ 𝙺𝚊𝚗𝙱𝚘𝚝 ✰`, 
-            thumbnail: await fetch(yt.thumbnail) 
+
+        await conn.sendMessage(m.chat, {
+            video: { url: dl_url },
+            fileName: `${ttl}.mp4`,
+            mimetype: 'video/mp4',
+            caption: '😎 Su video by ✰ 𝙺𝚊𝚗𝙱𝚘𝚝 ✰',
+            thumbnail: await fetch(yt.thumbnail)
         }, { quoted: m });
     } catch (E1) {
-        try {  
-            // Intentar descargar con la API de delirius (v1)
+        try {
             let mediaa = await fetch(`https://deliriusapi-official.vercel.app/download/ytmp4?url=${youtubeLink}`);
-            let mediaResult = await mediaa.json();
-            await conn.sendMessage(m.chat, { 
-                video: { url: mediaResult.result }, 
-                fileName: `error.mp4`, 
-                caption: `${packname}`, 
-                thumbnail: mediaResult.thumb, 
-                mimetype: 'video/mp4' 
-            }, { quoted: m });     
-        } catch (E2) {  
-            try {
-                // Intentar descargar con la API de delirius (v2)
-                let mediaa = await fetch(`https://deliriusapi-official.vercel.app/download/ytmp4v2?url=${youtubeLink}`);
-                let mediaResult = await mediaa.json();
-                await conn.sendMessage(m.chat, { 
-                    video: { url: mediaResult.result }, 
-                    fileName: `error.mp4`, 
-                    caption: `${packname}`, 
-                    thumbnail: mediaResult.thumb, 
-                    mimetype: 'video/mp4' 
-                }, { quoted: m });     
-            } catch (E3) {
-                // Si todo falla, intentar con lolhuman
-                try {
-                    let lolhuman = await fetch(`https://api.lolhuman.xyz/api/ytvideo2?apikey=${lolkeysapi}&url=${youtubeLink}`);    
-                    let lolh = await lolhuman.json();
-                    let n = lolh.result.title || 'error';
-                    let n2 = lolh.result.link;
-                    let n3 = lolh.result.size;
-                    let n4 = lolh.result.thumbnail;
-                    await conn.sendMessage(m.chat, { 
-                        video: { url: n2 }, 
-                        fileName: `${n}.mp4`, 
-                        caption: `${n}\n*${n3}*`, 
-                        thumbnail: n4, 
-                        mimetype: 'video/mp4' 
-                    }, { quoted: m });     
-                } catch (E4) {
-                    return conn.reply(m.chat, 'Error: No se pudo descargar el video', m);
-                }
+            let mediaa2 = await mediaa.json();
+
+            if (mediaa2.result) {
+                await conn.sendMessage(m.chat, {
+                    video: { url: mediaa2.result },
+                    fileName: `error.mp4`,
+                    caption: `${packname}`,
+                    thumbnail: mediaa2.thumb,
+                    mimetype: 'video/mp4'
+                }, { quoted: m });
+                return;
             }
+
+            let mediaa3 = await fetch(`https://deliriusapi-official.vercel.app/download/ytmp4v2?url=${youtubeLink}`);
+            let mediaa4 = await mediaa3.json();
+
+            await conn.sendMessage(m.chat, {
+                video: { url: mediaa4.result },
+                fileName: `error.mp4`,
+                caption: `${packname}`,
+                thumbnail: mediaa4.thumb,
+                mimetype: 'video/mp4'
+            }, { quoted: m });
+        } catch (E2) {
+            console.error(E2);
+            conn.reply(m.chat, `*Error al obtener el video. Intente de nuevo más tarde.*`, m);
         }
     }
-}
+};
 
+handler.help = ['mp4 <url>'];
+handler.tags = ['downloader'];
 handler.command = /^(mp4)$/i;
+
 export default handler;
 
 
