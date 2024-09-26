@@ -23,9 +23,9 @@ let handler = async (m, { conn, command, args, text, usedPrefix }) => {
     txt += `> *𝚅𝚒𝚜𝚒𝚝𝚊𝚜* : _${views.toLocaleString()}_\n`;
     txt += `> *𝙻𝚒𝚗𝚔* : _https://www.youtube.com/watch?v=${videoId}_\n`;
     txt += '===========================\n';
-    txt += 'BY KANBOT';
+    txt += 'BY KAN-BOT';
 
-    await conn.sendButton(m.chat, txt, 'KAN-BOT', thumbnail, [
+    await conn.sendButton(m.chat, txt, 'Provieded by Stiiven', thumbnail, [
         ['ʏᴛᴍᴘ3', `${usedPrefix}ytmp3 ${url}`],
         ['ʏᴛᴍᴘ4', `${usedPrefix}ytmp4 ${url}`],
         ['ʏᴛᴍᴘ4ᴅᴏᴄ', `${usedPrefix}ytmp4doc ${url}`],
