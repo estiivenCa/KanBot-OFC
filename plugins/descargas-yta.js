@@ -29,8 +29,8 @@ var handler = async (m, { text, conn, args, usedPrefix, command }) => {
       }
     }
   }
-  
-  await conn.sendMessage(m.chat, { text: `*🚀 D E S C A R G A N D O*` }, { quoted: m });
+  await conn.reply(m.chat, `*🚀 𝙎𝙀 𝙀𝙎𝙏𝘼 𝘿𝙀𝙎𝘾𝘼𝙍𝙂𝘼𝙉𝘿𝙊 𝙎𝙐 𝘼𝙐𝘿𝙄𝙊, 𝙀𝙎𝙋𝙀𝙍𝙀 𝙐𝙉 𝙈𝙊𝙈𝙀𝙉𝙏𝙊*`, m, fake)
+ // await conn.sendMessage(m.chat, { text: `*🚀 D E S C A R G A N D O*` }, { quoted: m });
   
   try {
     let q = '128kbps';
