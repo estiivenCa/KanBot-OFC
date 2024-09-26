@@ -4,91 +4,89 @@ import ytdl from 'ytdl-core';
 import axios from 'axios';
 import {youtubedl, youtubedlv2} from '@bochilteam/scraper';
 
-const buttonsState = {};  // Variable para almacenar el estado de los botones por chat ID
+import fetch from 'node-fetch'; // Asegúrate de tener esta importación
 
-const handler = async (m, { conn, command, args, text, usedPrefix }) => {
-  if (!text) throw `_𝐄𝐬𝐜𝐫𝐢𝐛𝐞 𝐮𝐧𝐚 𝐩𝐞𝐭𝐢𝐜𝐢𝐨́𝐧 𝐥𝐮𝐞𝐠𝐨 𝐝𝐞𝐥 𝐜𝐨𝐦𝐚𝐧𝐝𝐨 𝐞𝐣𝐞𝐦𝐩𝐥𝐨:_ \n*${usedPrefix + command} Daniel Trevor - Falling*`;
+// ... otras importaciones y configuraciones previas
 
+// Manejador de comandos
+const handleCommand = async (command, m) => {
   try {
-    await m.react('⏳');
-    const yt_play = await search(args.join(' '));
-    
-    const chatId = m.chat;  // Identificar el chat para gestionar el estado de los botones
-    buttonsState[chatId] = buttonsState[chatId] || { audio: false, video: false };  // Estado inicial de los botones si no existe
+    let result;
 
-    // Deshabilitar botones si ya están en uso
-    if (buttonsState[chatId].audio || buttonsState[chatId].video) {
-      await conn.reply(m.chat, "Espere a que se complete la reproducción actual antes de usar otro botón.", null);
-      return;
+    // Suponiendo que tienes una función que obtiene la URL de descarga
+    if (command === 'play') {
+      // Aquí llamas a la API para obtener la información del audio
+      const audioResponse = await fetch(`https://api.ejemplo.com/audio/${m.query}`);
+      result = await audioResponse.json();
+
+      if (!result.status) {
+        return await conn.sendMessage(m.chat, 'No se encontró el audio.');
+      }
+
+      // Crear un mensaje que incluya el título, tamaño y calidad
+      const downloadUrl = result.result.dl_url;
+      const fileResponse = await fetch(downloadUrl);
+
+      if (!fileResponse.ok) throw new Error('No se pudo descargar el archivo.');
+
+      const buffer = await fileResponse.buffer(); // Obtener el archivo como buffer
+
+      // Crear un mensaje que incluya la información
+      const messageContent = `
+*Audio enviado:*
+📝 *Título:* ${result.result.title}
+📏 *Tamaño:* ${result.result.size}
+🔊 *Calidad:* ${result.result.quality}
+`;
+
+      await conn.sendMessage(m.chat, {
+        content: messageContent,
+        audio: buffer,
+        mimetype: 'audio/mpeg',
+        filename: `${result.result.title}.mp3`,
+      });
+    } else if (command === 'play2') {
+      // Aquí llamas a la API para obtener la información del video
+      const videoResponse = await fetch(`https://api.ejemplo.com/video/${m.query}`);
+      result = await videoResponse.json();
+
+      if (!result.status) {
+        return await conn.sendMessage(m.chat, 'No se encontró el video.');
+      }
+
+      // Crear un mensaje que incluya el título, tamaño y calidad
+      const downloadUrl = result.result.dl_url;
+      const fileResponse = await fetch(downloadUrl);
+
+      if (!fileResponse.ok) throw new Error('No se pudo descargar el archivo.');
+
+      const buffer = await fileResponse.buffer(); // Obtener el archivo como buffer
+
+      // Crear un mensaje que incluya la información
+      const messageContent = `
+*Video enviado:*
+📝 *Título:* ${result.result.title}
+📏 *Tamaño:* ${result.result.size}
+🔊 *Calidad:* ${result.result.quality}
+`;
+
+      await conn.sendMessage(m.chat, {
+        content: messageContent,
+        video: buffer,
+        mimetype: 'video/mp4',
+        filename: `${result.result.title}.mp4`,
+      });
+    } else {
+      await conn.sendMessage(m.chat, 'Comando no reconocido.');
     }
-
-    const texto1 = `
-┏─۟─۪─۫─۪۬─۟─۪─۟─۪۬─۟─۪─۟─۪۬─۟─۪─۟┄۪۬┄۟┄۪┈۟┈۪
-│
-├ ⚘݄𖠵⃕⁖𖥔. _*🅃𝕚𝕥𝕦𝕝𝕠*_
-├» ${yt_play[0].title}
-├╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌┄
-├ ⚘݄𖠵⃕⁖𖥔. _*🄿𝕦𝕓𝕝𝕚𝕔𝕒𝕕𝕠*_
-├» ${yt_play[0].ago}
-├╌╌╌╌╌╌╌╌╌╌╌╌╌╌┈
-├ ⚘݄𖠵⃕⁖𖥔. _*🄳𝕦𝕣𝕒𝕔𝕚𝕠𝕟*_
-├» ${secondString(yt_play[0].duration.seconds)}
-├╌╌╌╌╌╌╌╌╌╌╌╌┄
-├ ⚘݄𖠵⃕⁖𖥔. _*🅅𝕚𝕤𝕥𝕒𝕤*_
-├» ${MilesNumber(yt_play[0].views)}
-├╌╌╌╌╌╌╌╌┄
-├ ⚘݄𖠵⃕⁖𖥔. _*🄰𝕦𝕥𝕠𝕣(𝕒)*_
-├» ${yt_play[0].author.name}
-├╌╌╌╌╌╌╌╌┈
-├ ⚘݄𖠵⃕⁖𖥔. _*🄴𝕟𝕝𝕒𝕔𝕖*_
-├» ${yt_play[0].url}
-╰ׁ̻۫─۪۬─۟─۪─۫─۪۬─۟─۪─۟─۪۬─۟─۪─۟─۪۬─۟─۪─۟┄۪۬┄۟┄۪┈۟┈۪`.trim();
-
-    const audioButton = buttonsState[chatId].audio ? 'disable' : `${usedPrefix}play5 ${yt_play[0].url}`;
-    const videoButton = buttonsState[chatId].video ? 'disable' : `${usedPrefix}play6 ${yt_play[0].url}`;
-
-   const del = await conn.sendButton(
-      m.chat,
-      wm,
-      texto1,
-      yt_play[0].thumbnail,
-      [
-        ['𝐌 𝐄 𝐍 𝐔 📌', `${usedPrefix}menu`, 'disable'],
-        ['🎧 𝗔 𝗨 𝗗 𝗜 𝗢', audioButton, 'disable'],
-        ['📽 𝗩 𝗜 𝗗 𝗘 𝗢', videoButton, 'disable']
-      ],
-      null,
-      null,
-      fgif2
-    );
-
-        // Detectar cuál botón se ha seleccionado
-    if (m.text.includes(`${usedPrefix}play5`)) {
-      // Acción para el botón de audio
-      buttonsState[chatId].audio = true;
-      await conn.sendMessage(m.chat, { delete: del.key }); // Eliminar mensaje
-    } else if (m.text.includes(`${usedPrefix}play6`)) {
-      // Acción para el botón de video
-      buttonsState[chatId].video = true;
-      await conn.sendMessage(m.chat, { delete: del.key }); // Eliminar mensaje
-    }
-    // Desactivar el botón correspondiente basado en lo que se seleccione
-    buttonsState[chatId].audio = true;
-    buttonsState[chatId].video = true;
-
-    await m.react('✅');  // Emoji de check
-  } catch (e) {
-    await conn.reply(m.chat, `*[ ! ] Hubo un error en el comando. Intenta más tarde.*`, fkontak, m, rcanal);
-    console.log(`❗❗ Error en ${usedPrefix + command} ❗❗`);
-    console.log(e);
-    handler.limit = 0;
-  } finally {
-    // Reactivar los botones al terminar
-    const chatId = m.chat;
-    buttonsState[chatId].audio = false;
-    buttonsState[chatId].video = false;
+  } catch (error) {
+    console.error('Error al procesar el comando:', error);
+    await conn.sendMessage(m.chat, 'Ocurrió un error al procesar tu solicitud.');
   }
 };
+
+// ... otras partes del código, como la inicialización del bot y la escucha de comandos
+
 
 handler.command = ['play', 'play2', 'play3', 'play4'];
 handler.register = true;
