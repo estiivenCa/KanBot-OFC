@@ -28,9 +28,9 @@ let handler = async (m, { conn, command, args, text, usedPrefix }) => {
     await conn.sendButton(m.chat, txt, 'Provieded by Stiiven', thumbnail, [
         ['ʏᴛᴍᴘ3', `${usedPrefix}ytmp3 ${url}`],
         ['ʏᴛᴍᴘ4', `${usedPrefix}ytmp4 ${url}`],
-        ['ʏᴛᴍᴘ4ᴅᴏᴄ', `${usedPrefix}ytmp4doc ${url}`],
-        ['ʏᴛᴍᴘ3ᴅᴏᴄ', `${usedPrefix}ytmp3doc ${url}`]
-    ], null, [['ᴄᴀɴᴀʟ', '']], m);
+        ['ʏᴛᴍᴘ4ᴅᴏᴄ', `${usedPrefix}play8 ${url}`],
+        ['ʏᴛᴍᴘ3ᴅᴏᴄ', `${usedPrefix}play7 ${url}`]
+    ], null, [['ᴄᴀɴᴀʟ', 'https://whatsapp.com/channel/0029VakhAHc5fM5hgaQ8ed2N']], m);
 
     await m.react('✅');
 };
