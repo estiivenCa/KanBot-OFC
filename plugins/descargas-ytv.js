@@ -59,8 +59,7 @@ handler.command = ['video', 'fgmp4', 'dlmp4', 'getvid', 'yt', 'ytmp4', 'mp4', 'y
 handler.group = true;
 export default handler
  */
-
-  import { youtubedl, youtubedlv2 } from '@bochilteam/scraper'
+import { youtubedl, youtubedlv2 } from '@bochilteam/scraper'
 import fetch from 'node-fetch'
 import yts from 'yt-search'
 import ytdl from 'ytdl-core'
@@ -77,7 +76,26 @@ let handler = async (m, { conn, args, usedPrefix, command }) => {
         "participant": "0@s.whatsapp.net" 
     }
 
-    if (!args[0]) return conn.reply(m.chat, *[❗𝐈𝐍𝐅𝐎❗] 𝙄𝙉𝙂𝙍𝙀𝙎𝙀 𝙐𝙉 𝙀𝙉𝙇𝘼𝘾𝙀 𝘿𝙀 𝙔𝙊𝙐𝙏𝙐𝘽𝙀 𝙋𝘼𝙍𝘼 𝘿𝙀𝙎𝘾𝘼𝙍𝙂𝘼𝙍 𝙀𝙇 𝙑𝙄𝘿𝙀𝙊*\n\n❕ 𝙀𝙅𝙀𝙈𝙋𝙇𝙊\n*${usedPrefix + command} https://youtu.be/85xI8WFMIUY*, /*fkontak,*/ m, { contextInfo: { 'forwardingScore': 0, 'isForwarded': false, externalAdReply: { showAdAttribution: false, title: packname, body: 👋 Hola  + nombre, mediaType: 3, sourceUrl: global.channel }}}, { quoted: fkontak })
+    if (!args[0]) {
+    return conn.reply(m.chat, 
+        `*[❗𝐈𝐍𝐅𝐎❗] 𝙄𝙉𝙂𝙍𝙀𝙎𝙀 𝙐𝙉 𝙀𝙉𝙇𝘼𝘾𝙀 𝘿𝙀 𝙔𝙊𝙐𝙏𝙐𝘽𝙀 𝙋𝘼𝙍𝘼 𝘿𝙀𝙎𝘾𝘼𝙍𝙂𝘼𝙍 𝙀𝙇 𝙑𝙄𝘿𝙀𝙊* \n\n❕ 𝙀𝙅𝙀𝙈𝙋𝙇𝙊\n*${usedPrefix + command} https://youtu.be/85xI8WFMIUY*`, 
+        m, 
+        { 
+            contextInfo: { 
+                'forwardingScore': 0, 
+                'isForwarded': false, 
+                externalAdReply: { 
+                    showAdAttribution: false, 
+                    title: packname, 
+                    body: `👋 Hola ${nombre}`, 
+                    mediaType: 3, 
+                    sourceUrl: global.channel 
+                }
+            }
+        }
+    );
+}
+
 
     let youtubeLink = '';
     if (args[0].includes('you')) {
@@ -171,6 +189,7 @@ let handler = async (m, { conn, args, usedPrefix, command }) => {
 
 handler.command = /^(mp4)$/i;
 export default handler;
+
 
 function bytesToSize(bytes) {
 return new Promise((resolve, reject) => {
