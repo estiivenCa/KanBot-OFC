@@ -17,10 +17,8 @@ const handler = async (m, { conn, command, args, text, usedPrefix }) => {
 
   if (!text) throw `*[ ℹ️ ] Hace falta el título o enlace del video de YouTube.*\n\n*[ 💡 ] Ejemplo:* _${usedPrefix + command} Good Feeling - Flo Rida_`;
 
-  // Realiza la búsqueda en YouTube utilizando el argumento proporcionado
   const yt_play = await search(args.join(' '));
   
-  // Verifica si la búsqueda devolvió algún resultado antes de intentar acceder a yt_play[0]
   if (!yt_play || yt_play.length === 0) {
     throw '*[ ℹ️ ] No se encontraron resultados para la búsqueda. Por favor, intente con otro término.*';
   }
@@ -32,7 +30,6 @@ const handler = async (m, { conn, command, args, text, usedPrefix }) => {
     additionalText = 'vídeo';
   }
 
-  // El resto del código permanece igual
   const texto1 = `╭─────┈✰𝙺𝚊𝚗𝙱𝚘𝚝✰┈──────\n│𐇵 *𝑻𝒊𝒕𝒖𝒍𝒐:* ${yt_play[0].title}\n│𐇵 *𝐷𝑢𝑟𝑎𝑐𝑖𝑜𝑛:* ${secondString(yt_play[0].duration.seconds)}\n│𐇵 *𝐴𝑢𝑡𝑜𝑟:* ${yt_play[0].author.name}\n╰─────┈✰𝙺𝚊𝚗𝙱𝚘𝚝✰┈──────\n> *🚀 _𝐒𝐞 𝐞𝐬𝐭𝐚́ 𝐞𝐧𝐯𝐢𝐚𝐧𝐝𝐨 𝐞𝐥 ${additionalText}. 𝐞𝐬𝐩𝐞𝐫𝐞..._`.trim();
 
   const externalAdReply = {
@@ -90,7 +87,14 @@ const handler = async (m, { conn, command, args, text, usedPrefix }) => {
           return;
         }
       } catch {
-        throw '*[ ℹ️ ] O̶c̶u̶r̶r̶i̶ó ̶u̶n ̶e̶r̶r̶o̶r. 𝐏𝐨𝐫 𝐟𝐚𝐯𝐨𝐫, 𝐢𝐧𝐭𝐞́𝐧𝐭𝐚𝐥𝐨 𝐝𝐞 𝐧𝐮𝐞𝐯𝐨 𝐦𝐚́𝐬 𝐭𝐚𝐫𝐝𝐞.*';
+        // Añadiendo la nueva API en caso de fallo
+        try {
+          const audioFallback = `https://api.fgmods.xyz/api/downloader/yta?url=${yt_play[0].url}&apikey=fJ6pYN8U`;
+          const buff_aud = await getBuffer(audioFallback);
+          await conn.sendMessage(m.chat, { audio: buff_aud, mimetype: 'audio/mpeg', fileName: yt_play[0].title + `.mp3` }, { quoted: m });
+        } catch (error) {
+          throw '*[ ℹ️ ] Ocurrió un error. Por favor, inténtelo de nuevo más tarde.*';
+        }
       }
     }
   }
@@ -141,33 +145,43 @@ const handler = async (m, { conn, command, args, text, usedPrefix }) => {
           return;
         }
       } catch {
-        throw '*[ ℹ️ ] O̶c̶u̶r̶r̶í𝑜́ 𝑢𝑛 𝑒𝑟𝑟𝑜𝑟. 𝐏𝐨𝐫 𝐟𝐚𝐯𝐨𝐫, 𝐢𝐧𝐭𝐞́𝐧𝐭𝐚𝐥𝐨 𝐝𝐞 𝐧𝐮𝐞𝐯𝐨 𝐦𝐚́𝐬 𝐭𝐚𝐫𝐝𝐞.*';
+        // Añadiendo la nueva API en caso de fallo
+        try {
+          const videoFallback = `https://api.fgmods.xyz/api/downloader/ytv?url=${yt_play[0].url}&apikey=fJ6pYN8U`;
+          const buff_vid = await getBuffer(videoFallback);
+          await conn.sendMessage(m.chat, { video: buff_vid, mimetype: 'video/mp4', fileName: yt_play[0].title + `.mp4` }, { quoted: m });
+        } catch (error) {
+          throw '*[ ℹ️ ] Ocurrió un error. Por favor, inténtelo de nuevo más tarde.*';
+        }
       }
     }
   }
 };
 
+handler.help = ['play5', 'play6'];
+handler.tags = ['downloader'];
 handler.command = /^play5|play6$/i;
+handler.limit = 3;
+handler.level = 8;
+
 export default handler;
 
-async function search(query) {
-  const results = await yts(query);
-  return results.all;
-}
+const search = async (query) => {
+  const data = await yts.search(query);
+  return data.videos;
+};
 
-function secondString(seconds) {
-  const pad = (s) => (s < 10 ? '0' : '') + s;
-  const hrs = Math.floor(seconds / (60 * 60));
-  const mins = Math.floor(seconds % (60 * 60) / 60);
+const secondString = (seconds) => {
+  const pad = (s) => {
+    return (s < 10 ? '0' : '') + s;
+  };
+  const hours = Math.floor(seconds / (60 * 60));
+  const minutes = Math.floor((seconds % (60 * 60)) / 60);
   const secs = Math.floor(seconds % 60);
-  return `${pad(hrs)}:${pad(mins)}:${pad(secs)}`;
-}
+  return pad(hours) + ':' + pad(minutes) + ':' + pad(secs);
+};
 
-function MilesNumber(numero) {
-  return numero.toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.');
-}
-
-async function getBuffer(url) {
+const getBuffer = async (url) => {
   const res = await fetch(url);
   return res.buffer();
-}
+};
