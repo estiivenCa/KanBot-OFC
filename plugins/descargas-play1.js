@@ -1,93 +1,76 @@
 import fetch from 'node-fetch';
 import yts from 'yt-search';
-import ytdl from 'ytdl-core';
-import axios from 'axios';
-import {youtubedl, youtubedlv2} from '@bochilteam/scraper';
+import { createWriteStream } from 'fs';
+import { promisify } from 'util';
+import pipeline from 'stream').promises;
+import fs from 'fs';
 
+const handler = async (m, { conn, command, args, text, usedPrefix }) => {
+  if (!text) throw `_𝐄𝐬𝐜𝐫𝐢𝐛𝐞 𝐮𝐧𝐚 𝐩𝐞𝐭𝐢𝐜𝐢𝐨́𝐧 𝐥𝐮𝐞𝐠𝐨 𝐝𝐞𝐥 𝐜𝐨𝐦𝐚𝐧𝐝𝐨 𝐞𝐣𝐞𝐦𝐩𝐥𝐨:_ \n*${usedPrefix + command} Daniel Trevor - Falling*`;
 
-// ... otras importaciones y configuraciones previas
-
-// Manejador de comandos
-const handleCommand = async (command, m) => {
   try {
-    let result;
+    await m.react('⏳');
+    const yt_play = await search(args.join(' '));
 
-    // Suponiendo que tienes una función que obtiene la URL de descarga
+    let downloadUrl, title, quality, size;
     if (command === 'play') {
-      // Aquí llamas a la API para obtener la información del audio
-      const audioResponse = await fetch(`https://api.ejemplo.com/audio/${m.query}`);
-      result = await audioResponse.json();
-
-      if (!result.status) {
-        return await conn.sendMessage(m.chat, 'No se encontró el audio.');
+      // Lógica para audio
+      const response = await fetch(`https://api.fgmods.xyz/api/downloader/yta?url=${yt_play[0].url}&apikey=fJ6pYN8U`);
+      const data = await response.json();
+      if (data.status) {
+        downloadUrl = data.result.dl_url;
+        title = data.result.title;
+        quality = data.result.quality;
+        size = data.result.size;
       }
-
-      // Crear un mensaje que incluya el título, tamaño y calidad
-      const downloadUrl = result.result.dl_url;
-      const fileResponse = await fetch(downloadUrl);
-
-      if (!fileResponse.ok) throw new Error('No se pudo descargar el archivo.');
-
-      const buffer = await fileResponse.buffer(); // Obtener el archivo como buffer
-
-      // Crear un mensaje que incluya la información
-      const messageContent = `
-*Audio enviado:*
-📝 *Título:* ${result.result.title}
-📏 *Tamaño:* ${result.result.size}
-🔊 *Calidad:* ${result.result.quality}
-`;
-
-      await conn.sendMessage(m.chat, {
-        content: messageContent,
-        audio: buffer,
-        mimetype: 'audio/mpeg',
-        filename: `${result.result.title}.mp3`,
-      });
     } else if (command === 'play2') {
-      // Aquí llamas a la API para obtener la información del video
-      const videoResponse = await fetch(`https://api.ejemplo.com/video/${m.query}`);
-      result = await videoResponse.json();
-
-      if (!result.status) {
-        return await conn.sendMessage(m.chat, 'No se encontró el video.');
+      // Lógica para video
+      const response = await fetch(`https://api.fgmods.xyz/api/downloader/ytv?url=${yt_play[0].url}&quality=360p&apikey=fJ6pYN8U`);
+      const data = await response.json();
+      if (data.status) {
+        downloadUrl = data.result.dl_url;
+        title = data.result.title;
+        quality = data.result.quality;
+        size = data.result.size;
       }
-
-      // Crear un mensaje que incluya el título, tamaño y calidad
-      const downloadUrl = result.result.dl_url;
-      const fileResponse = await fetch(downloadUrl);
-
-      if (!fileResponse.ok) throw new Error('No se pudo descargar el archivo.');
-
-      const buffer = await fileResponse.buffer(); // Obtener el archivo como buffer
-
-      // Crear un mensaje que incluya la información
-      const messageContent = `
-*Video enviado:*
-📝 *Título:* ${result.result.title}
-📏 *Tamaño:* ${result.result.size}
-🔊 *Calidad:* ${result.result.quality}
-`;
-
-      await conn.sendMessage(m.chat, {
-        content: messageContent,
-        video: buffer,
-        mimetype: 'video/mp4',
-        filename: `${result.result.title}.mp4`,
-      });
     } else {
-      await conn.sendMessage(m.chat, 'Comando no reconocido.');
+      throw new Error('Comando no reconocido.');
     }
-  } catch (error) {
-    console.error('Error al procesar el comando:', error);
-    await conn.sendMessage(m.chat, 'Ocurrió un error al procesar tu solicitud.');
+
+    if (!downloadUrl) {
+      await conn.reply(m.chat, `*[ ! ] No se pudo obtener el enlace. Intenta más tarde.*`, m);
+      return;
+    }
+
+    // Descargar el archivo
+    const filePath = `./downloads/${title}.${command === 'play' ? 'mp3' : 'mp4'}`;
+    const fileStream = createWriteStream(filePath);
+    const response = await fetch(downloadUrl);
+
+    await pipeline(response.body, fileStream);
+
+    // Enviar el archivo con información adicional
+    const messageText = `*🎶 Aquí está tu ${command === 'play' ? 'audio' : 'video'}:*\n\n` +
+                        `*Título:* ${title}\n` +
+                        `*Calidad:* ${quality}\n` +
+                        `*Tamaño:* ${size}`;
+    
+    await conn.sendFile(m.chat, filePath, title, messageText, m);
+    
+    // Eliminar el archivo después de enviarlo
+    fs.unlink(filePath, (err) => {
+      if (err) console.error(`Error al eliminar el archivo: ${err}`);
+    });
+
+    await m.react('✅');  // Emoji de check
+  } catch (e) {
+    await conn.reply(m.chat, `*[ ! ] Hubo un error en el comando. Intenta más tarde.*`, m);
+    console.log(`❗❗ Error en ${usedPrefix + command} ❗❗`);
+    console.log(e);
   }
 };
 
-// ... otras partes del código, como la inicialización del bot y la escucha de comandos
-
-
-handler.command = ['play', 'play2', 'play3', 'play4'];
+handler.command = ['play', 'play2'];
 handler.register = true;
 handler.group = true;
 
@@ -96,25 +79,4 @@ export default handler;
 async function search(query, options = {}) {
   const search = await yts.search({ query, hl: 'es', gl: 'ES', ...options });
   return search.videos;
-}
-
-function MilesNumber(number) {
-  const exp = /(\d)(?=(\d{3})+(?!\d))/g;
-  const rep = '$1.';
-  const arr = number.toString().split('.');
-  arr[0] = arr[0].replace(exp, rep);
-  return arr[1] ? arr.join('.') : arr[0];
-}
-
-function secondString(seconds) {
-  seconds = Number(seconds);
-  const d = Math.floor(seconds / (3600 * 24));
-  const h = Math.floor((seconds % (3600 * 24)) / 3600);
-  const m = Math.floor((seconds % 3600) / 60);
-  const s = Math.floor(seconds % 60);
-  const dDisplay = d > 0 ? d + (d == 1 ? ' día, ' : ' días, ') : '';
-  const hDisplay = h > 0 ? h + (h == 1 ? ' hora, ' : ' horas, ') : '';
-  const mDisplay = m > 0 ? m + (m == 1 ? ' minuto, ' : ' minutos, ') : '';
-  const sDisplay = s > 0 ? s + (s == 1 ? ' segundo' : ' segundos') : '';
-  return dDisplay + hDisplay + mDisplay + sDisplay;
 }
