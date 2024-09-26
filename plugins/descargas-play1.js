@@ -4,7 +4,6 @@ import ytdl from 'ytdl-core';
 import axios from 'axios';
 import {youtubedl, youtubedlv2} from '@bochilteam/scraper';
 
-import fetch from 'node-fetch'; // Asegúrate de tener esta importación
 
 // ... otras importaciones y configuraciones previas
 
