@@ -2,7 +2,7 @@ import fetch from 'node-fetch';
 import yts from 'yt-search';
 import { createWriteStream } from 'fs';
 import { promisify } from 'util';
-import pipeline from 'stream').promises;
+//import pipeline from 'stream').promises;
 import fs from 'fs';
 
 const handler = async (m, { conn, command, args, text, usedPrefix }) => {
