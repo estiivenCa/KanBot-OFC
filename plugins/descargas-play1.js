@@ -25,7 +25,7 @@ let handler = async (m, { conn, command, args, text, usedPrefix }) => {
     txt += '===========================\n';
     txt += 'BY KANBOT';
 
-    await conn.sendButton2(m.chat, txt, 'KAN-BOT', thumbnail, [
+    await conn.sendButton(m.chat, txt, 'KAN-BOT', thumbnail, [
         ['ʏᴛᴍᴘ3', `${usedPrefix}ytmp3 ${url}`],
         ['ʏᴛᴍᴘ4', `${usedPrefix}ytmp4 ${url}`],
         ['ʏᴛᴍᴘ4ᴅᴏᴄ', `${usedPrefix}ytmp4doc ${url}`],
