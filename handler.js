@@ -279,7 +279,7 @@ if (opts['gconly'] && !m.chat.endsWith('g.us')) return
 if (opts['swonly'] && m.chat !== 'status@broadcast') return
 if (typeof m.text !== 'string')
 m.text = ''
-
+//responder a sus propios comandos
         //if (m.isBaileys) return 
         if (m.isBaileys || isBaileysFail && m?.sender === this?.this?.user?.jid) {
         return
