@@ -42,19 +42,26 @@ const handler = async (m, { conn, command, args, text, usedPrefix }) => {
   conn.sendMessage(m.chat, { image: { url: yt_play[0].thumbnail }, caption: texto1, contextInfo: { externalAdReply } }, { quoted: m });
 
   if (command === 'play5') {
+    // Usar nueva API para descargar audio
     try {
-      const { status, resultados, error } = await ytmp33(yt_play[0].url);
-      if (!status) throw new Error(error);
+      const audioUrl = `https://api.fgmods.xyz/api/downloader/yta?url=${yt_play[0].url}&apikey=fJ6pYN8U`;
+      const audioResponse = await fetch(audioUrl);
+      const audioData = await audioResponse.json();
 
-      const ttl = resultados.titulo;
-      const buff_aud = await getBuffer(resultados.descargar);
+      if (!audioData.status) {
+        throw '*[ ℹ️ ] Ocurrió un error al intentar obtener el audio. Por favor, inténtelo de nuevo más tarde.*';
+      }
+
+      const audioDownloadLink = audioData.result.dl_url; // Uso de dl_url
+      const buff_aud = await getBuffer(audioDownloadLink);
+      const ttl = yt_play[0].title;
       const fileSizeInBytes = buff_aud.byteLength;
       const fileSizeInKB = fileSizeInBytes / 1024;
       const fileSizeInMB = fileSizeInKB / 1024;
       const size = fileSizeInMB.toFixed(2);
 
       if (size >= limit_a2) {
-        await conn.sendMessage(m.chat, { text: `[ ℹ️ ] Descargue su audio en:* _${resultados.descargar}_` }, { quoted: m });
+        await conn.sendMessage(m.chat, { text: `[ ℹ️ ] Descargue su audio en:* _${audioDownloadLink}_` }, { quoted: m });
         return;
       }
       if (size >= limit_a1 && size <= limit_a2) {
@@ -65,54 +72,31 @@ const handler = async (m, { conn, command, args, text, usedPrefix }) => {
         return;
       }
     } catch (error) {
-      console.log('Fallo el 1: ' + error)
-      try {
-        const audio = `${global.MyApiRestBaseUrl}/api/v1/ytmp3?url=${yt_play[0].url}&apikey=${global.MyApiRestApikey}`;
-        const ttl = await yt_play[0].title;
-        const buff_aud = await getBuffer(audio);
-        const fileSizeInBytes = buff_aud.byteLength;
-        const fileSizeInKB = fileSizeInBytes / 1024;
-        const fileSizeInMB = fileSizeInKB / 1024;
-        const size = fileSizeInMB.toFixed(2);
-
-        if (size >= limit_a2) {
-          await conn.sendMessage(m.chat, { text: `[ ℹ️ ] Descargue su audio en:* _${audio}_` }, { quoted: m });
-          return;
-        }
-        if (size >= limit_a1 && size <= limit_a2) {
-          await conn.sendMessage(m.chat, { document: buff_aud, mimetype: 'audio/mpeg', fileName: ttl + `.mp3` }, { quoted: m });
-          return;
-        } else {
-          await conn.sendMessage(m.chat, { audio: buff_aud, mimetype: 'audio/mpeg', fileName: ttl + `.mp3` }, { quoted: m });
-          return;
-        }
-      } catch {
-        // Añadiendo la nueva API en caso de fallo
-        try {
-          const audioFallback = `https://api.fgmods.xyz/api/downloader/yta?url=${yt_play[0].url}&apikey=fJ6pYN8U`;
-          const buff_aud = await getBuffer(audioFallback);
-          await conn.sendMessage(m.chat, { audio: buff_aud, mimetype: 'audio/mpeg', fileName: yt_play[0].title + `.mp3` }, { quoted: m });
-        } catch (error) {
-          throw '*[ ℹ️ ] Ocurrió un error. Por favor, inténtelo de nuevo más tarde.*';
-        }
-      }
+      throw '*[ ℹ️ ] Ocurrió un error al intentar obtener el audio. Por favor, inténtelo de nuevo más tarde.*';
     }
   }
 
   if (command === 'play6') {
+    // Usar nueva API para descargar video
     try {
-      const { status, resultados, error } = await ytmp44(yt_play[0].url);
-      if (!status) throw new Error(error);
+      const videoUrl = `https://api.fgmods.xyz/api/downloader/ytv?url=${yt_play[0].url}&apikey=fJ6pYN8U`;
+      const videoResponse = await fetch(videoUrl);
+      const videoData = await videoResponse.json();
 
-      const ttl2 = resultados.titulo;
-      const buff_vid = await getBuffer(resultados.descargar);
+      if (!videoData.status) {
+        throw '*[ ℹ️ ] Ocurrió un error al intentar obtener el video. Por favor, inténtelo de nuevo más tarde.*';
+      }
+
+      const videoDownloadLink = videoData.result.dl_url; // Uso de dl_url
+      const buff_vid = await getBuffer(videoDownloadLink);
+      const ttl2 = yt_play[0].title;
       const fileSizeInBytes2 = buff_vid.byteLength;
       const fileSizeInKB2 = fileSizeInBytes2 / 1024;
       const fileSizeInMB2 = fileSizeInKB2 / 1024;
       const size2 = fileSizeInMB2.toFixed(2);
 
       if (size2 >= limit2) {
-        await conn.sendMessage(m.chat, { text: `*[ ℹ️ ] Descargue su vídeo en:* _${resultados.descargar}_` }, { quoted: m });
+        await conn.sendMessage(m.chat, { text: `*[ ℹ️ ] Descargue su vídeo en:* _${videoDownloadLink}_` }, { quoted: m });
         return;
       }
       if (size2 >= limit1 && size2 <= limit2) {
@@ -123,37 +107,7 @@ const handler = async (m, { conn, command, args, text, usedPrefix }) => {
         return;
       }
     } catch (error) {
-      console.log('Fallo el 1: ' + error);
-      try {
-        const video = `${global.MyApiRestBaseUrl}/api/v1/ytmp4?url=${yt_play[0].url}&apikey=${global.MyApiRestApikey}`;
-        const ttl2 = await yt_play[0].title;
-        const buff_vid = await getBuffer(video);
-        const fileSizeInBytes2 = buff_vid.byteLength;
-        const fileSizeInKB2 = fileSizeInBytes2 / 1024;
-        const fileSizeInMB2 = fileSizeInKB2 / 1024;
-        const size2 = fileSizeInMB2.toFixed(2);
-
-        if (size2 >= limit2) {
-          await conn.sendMessage(m.chat, { text: `*[ ℹ️ ] Descargue su vídeo en:* _${video}_` }, { quoted: m });
-          return;
-        }
-        if (size2 >= limit1 && size2 <= limit2) {
-          await conn.sendMessage(m.chat, { document: buff_vid, mimetype: 'video/mp4', fileName: ttl2 + `.mp4` }, { quoted: m });
-          return;
-        } else {
-          await conn.sendMessage(m.chat, { video: buff_vid, mimetype: 'video/mp4', fileName: ttl2 + `.mp4` }, { quoted: m });
-          return;
-        }
-      } catch {
-        // Añadiendo la nueva API en caso de fallo
-        try {
-          const videoFallback = `https://api.fgmods.xyz/api/downloader/ytv?url=${yt_play[0].url}&apikey=fJ6pYN8U`;
-          const buff_vid = await getBuffer(videoFallback);
-          await conn.sendMessage(m.chat, { video: buff_vid, mimetype: 'video/mp4', fileName: yt_play[0].title + `.mp4` }, { quoted: m });
-        } catch (error) {
-          throw '*[ ℹ️ ] Ocurrió un error. Por favor, inténtelo de nuevo más tarde.*';
-        }
-      }
+      throw '*[ ℹ️ ] Ocurrió un error al intentar obtener el video. Por favor, inténtelo de nuevo más tarde.*';
     }
   }
 };
@@ -162,6 +116,7 @@ handler.help = ['play5', 'play6'];
 handler.tags = ['downloader'];
 handler.command = /^play5|play6$/i;
 handler.limit = 3;
+handler.level = 8;
 
 export default handler;
 
