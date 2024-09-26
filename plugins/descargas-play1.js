@@ -1,87 +1,42 @@
-import fetch from 'node-fetch';
 import yts from 'yt-search';
-import { createWriteStream, promises as fsPromises } from 'fs';
-import path from 'path';
-import { pipeline as streamPipeline } from 'stream';
 
-const pipeline = promisify(streamPipeline);
-
-const handler = async (m, { conn, command, args, text, usedPrefix }) => {
-  if (!text) throw `_𝐄𝐬𝐜𝐫𝐢𝐛𝐞 𝐮𝐧𝐚 𝐩𝐞𝐭𝐢𝐜𝐢𝐨́𝐧 𝐥𝐮𝐞𝐠𝐨 𝐝𝐞𝐥 𝐜𝐨𝐦𝐚𝐧𝐝𝐨 𝐞𝐣𝐞𝐦𝐩𝐥𝐨:_ \n*${usedPrefix + command} Daniel Trevor - Falling*`;
-
-  try {
-    await m.react('⏳');
-    const yt_play = await search(args.join(' '));
-
-    let downloadUrl, title, quality, size;
-    if (command === 'play') {
-      // Lógica para audio
-      const response = await fetch(`https://api.fgmods.xyz/api/downloader/yta?url=${yt_play[0].url}&apikey=fJ6pYN8U`);
-      const data = await response.json();
-      if (data.status) {
-        downloadUrl = data.result.dl_url;
-        title = data.result.title;
-        quality = data.result.quality;
-        size = data.result.size;
-      }
-    } else if (command === 'play2') {
-      // Lógica para video
-      const response = await fetch(`https://api.fgmods.xyz/api/downloader/ytv?url=${yt_play[0].url}&quality=360p&apikey=fJ6pYN8U`);
-      const data = await response.json();
-      if (data.status) {
-        downloadUrl = data.result.dl_url;
-        title = data.result.title;
-        quality = data.result.quality;
-        size = data.result.size;
-      }
-    } else {
-      throw new Error('Comando no reconocido.');
+let handler = async (m, { conn, command, args, text, usedPrefix }) => {
+    if (!text) {
+        return conn.reply(m.chat, '*𝙸𝚗𝚐𝚛𝚎𝚜𝚊 𝚎𝚕 𝚗𝚘𝚖𝚋𝚛𝚎 𝚍𝚎 𝚕𝚘 𝚚𝚞𝚎 𝚚𝚞𝚒𝚎𝚛𝚎𝚜 𝚋𝚞𝚜𝚌𝚊𝚛*', m);
     }
 
-    if (!downloadUrl) {
-      await conn.reply(m.chat, `*[ ! ] No se pudo obtener el enlace. Intenta más tarde.*`, m);
-      return;
+    await m.react('🕓');
+    let res = await yts(text);
+    let play = res.videos[0];
+
+    if (!play) {
+        throw `Error: Vídeo no encontrado`;
     }
 
-    // Asegúrate de que el directorio de descarga exista
-    const downloadDir = path.join(__dirname, 'downloads');
-    await fsPromises.mkdir(downloadDir, { recursive: true });
+    let { title, thumbnail, ago, timestamp, views, videoId, url } = play;
 
-    // Descargar el archivo
-    const filePath = path.join(downloadDir, `${title}.${command === 'play' ? 'mp3' : 'mp4'}`);
-    const fileStream = createWriteStream(filePath);
-    const response = await fetch(downloadUrl);
+    let txt = '```𝚈𝚘𝚞𝚃𝚞𝚋𝚎 𝙳𝚎𝚜𝚌𝚊𝚛𝚐𝚊𝚜```\n';
+    txt += '===========================\n';
+    txt += `> *𝚃𝚒𝚝𝚞𝚕𝚘* : _${title}_\n`;
+    txt += `> *𝙲𝚛𝚎𝚊𝚍𝚘* : _${ago}_\n`;
+    txt += `> *𝙳𝚞𝚛𝚊𝚌𝚒𝚘𝚗* : _${timestamp}_\n`;
+    txt += `> *𝚅𝚒𝚜𝚒𝚝𝚊𝚜* : _${views.toLocaleString()}_\n`;
+    txt += `> *𝙻𝚒𝚗𝚔* : _https://www.youtube.com/watch?v=${videoId}_\n`;
+    txt += '===========================\n';
+    txt += 'BY KANBOT';
 
-    await pipeline(response.body, fileStream);
+    await conn.sendButton2(m.chat, txt, 'KAN-BOT', thumbnail, [
+        ['ʏᴛᴍᴘ3', `${usedPrefix}ytmp3 ${url}`],
+        ['ʏᴛᴍᴘ4', `${usedPrefix}ytmp4 ${url}`],
+        ['ʏᴛᴍᴘ4ᴅᴏᴄ', `${usedPrefix}ytmp4doc ${url}`],
+        ['ʏᴛᴍᴘ3ᴅᴏᴄ', `${usedPrefix}ytmp3doc ${url}`]
+    ], null, [['ᴄᴀɴᴀʟ', '']], m);
 
-    // Enviar el archivo con información adicional
-    const messageText = `*🎶 Aquí está tu ${command === 'play' ? 'audio' : 'video'}:*\n\n` +
-                        `*Título:* ${title}\n` +
-                        `*Calidad:* ${quality}\n` +
-                        `*Tamaño:* ${size}`;
-    
-    await conn.sendFile(m.chat, filePath, title, messageText, m);
-    
-    // Eliminar el archivo después de enviarlo
-    fs.unlink(filePath, (err) => {
-      if (err) console.error(`Error al eliminar el archivo: ${err}`);
-    });
-
-    await m.react('✅');  // Emoji de check
-  } catch (e) {
-    await conn.reply(m.chat, `*[ ! ] Hubo un error en el comando. Intenta más tarde.*`, m);
-    console.log(`❗❗ Error en ${usedPrefix + command} ❗❗`);
-    console.log(e);
-  }
+    await m.react('✅');
 };
 
-handler.command = ['play', 'play2'];
-handler.register = true;
-handler.group = true;
+handler.help = ['play', 'play2', ];
+handler.tags = ['dl'];
+handler.command = ['play',];
 
 export default handler;
-
-async function search(query, options = {}) {
-  const search = await yts.search({ query, hl: 'es', gl: 'ES', ...options });
-  return search.videos;
-}
