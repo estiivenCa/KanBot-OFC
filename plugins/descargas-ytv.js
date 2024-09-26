@@ -178,9 +178,8 @@ handler.tags = ['descargas']
 handler.help = ['ytmp4 *<url youtube>*']
 handler.command = ['video', 'fgmp4', 'dlmp4', 'getvid', 'yt', 'ytmp4', 'mp4', 'ytv']
 handler.group = true;
-export default handler
 
-export default handler;
+export default handler
 
 
 function bytesToSize(bytes) {
