@@ -23,7 +23,7 @@ let handler = async (m, { conn, command, args, text, usedPrefix }) => {
     txt += `> *𝚅𝚒𝚜𝚒𝚝𝚊𝚜* : _${views.toLocaleString()}_\n`;
     txt += `> *𝙻𝚒𝚗𝚔* : _https://www.youtube.com/watch?v=${videoId}_\n`;
     txt += '===========================\n';
-    txt += 'BY KAN-BOT';
+    txt += '✰ 𝙺𝚊𝚗𝙱𝚘𝚝 ✰';
 
     await conn.sendButton(m.chat, txt, 'Provieded by Stiiven', thumbnail, [
         ['ʏᴛᴍᴘ3', `${usedPrefix}ytmp3 ${url}`],
@@ -36,7 +36,7 @@ let handler = async (m, { conn, command, args, text, usedPrefix }) => {
 };
 
 handler.help = ['play', 'play2', ];
-handler.tags = ['dl'];
+handler.tags = ['descargas'];
 handler.command = ['play',];
 
 export default handler;
