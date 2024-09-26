@@ -1,9 +1,10 @@
 import fetch from 'node-fetch';
 import yts from 'yt-search';
-import { createWriteStream } from 'fs';
-import { promisify } from 'util';
-//import pipeline from 'stream').promises;
-import fs from 'fs';
+import { createWriteStream, promises as fsPromises } from 'fs';
+import path from 'path';
+import { pipeline as streamPipeline } from 'stream';
+
+const pipeline = promisify(streamPipeline);
 
 const handler = async (m, { conn, command, args, text, usedPrefix }) => {
   if (!text) throw `_𝐄𝐬𝐜𝐫𝐢𝐛𝐞 𝐮𝐧𝐚 𝐩𝐞𝐭𝐢𝐜𝐢𝐨́𝐧 𝐥𝐮𝐞𝐠𝐨 𝐝𝐞𝐥 𝐜𝐨𝐦𝐚𝐧𝐝𝐨 𝐞𝐣𝐞𝐦𝐩𝐥𝐨:_ \n*${usedPrefix + command} Daniel Trevor - Falling*`;
@@ -42,8 +43,12 @@ const handler = async (m, { conn, command, args, text, usedPrefix }) => {
       return;
     }
 
+    // Asegúrate de que el directorio de descarga exista
+    const downloadDir = path.join(__dirname, 'downloads');
+    await fsPromises.mkdir(downloadDir, { recursive: true });
+
     // Descargar el archivo
-    const filePath = `./downloads/${title}.${command === 'play' ? 'mp3' : 'mp4'}`;
+    const filePath = path.join(downloadDir, `${title}.${command === 'play' ? 'mp3' : 'mp4'}`);
     const fileStream = createWriteStream(filePath);
     const response = await fetch(downloadUrl);
 
