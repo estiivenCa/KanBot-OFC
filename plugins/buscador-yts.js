@@ -18,7 +18,7 @@ const handler = async (m, { conn, text, usedPrefix: prefijo }) => {
     const device = await getDevice(m.key.id);
     
   if (!text) throw `⚠️ *_Que quieres que busque en YouTube?_*`;
-    
+    await m.react('⏳');
   if (device !== 'desktop' || device !== 'web') {      
     
   const results = await yts(text);
@@ -93,6 +93,7 @@ const handler = async (m, { conn, text, usedPrefix: prefijo }) => {
   }).filter((v) => v).join('\n\n◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦\n\n');
   conn.sendFile(m.chat, tes[0].thumbnail, 'error.jpg', teks.trim(), m);      
   }    
+      await m.react('✅');
 };
 handler.help = ['ytsearch <texto>'];
 handler.tags = ['search'];
