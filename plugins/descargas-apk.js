@@ -21,5 +21,5 @@ handler.command = ['apk', 'apkdl', 'modapk']
 handler.help = ['apk']
 handler.tags = ['descargas']
 handler.group = true
-handler.estrellas = 5
+handler.estrellas = 5;
 export default handler
