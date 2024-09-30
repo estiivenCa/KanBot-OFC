@@ -5,23 +5,19 @@ let result = await res.json();
 let { name, size, lastUpdate, icon } = result;
 let URL = result.dllink
 let packe = result.package
-let texto = ` \`\`\`
-   ❯───「 APK DOWNLOAD 」───❮
+let texto = `❯───「 APK DOWNLOAD 」───❮
     𝌡 Nombre : ⇢ ${name} 📛
     𝌡 Tamaño : ⇢ ${size} ⚖️
     𝌡 Package : ⇢ ${packe} 📦
     𝌡 Actulizado : ⇢ ${lastUpdate} 🗓️
     
-## Su aplicación se enviará en un momento . . .
-
-   - ${wm} -          
-\`\`\`     
+## Su aplicación se enviará en un momento POR FAVOR ESPERE . . .
 `
 await conn.sendFile(m.chat, icon, name + '.jpg', texto, m)
 
 await conn.sendMessage(m.chat, { document: { url: URL }, mimetype: 'application/vnd.android.package-archive', fileName: name + '.apk', caption: ''}, { quoted: m });
 }
 handler.command = ['apk', 'apkdl', 'modapk']
-handler.help = ['apkdl']
-handler.tags = ['dl']
+handler.help = ['apk']
+handler.tags = ['descargas']
 export default handler
