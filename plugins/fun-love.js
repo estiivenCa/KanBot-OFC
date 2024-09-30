@@ -36,7 +36,7 @@ let handler = async (m, { conn, usedPrefix }) => {
 
 handler.help = ['enamorada @tag'];
 handler.tags = ['fun'];
-handler.command = /^(love2|enamorado_de|enamorada_de)$/i;
+handler.command = /^(love2|enamorado_de|enamorada_de|lov)$/i;
 handler.group = true;
 
 export default handler;
