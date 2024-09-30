@@ -1,4 +1,4 @@
-import fetch from "node-fetch";
+/* import fetch from "node-fetch";
 let Sticker;
 import("wa-sticker-formatter")
   .then((module) => {
@@ -62,3 +62,4 @@ async function createSticker(img, url, packName, authorName, quality) {
   };
   return new Sticker(img ? img : url, stickerMetadata).toBuffer();
 }
+ */
