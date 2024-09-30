@@ -6,6 +6,8 @@ let handler = async (m, { conn, usedPrefix, command, text }) => {
     const username = `${conn.getName(m.sender)}`;
     const basePrompt = `Tu nombre es Megumin-Bot y parece haber sido creado por David Chian. Tú usas el idioma Español. Llamarás a las personas por su nombre ${username}, te gusta ser divertida, te encanta aprender y sobre todo las explosiones. Lo más importante es que debes ser amigable con la persona con la que estás hablando. ${username}`;
 
+    console.log('🚩 Comando recibido:', command, 'Texto:', text);
+
     if (isQuotedImage) {
         const q = m.quoted;
         const img = await q.download?.();
@@ -15,7 +17,6 @@ let handler = async (m, { conn, usedPrefix, command, text }) => {
         }
         const content = '🚩 ¿Qué se observa en la imagen?';
         try {
-            // Implementar análisis de imagen aquí si es necesario
             const query = '😊 Descríbeme la imagen y detalla por qué actúan así. También dime quién eres';
             const prompt = `${basePrompt}. La imagen que se analiza es: (Descripción de la imagen)`;
             const description = await fetchFromBing(query); // Cambiado a fetchFromBing
@@ -31,7 +32,9 @@ let handler = async (m, { conn, usedPrefix, command, text }) => {
         await m.react('💬');
         try {
             const query = text;
+            console.log('🚩 Enviando consulta a OpenAI:', query);
             const response = await fetchFromAPIs(query);
+            console.log('🚩 Respuesta de OpenAI:', response);
             await conn.reply(m.chat, response, m, fake);
         } catch (error) {
             console.error('🚩 Error al obtener la respuesta:', error);
@@ -56,6 +59,7 @@ async function fetchFromAPIs(query) {
 
     // Llamada a la API de OpenAI
     try {
+        console.log('🚩 Llamando a la API de OpenAI...');
         const response = await axios.post(openAiUrl, {
             model: "gpt-3.5-turbo", // Usa el modelo que desees
             messages: [{ role: "user", content: query }],
@@ -67,6 +71,7 @@ async function fetchFromAPIs(query) {
             }
         });
 
+        console.log('🚩 Respuesta de OpenAI recibida:', response.data);
         return response.data.choices[0].message.content;
     } catch (error) {
         console.error('🚩 Error al obtener respuesta de OpenAI:', error);
