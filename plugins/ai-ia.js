@@ -15,10 +15,9 @@ let handler = async (m, { conn, usedPrefix, command, text }) => {
         }
         const content = '🚩 ¿Qué se observa en la imagen?'
         try {
-            // Implementar análisis de imagen aquí si es necesario
             const query = '😊 Descríbeme la imagen y detalla por qué actúan así. También dime quién eres'
             const prompt = `${basePrompt}. La imagen que se analiza es: (Descripción de la imagen)`
-            const description = await fetchFromBing(query) // Cambiado a fetchFromBing
+            const description = await fetchFromBing(query)
             await conn.reply(m.chat, description, m, fake)
         } catch (error) {
             console.error('🚩 Error al analizar la imagen:', error)
@@ -49,35 +48,58 @@ handler.command = ['ia', 'chatgpt']
 
 export default handler
 
-// Función para interactuar con la IA usando prompts
+// Función para interactuar con la IA usando prompts, con las nuevas APIs primero
 async function fetchFromAPIs(query) {
-    const apis = [
+    const apisNuevas = [
+        `https://api.dorratz.com/ai/gpt4?username=diego&query=${encodeURIComponent(query)}`,
+        `https://api.dorratz.com/ai2/gpt2?text=${encodeURIComponent(query)}&name=diego%20OFC&prompt=${encodeURIComponent(query)}`
+    ];
+    
+    const apisAntiguas = [
         `https://deliriusapi-official.vercel.app/ia/bingia?query=${encodeURIComponent(query)}`,
         `https://deliriusapi-official.vercel.app/ia/gemini?query=${encodeURIComponent(query)}`,
         `https://api.neoxr.eu/api/gpt-pro?q=${encodeURIComponent(query)}&apikey=GoKVcs`,
         `https://api.neoxr.eu/api/gpt4-mini?q=${encodeURIComponent(query)}&apikey=GoKVcs`
     ];
 
-    for (const api of apis) {
+    // Intentamos primero con las nuevas APIs
+    for (const api of apisNuevas) {
+        try {
+            const response = await fetch(api);
+            const data = await response.json();
+            
+            if (api.includes('gpt4') && data.status) {
+                return `*Hola!👋 soy KanBot Provided By Stiiven*: ${data.msg}`;
+            }
+            if (api.includes('gpt2') && data.status) {
+                return `*Hola!👋 soy KanBot Provided By Stiiven*: ${data.resultado}`;
+            }
+        } catch (error) {
+            console.error(`🚩 Error al obtener respuesta de ${api}:`, error);
+            // Intentar con la siguiente API si esta falla
+        }
+    }
+
+    // Si las nuevas APIs fallan, intentamos con las antiguas
+    for (const api of apisAntiguas) {
         try {
             const response = await fetch(api);
             const data = await response.json();
 
             if (api.includes('bingia') && data.status) {
-                return `*Hola!👋 soy KanBot Provided By Stiiven*: ${data.message}`; //bing
+                return `*Hola!👋 soy KanBot Provided By Stiiven*: ${data.message}`;
             }
             if (api.includes('gemini') && data.status) {
-                return `*Hola!👋 soy KanBot Provided By Stiiven*: ${data.message}`; // gemini
+                return `*Hola!👋 soy KanBot Provided By Stiiven*: ${data.message}`;
             }
             if (api.includes('gpt-pro') && data.status) {
-                return `*Hola!👋 soy KanBot Provided By Stiiven*: ${data.data.message}`; //gpt-pro
+                return `*Hola!👋 soy KanBot Provided By Stiiven*: ${data.data.message}`;
             }
             if (api.includes('gpt4-mini') && data.status) {
-                return `*Hola!👋 soy KanBot Provided By Stiiven*: ${data.data.message}`; // gptmini
+                return `*Hola!👋 soy KanBot Provided By Stiiven*: ${data.data.message}`;
             }
         } catch (error) {
             console.error(`🚩 Error al obtener respuesta de ${api}:`, error);
-            // Intentar con la siguiente API
         }
     }
 
