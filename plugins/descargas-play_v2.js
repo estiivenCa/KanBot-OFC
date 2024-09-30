@@ -1,4 +1,4 @@
-import yts from "yt-search";
+/* import yts from "yt-search";
 
 let handler = async (m, { conn, usedPrefix, text }) => {
   if (!text) return conn.reply(m.chat,"*𝙸𝚗𝚐𝚛𝚎𝚜𝚊 𝚎𝚕 𝚝𝚎𝚡𝚝𝚘 𝚍𝚎 𝚕𝚘 𝚚𝚞𝚎 𝚚𝚞𝚒𝚎𝚛𝚎𝚜 𝚋𝚞𝚜𝚌𝚊𝚛 𝚎𝚗 𝚢𝚘𝚞𝚝𝚞𝚋𝚎 :𝟹*", m, );
@@ -23,3 +23,4 @@ handler.tags = ["search"];
 handler.command = ["ytsearch", "yts"];
 handler.register = true;
 export default handler;
+ */
