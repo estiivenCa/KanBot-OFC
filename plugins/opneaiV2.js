@@ -75,6 +75,9 @@ async function fetchFromAPIs(query) {
         return response.data.choices[0].message.content;
     } catch (error) {
         console.error('🚩 Error al obtener respuesta de OpenAI:', error);
+        if (error.response) {
+            console.error('🚩 Respuesta del servidor:', error.response.data);
+        }
         return 'No se pudo obtener respuesta de OpenAI.';
     }
 }
