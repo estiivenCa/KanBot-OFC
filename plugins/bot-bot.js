@@ -6,12 +6,12 @@ handler.all = async function(m) {
     if (chat.isBanned) return;
 
     // Respuesta a "quien es el mejor bot"
-    if (/^Quien es el mejor bot?$/i.test(m.text)) {
+    if (/^Quien es el mejor bot$/i.test(m.text)) {
         conn.reply(m.chat, `KanBot mi rey😎 `, m, rcanal);
     }
     
     // Respuesta a "quien es tu creador"
-    if (/^Quien es tu creador?$/i.test(m.text)) {
+    if (/^Quien es tu creador$/i.test(m.text)) {
         conn.reply(m.chat, `Stiiven😌`, m, rcanal);
     }
 
