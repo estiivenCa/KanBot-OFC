@@ -1,4 +1,4 @@
-import fetch from 'node-fetch';
+/* import fetch from 'node-fetch';
 import yts from 'yt-search';
 
 const handler = async (m, { conn, command, args, usedPrefix }) => {
@@ -66,3 +66,4 @@ handler.command = /^play5|play6$/i;
 handler.limit = 3;
 
 export default handler;
+ */
