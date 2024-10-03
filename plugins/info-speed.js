@@ -32,7 +32,9 @@ let texto = `🚩 *${global.botname}*
 → ${groups.length} *Grupos*
 
 🏆 *Servidor:*
-➤ *Ram ⪼* ${format(totalmem() - freemem())} / ${format(totalmem())}`.trim()
+➤ *Ram ⪼* ${format(totalmem() - freemem())} / ${format(totalmem())}
+
+👑 *Provided by Stiiven*`.trim()
 
 m.react('✈️')
 
