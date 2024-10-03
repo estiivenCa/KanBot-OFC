@@ -38,5 +38,6 @@ let handler = async (m, { conn, command, args, text, usedPrefix }) => {
 handler.help = ['play', 'play2', ];
 handler.tags = ['descargas'];
 handler.command = ['play',];
+handler.group = true;
 
 export default handler;
