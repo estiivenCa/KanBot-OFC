@@ -74,4 +74,5 @@ handler.help = ['drive'].map(v => v + ' <url>')
 handler.tags = ['descargas']
 handler.command = /^(drive|drivedl|dldrive|gdrive)$/i
 handler.register = true
+handler.group = true
 export default handler
