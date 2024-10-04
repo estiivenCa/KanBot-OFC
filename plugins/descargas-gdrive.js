@@ -1,106 +1,77 @@
-import fetch from 'node-fetch';
-import { google } from 'googleapis';
-import path from 'path';
-
-var handler = async (m, { conn, args, usedPrefix, command, isOwner, isPrems }) => {
-    var limit;
-    if (isOwner || isPrems) {
-        limit = 1000; // 1 GB
-    } else {
-        limit = 600; // 600 MB
+import fetch from 'node-fetch'
+let handler = async (m, { conn, args, usedPrefix, command }) => {
+if (!args[0]) throw `${lenguajeGB['smsAvisoMG']()} Ingrese una Url de Drive`
+let url=args[0]
+if (!(url && url.match(/drive\.google\.com\/file/i))) throw `${lenguajeGB['smsAvisoMG']()} La url ingresada no es valida o es un folder`
+try{
+var res = await fdrivedl(url)
+} catch (e){
+throw 'Ocurrio un error inesperado';
+}
+let caption=`    
+┃ 💫 ${mid.name}
+┃ ${res.fileName}
+┃┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈
+┃ 💪 ${mid.smsYT11}
+┃ ${formatBytes(res.sizeBytes)}
+┃┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈
+┃ 🚀 ${mid.smsYT12}
+┃ ${res.mimetype}`.trim()
+m.reply(`${caption}`)
+let fileSize=formatBytes(res.sizeBytes)
+if (fileSize.includes('GB') && parseInt(fileSize.replace(' GB', '')) > 1.8) throw 'El archivo es muy pesado'
+conn.sendMessage(m.chat, { document: { url: res.downloadUrl }, fileName: res.fileName, mimetype: res.mimetype }, { quoted: m })
+}
+async function fdrivedl(url) {
+      let id;
+      id = (url.match(/\/?id=(.+)/i) || url.match(/\/d\/(.*?)\//))[1];
+      if (!id) throw 'No se encontró id de descarga';
+      let res = await fetch(
+        `https://drive.google.com/uc?id=${id}&authuser=0&export=download`,
+        {
+          method: 'post',
+          headers: {
+            'accept-encoding': 'gzip, deflate, br',
+            'content-length': 0,
+            'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8',
+            origin: 'https://drive.google.com',
+            'user-agent':
+              'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/65.0.3325.181 Safari/537.36',
+            'x-client-data': 'CKG1yQEIkbbJAQiitskBCMS2yQEIqZ3KAQioo8oBGLeYygE=',
+            'x-drive-first-party': 'DriveWebUi',
+            'x-json-requested': 'true',
+          },
+        }
+      );
+      let { fileName, sizeBytes, downloadUrl } = JSON.parse(
+        (await res.text()).slice(4)
+      );
+      if (!downloadUrl) throw 'Se excedió el número de descargas del link';
+      let data = await fetch(downloadUrl);
+      if (data.status !== 200) throw data.statusText;
+      return {
+        downloadUrl,
+        fileName,
+        sizeBytes,
+        mimetype: data.headers.get('content-type'),
+      };
     }
 
-    if (!args[0]) throw `*[❗𝐈𝐍𝐅𝐎❗] 𝙄𝙉𝙂𝙍𝙀𝙎𝙀 𝙐𝙉 𝙀𝙉𝙇𝘼𝘾𝙀 𝘿𝙀 𝙂𝙊𝙊𝙂𝙇𝙀 𝘿𝙍𝙄𝙑𝙀*\n\n❕ 𝙀𝙅𝙀𝙈𝙋𝙇𝙊\n*${usedPrefix}gdrive* https://drive.google.com/file/d/yourfileid/view?usp=sharing`;
+function formatBytes(bytes, decimals = 2) {
+      if (bytes === 0) return '0 Bytes';
 
-    if (!args[0].match(/drive\.google\.com/gi)) throw `[❗𝐈𝐍𝐅𝐎❗] 𝙇𝙄𝙉𝙆 𝙄𝙉𝘾𝙊𝙍𝙍𝙀𝘾𝙏𝙊*`;
+      const k = 1024;
+      const dm = decimals < 0 ? 0 : decimals;
+      const sizes = ['Bytes', 'KB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB'];
 
-    try {
-        m.react('⏳'); // Reacción inicial mientras se procesa
+      const i = Math.floor(Math.log(bytes) / Math.log(k));
 
-        const fileId = args[0].match(/[-\w]{25,}/)[0]; // Extraer el ID del archivo de Google Drive
-        const auth = new google.auth.GoogleAuth({
-            scopes: ['https://www.googleapis.com/auth/drive.readonly'],
-        });
-
-        const drive = google.drive({ version: 'v3', auth });
-        const file = await drive.files.get({
-            fileId: fileId,
-            alt: 'media',
-        }, { responseType: 'stream' });
-
-        const fileName = await drive.files.get({
-            fileId: fileId,
-            fields: 'name, size',
-        });
-
-        const fileSize = parseInt(fileName.data.size, 10);
-        const isLimit = limit * 1024 * 1024 < fileSize;
-
-        if (isLimit) {
-            return m.reply(`*[❗𝐈𝐍𝐅𝐎❗] El archivo es demasiado grande para descargar. El límite es de ${limit}MB.*`);
-        }
-
-        const mimeTypes = {
-            ".mp4": "video/mp4",
-            ".pdf": "application/pdf",
-            ".zip": "application/zip",
-            ".rar": "application/x-rar-compressed",
-            ".7z": "application/x-7z-compressed",
-            ".jpg": "image/jpeg",
-            ".jpeg": "image/jpeg",
-            ".png": "image/png",
-            ".apk": "application/vnd.android.package-archive",
-        };
-
-        const fileExtension = path.extname(fileName.data.name).toLowerCase();
-        const mimetype = mimeTypes[fileExtension] || "application/octet-stream";
-
-        let buffer = Buffer.from([]);
-        for await (const chunk of file.data) {
-            buffer = Buffer.concat([buffer, chunk]);
-        }
-
-        await conn.reply(m.chat, 
-            `💌 *Nombre:* ${fileName.data.name}\n📊 *Peso:* ${formatBytes(fileSize)}\n*🧿 Enviando, por favor espera...*\n> Mientras esperas, sígueme en mi canal, crack 😎`,
-            m,
-            {
-                contextInfo: {
-                    externalAdReply: {
-                        mediaUrl: null,
-                        mediaType: 1,
-                        showAdAttribution: true,
-                        title: "Descarga de Google Drive",
-                        body: "Bot de WhatsApp",
-                        previewType: 0,
-                        sourceUrl: 'https://youtube.com', // URL de ejemplo
-                    }
-                }
-            }
-        );
-
-        await conn.sendFile(m.chat, buffer, fileName.data.name, '', m, null, { mimetype, asDocument: true });
-
-        m.react('✅'); // Reacción de éxito
-
-    } catch (e) {
-        m.react('❌'); // Reacción de error
-        m.reply(`*[❗𝐈𝐍𝐅𝐎❗] 𝙑𝙐𝙀𝙇𝙑𝘼 𝘼 𝙄𝙉𝙏𝙀𝙉𝙏𝘼𝙍𝙇𝙊. 𝘿𝙀𝘽𝙀 𝘿𝙀 𝙎𝙀𝙍 𝙐𝙉 𝙀𝙉𝙇𝘼𝘾𝙀 𝙑𝘼𝙇𝙄𝘿𝙊 𝘿𝙀 𝙂𝙊𝙊𝙂𝙇𝙀 𝘿𝙍𝙄𝙑𝙀*`);
-        console.log(e);
+      return parseFloat((bytes / Math.pow(k, i)).toFixed(dm)) + ' ' + sizes[i];
     }
-}
+  
 
-handler.help = ['gdrive'];
-handler.tags = ['descargas'];
-handler.command = ['gdrive', 'drive'];
-handler.diamond = true;
-handler.register = true;
-
-export default handler;
-
-function formatBytes(bytes) {
-    if (bytes === 0) return '0 Bytes';
-    const k = 1024;
-    const sizes = ['Bytes', 'KB', 'MB', 'GB', 'TB'];
-    const i = Math.floor(Math.log(bytes) / Math.log(k));
-    return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + ' ' + sizes[i];
-}
+handler.help = ['drive'].map(v => v + ' <url>')
+handler.tags = ['descargas']
+handler.command = /^(drive|drivedl|dldrive|gdrive)$/i
+handler.register = true
+export default handler
