@@ -23,8 +23,8 @@ handler.help = ['apkdl']
 handler.tags = ['dl']
 export default handler */
 import { search, download } from 'aptoide-scraper';
-import ufs from 'url-file-size';
-import { sizeFormatter } from 'human-readable';
+//import ufs from 'url-file-size';
+//import { sizeFormatter } from 'human-readable';
 
 const formatSize = async (size) => {
     const format = sizeFormatter({
