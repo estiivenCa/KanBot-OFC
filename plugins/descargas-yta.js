@@ -54,7 +54,7 @@ var handler = async (m, { text, conn, args, usedPrefix, command }) => {
         let ress = await ytdl.chooseFormat(infoo.formats, { filter: 'audioonly' });
         await conn.sendMessage(m.chat, { audio: { url: ress.url }, fileName: `${__res[0].title}.mp3`, mimetype: 'audio/mp4' }, { quoted: m });
       } catch (e) {
-        await conn.reply(m.chat, '*[❗𝐈𝐍𝐅𝐎❗] 𝙀𝙍𝙍𝙊𝙍, 𝙉𝙊 𝙎𝙀 𝙋𝙐𝘿𝙊 𝙀𝙉𝙑𝙄𝘼𝙍 𝙀𝙇 𝘼𝙐𝘿𝙄𝙊*', m);
+        await conn.reply(m.chat, '*[❗𝐈𝐍𝐅𝐎❗] 𝙀𝙍𝙍𝙊𝙍, 𝙉𝙊 𝙎𝙀 𝙋𝙐𝘿𝙊 𝙀𝙉𝙑𝙄𝘼𝙍 𝙀𝙇 𝘼𝙐𝘿𝙄𝙊. 𝙄𝙉𝙏𝙀𝙉𝙏𝙀 𝘾𝙊𝙉 𝙊𝙏𝙍𝘼 𝙊𝙋𝘾𝙄𝙊́𝙉 𝘿𝙀 𝘿𝙀𝙎𝘾𝘼𝙍𝙂𝘼 (#play7*', m);
       }
     }
   }
