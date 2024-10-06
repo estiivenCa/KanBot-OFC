@@ -16,11 +16,13 @@ global.confirmCode = ''
 global.owner = [
   ['573204545069', 'Stiiven', true],
   ['573028488839', 'Stiiven', true],
-  ['573203516208']
+  ['573203516208'],
+  ['573163963499'],
+  ['573225949713']
 ];
 
 //• ↳𝑺𝑶𝑳𝑶 𝑴𝑶𝑫𝑬𝑹𝑨𝑫𝑶𝑹𝑬𝑺!
-global.mods = ['573163963499', '573225949713', '', '', '']
+global.mods = ['', '', '', '', '']
 
 global.suittag = ['573028488839']
 global.prems = []
@@ -30,8 +32,8 @@ global.isBaileysFail = false
 //• ↳ ◜𝑴𝑨𝑹𝑪𝑨𝑺 𝑫𝑬 𝑨𝑮𝑼𝑨◞ • 💌
 global.packsticker = `✰ 𝙺𝚊𝚗𝙱𝚘𝚝 ✰`
 global.packname = `✰ 𝙺𝚊𝚗𝙱𝚘𝚝 ✰`
-global.author = ``;
-global.wm = '';
+global.author = `by Stiiven`;
+global.wm = '✰ 𝙺𝚊𝚗𝙱𝚘𝚝 ✰';
 global.titulowm = '✰ 𝙺𝚊𝚗𝙱𝚘𝚝 ✰';
 global.titulowm2 = `✰ 𝙺𝚊𝚗𝙱𝚘𝚝 ✰`
 global.igfg = '✰ 𝙺𝚊𝚗𝙱𝚘𝚝 ✰'
