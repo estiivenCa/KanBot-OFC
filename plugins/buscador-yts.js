@@ -43,7 +43,7 @@ const handler = async (m, { conn, text, usedPrefix: prefijo }) => {
     const datas = global;
     const device = await getDevice(m.key.id);
     
-  if (!text) return conn.reply(m.chat,"⚠️ *_Que quieres que busque en YouTube?_*", m, rcanal);
+  if (!text) {return conn.reply(m.chat,"⚠️ *_Que quieres que busque en YouTube?_*", m, rcanal)};
     
   if (device !== 'desktop' || device !== 'web') {      
     
