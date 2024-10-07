@@ -40,10 +40,10 @@ let handler = async (message, { conn, text }) => {
         mediaUrl: null,
         mediaType: 1,
         showAdAttribution: true,
-        title: 'Buscador de Imágenes',
-        body: 'Resultado de búsqueda',
+        title: '✰ 𝙺𝚊𝚗𝙱𝚘𝚝 ✰',
+        body: 'by Stiicen',
         previewType: 0,
-        sourceUrl: 'https://example.com'
+        sourceUrl: channel
       }
     }
   });
@@ -70,7 +70,7 @@ let handler = async (message, { conn, text }) => {
           text: `Imagen - ${counter++}`
         }),
         footer: proto.Message.InteractiveMessage.Footer.fromObject({
-          text: 'Imágenes desde Google'
+          text: '✰ 𝙺𝚊𝚗𝙱𝚘𝚝 ✰ by Stiiven'
         }),
         header: proto.Message.InteractiveMessage.Header.fromObject({
           title: '',
@@ -94,7 +94,7 @@ let handler = async (message, { conn, text }) => {
               text: `🚩 Resultado de: ${text}`
             }),
             footer: proto.Message.InteractiveMessage.Footer.create({
-              text: "🔎 Google Imágenes - Búsquedas"
+              text: "🔎 by ✰ 𝙺𝚊𝚗𝙱𝚘𝚝 ✰"
             }),
             header: proto.Message.InteractiveMessage.Header.create({
               hasMediaAttachment: false
