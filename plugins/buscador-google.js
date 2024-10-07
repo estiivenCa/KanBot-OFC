@@ -1,28 +1,30 @@
-import {googleIt} from '@bochilteam/scraper'
-import google from 'google-it'
-import axios from 'axios'
-let handler = async (m, { conn, command, args, usedPrefix }) => {
-const fetch = (await import('node-fetch')).default;
-const text = args.join` `
-if (!text) return conn.reply(m.chat, '🍟 Ingresa lo que deseas buscar en Google.', m, rcanal)
-conn.reply(m.chat, `🚩 Buscando Su Información...`, m, {
-contextInfo: { externalAdReply :{ mediaUrl: null, mediaType: 1, showAdAttribution: true,
-title: packname,
-body: wm,
-previewType: 0, 
-sourceUrl: channel }}})
-const url = 'https://google.com/search?q=' + encodeURIComponent(text)
-google({'query': text}).then(res => {
-let teks = `🍟 *Resultado de* : ${text}\n\n`
-for (let g of res) {
-teks += `🐢 *Titulo ∙* ${g.title}\n🚩 *Info ∙* ${g.snippet}\n🔗 *Url ∙* ${g.link}\n\n`
+import { googleIt } from '@bochilteam/scraper'
+let handler = async (m, { conn, command, args }) => {
+    const fetch = (await import('node-fetch')).default
+    let full = /f$/i.test(command)
+    let text = args.join` `
+    if (!text) return conn.reply(m.chat, '✳️ Que deseas Buscar en Google?', m)
+    let url = 'https://google.com/search?q=' + encodeURIComponent(text)
+    let search = await googleIt(text)
+    let msg = search.articles.map(({
+        // header,
+        title,
+        url,
+        description
+    }) => {
+        return `*${title}*\n_${url}_\n_${description}_`
+    }).join('\n\n')
+    try {
+        let ss = await (await fetch(global.API('nrtm', '/api/ssweb', { delay: 1000, url, full }))).arrayBuffer()
+        if (/<!DOCTYPE html>/i.test(ss.toBuffer().toString())) throw ''
+        await conn.sendFile(m.chat, ss, 'screenshot.png', url + '\n\n' + msg, m)
+    } catch (e) {
+        m.reply(msg)
+    }
 }
-conn.reply(m.chat, teks, m, rcanal)
-})
-}
-handler.help = ['google <búsqueda>']
-handler.tags = ['buscador']
-handler.command = ['google']
-handler.group = true;
-handler.register = true
+handler.help = ['google']
+handler.tags = ['tools']
+handler.command = ['google'] 
+handler.diamond = true
+
 export default handler
