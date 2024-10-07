@@ -42,8 +42,8 @@ const messages = [['Imagen 1', dev, await res.getRandom(),
 await conn.sendCarousel(m.chat, `🚩 Resultado de ${text}`, '🔎 ✰ 𝙺𝚊𝚗𝙱𝚘𝚝 ✰ by Stiiven', null, messages, m);
 };
 handler.help = ['imagen <query>'];
-handler.tags = ['buscador', 'tools', 'descargas'];
-handler.command = ['image','imagen'];
+handler.tags = ['buscador'];
+handler.command = ['image','imagen', 'img'];
 handler.group = true;
 handler.register = true
 export default handler;
