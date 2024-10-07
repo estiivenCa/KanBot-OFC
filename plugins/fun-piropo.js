@@ -4,12 +4,12 @@ import db from '../lib/database.js'
 
 let handler = async (m, { conn, text}) => {
 
-conn.reply(m.chat, '🚩 *¡Buscando un piropo!*', m, {
+/* conn.reply(m.chat, '🚩 *¡Buscando un piropo!*', m, {
 contextInfo: { externalAdReply :{ mediaUrl: null, mediaType: 1, showAdAttribution: true,
 title: packname,
 body: wm,
 previewType: 0, 
-sourceUrl: channel }}})
+sourceUrl: channel }}}) */
 
 let hasil = Math.floor(Math.random() * 5000)
 
