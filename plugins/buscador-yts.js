@@ -43,7 +43,7 @@ const handler = async (m, { conn, text, usedPrefix: prefijo }) => {
     const datas = global;
     const device = await getDevice(m.key.id);
     
-  if (!text) throw `⚠️ *_Que quieres que busque en YouTube?_*`;
+  if (!text) return m.reply( `⚠️ *_Que quieres que busque en YouTube?_*`);
     
   if (device !== 'desktop' || device !== 'web') {      
     
