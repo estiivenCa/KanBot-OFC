@@ -14,8 +14,8 @@ let handler = async (m, { conn, command, args }) => {
                 mediaUrl: null,
                 mediaType: 1,
                 showAdAttribution: true,
-                title: 'Búsqueda',
-                body: 'Buscando en Google...',
+                title: '✰ 𝙺𝚊𝚗𝙱𝚘𝚝 ✰',
+                body: 'by Stiiiven',
                 previewType: 0,
                 sourceUrl: channel
             }
