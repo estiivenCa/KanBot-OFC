@@ -4,7 +4,7 @@ const handler = async (m, {conn, text, usedPrefix, command}) => {
 let foundProhibitedWord = prohibited.find(word => m.text.toLowerCase().includes(word));
 if (foundProhibitedWord) return conn.reply(m.chat, `🚩 *No daré resultado a tu solicitud por pajin* - Palabra prohibida: ${foundProhibitedWord}`, m);
   
-  if (!text) throw `*🚩 Uso Correcto: ${usedPrefix + command} Bart Simpson*`;
+  if (!text) return conn.reply(m.chat, `*🚩 Uso Correcto: ${usedPrefix + command} Bart Simpson*`, m, rcanal);
   conn.reply(m.chat, '🚩 *Descargando su imagen...*', m, {
   contextInfo: { externalAdReply :{ mediaUrl: null, mediaType: 1, showAdAttribution: true,
   title: packname,
