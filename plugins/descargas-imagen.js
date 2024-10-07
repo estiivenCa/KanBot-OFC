@@ -30,7 +30,7 @@ const { generateWAMessageContent, generateWAMessageFromContent, proto } = (await
 
 let handler = async (message, { conn, text }) => {
   if (!text) {
-    return conn.reply(message.chat, "🍟 *¿Qué quieres buscar en Google Imágenes?*", message);
+    return conn.reply(message.chat, "🍟 *¿Qué quieres buscar en Google Imágenes?*", message, rcanal);
   }
 
   await message.react('⏳');
