@@ -13,13 +13,13 @@ const handler = async (m, { conn, args, usedPrefix, command }) => {
     await m.react('⏳'); // Reacción de espera
     const resEX = await mediafiredl(args[0]);
     
-    // Convertir el tamaño a MB para verificar el límite
+/*     // Convertir el tamaño a MB para verificar el límite
     const fileSizeMB = parseFloat(resEX.filesize.replace('MB', '').trim());
 
     // Verificar si el tamaño del archivo supera los 200 MB
     if (fileSizeMB > limitMB) {
       return m.reply(`*🚨 El archivo es demasiado grande (${resEX.filesize}), supera el límite de 200 MB.*`);
-    }
+    } */
 
     const captionES = `_*MEDIAFIRE*_\n
     ▢ *Nombre:*  ${resEX.filename}
@@ -37,13 +37,13 @@ const handler = async (m, { conn, args, usedPrefix, command }) => {
       const res = await mediafireDl(args[0]);
       const { name, size, mime, link } = res;
 
-      // Convertir el tamaño a MB para verificar el límite
+  /*     // Convertir el tamaño a MB para verificar el límite
       const fileSizeMB = parseFloat(size.replace('MB', '').trim());
 
       // Verificar si el tamaño del archivo supera los 200 MB
       if (fileSizeMB > limitMB) {
         return m.reply(`*🚨 El archivo es demasiado grande (${size}), supera el límite de 200 MB.*`);
-      }
+      } */
 
       const caption = `_*MEDIAFIRE*_\n
       ▢ *Nombre:*  ${name}
