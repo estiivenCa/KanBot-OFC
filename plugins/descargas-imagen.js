@@ -118,8 +118,9 @@ let handler = async (message, { conn, text }) => {
   }
 };
 
-handler.help = ["gimage"];
+handler.help = ["imagen <txt>"];
 handler.tags = ["buscador"];
-handler.command = ['gimage'];
+handler.command = ['imagen', 'img', 'gimage'];
+handler.group = true
 
 export default handler;
