@@ -1,66 +1,80 @@
-import {googleIt} from '@bochilteam/scraper';
+import { googleIt } from '@bochilteam/scraper';
 import google from 'google-it';
 import axios from 'axios';
-let handler = async (m, { conn, command, args, usedPrefix }) => {
-const fetch = (await import('node-fetch')).default;
-const text = args.join` `;
-if (!text) throw `${lenguajeGB['smsAvisoMG']()} ${mid.smsMalused} *${usedPrefix + command} Cat*`
-try {
-const url = 'https://google.com/search?q=' + encodeURIComponent(text);
-google({'query': text}).then(res => {
-let teks = `🔍 ${mid.buscador9} ${text}\n\n*${url}*\n\n`
-for (let g of res) {
-teks += `_${g.title}_\n_${g.link}_\n_${g.snippet}_\n\n┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈\n\n`
-} 
-const ss = `https://image.thum.io/get/fullpage/${url}`
-conn.sendFile(m.chat, ss, 'error.png', teks, fkontak, false, { contextInfo: {externalAdReply :{ mediaUrl: null, mediaType: 1, description: null, title: gt, body: ' ShizukaBot-MD By @Alba070503 ', previewType: 0, thumbnail: imagen4, sourceUrl: accountsgb }}})
-//m.reply(teks)
-})
-} catch {    
-handler.limit = 0
-}}
-handler.help = ['google', 'googlef'].map(v => v + ' <pencarian>')
-handler.tags = ['internet']
-handler.command = /^googlef?$/i
-handler.register = true
-handler.limit = 1
-export default handler
 
-/*import { googleIt } from '@bochilteam/scraper'
-let handler = async (m, { conn, command, args, usedPrefix }) => {
-const fetch = (await import('node-fetch')).default
-let full = /f$/i.test(command)
-let text = args.join` `
-if (!text) return conn.reply(m.chat, `${lenguajeGB['smsAvisoMG']()}𝙀𝙎𝘾𝙍𝙄𝘽𝘼 𝙇𝙊 𝙌𝙐𝙀 𝙌𝙐𝙄𝙀𝙍𝙀 𝘽𝙐𝙎𝘾𝘼𝙍\n𝙀𝙅𝙀𝙈𝙋𝙇𝙊\n*${usedPrefix + command} Gata*\n\n𝙏𝙔𝙋𝙀 𝙒𝙃𝘼𝙏 𝙔𝙊𝙐 𝙒𝘼𝙉𝙏 𝙏𝙊 𝙎𝙀𝘼𝙍𝘾𝙃 𝙁𝙊𝙍\n𝙀𝙓𝘼𝙈𝙋𝙇𝙀\n*${usedPrefix + command} Cat*`, m)
-let pp = './media/menus/Menu1.jpg'
-let url = 'https://google.com/search?q=' + encodeURIComponent(text)
-let search = await googleIt(text)
-let msg = search.articles.map(({
-// header,
-title,
-url,
-description
-}) => {
-return `*${title}*\n_${url}_\n_${description}_\n┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈`
-}).join('\n\n')
+let handler = async (m, { conn, command, args }) => {
+    const text = args.join` `;
+    if (!text) {
+        return conn.reply(m.chat, '🍟 Ingresa lo que deseas buscar en Google.', m);
+    }
 
-/*let info = `💖 *Infórmate sobre las Novedades y recuerda tener la última versión.*\n\n💝 *Find out about what's new and remember to have the latest version.*
-  `.trim()
-conn.sendHydrated(m.chat, info, wm, pp, ig, '𝙄𝙣𝙨𝙩𝙖𝙜𝙧𝙖𝙢', null, null, [
-['𝙈𝙚𝙣𝙪 𝘽𝙪𝙨𝙦𝙪𝙚𝙙𝙖𝙨 | 𝙎𝙚𝙖𝙧𝙘𝙝𝙚𝙨 🔎', '#buscarmenu'],
-['𝙈𝙚𝙣𝙪 𝘾𝙤𝙢𝙥𝙡𝙚𝙩𝙤 | 𝙁𝙪𝙡𝙡 𝙈𝙚𝙣𝙪 ✨', '.allmenu'],
-['𝙑𝙤𝙡𝙫𝙚𝙧 𝙖𝙡 𝙈𝙚𝙣𝙪́ | 𝘽𝙖𝙘𝙠 𝙩𝙤 𝙈𝙚𝙣𝙪 ☘️', '/menu']
-], m,) 
-try {
-let ss = await (await fetch(global.API('nrtm', '/api/ssweb', { delay: 1000, url, full }))).arrayBuffer()
-if (/<!DOCTYPE html>/i.test(ss.toBuffer().toString())) throw ''
-await conn.sendFile(m.chat, ss, 'error.png', url + '\n\n' + msg, m)
-} catch (e) {
-m.reply(msg)
-}}
-handler.help = ['google', 'googlef'].map(v => v + ' <pencarian>')
-handler.tags = ['internet']
-handler.command = /^googlef?$/i
-handler.exp = 40
-handler.exp = 3
-export default handler*/
+    conn.reply(m.chat, `🚩 Buscando su información...`, m, {
+        contextInfo: {
+            externalAdReply: {
+                mediaUrl: null,
+                mediaType: 1,
+                showAdAttribution: true,
+                title: 'Búsqueda',
+                body: 'Buscando en Google...',
+                previewType: 0,
+                sourceUrl: channel
+            }
+        }
+    });
+
+    try {
+        // Primero intentamos realizar la búsqueda usando la API de Dorratz
+        const dorratzResponse = await axios.get(`https://api.dorratz.com/v2/google-search?q=${encodeURIComponent(text)}`);
+        const dorratzData = dorratzResponse.data;
+
+        if (dorratzData.status && dorratzData.results) {
+            let responseText = `🍟 *Resultado de* : ${text}\n\n`;
+            dorratzData.results.forEach((item) => {
+                responseText += `🐢 *Titulo ∙* ${item.title}\n🔗 *Url ∙* ${item.link}\n🕰️ *Fecha ∙* ${item.timestamp}\n🔎 *Dominio ∙* ${item.domain}\n\n`;
+            });
+            conn.reply(m.chat, responseText, m);
+            return; // Si hay resultados, termina aquí
+        }
+    } catch (dorratzError) {
+        console.error('Error al buscar en la API de Dorratz:', dorratzError);
+    }
+
+    try {
+        // Si la API de Dorratz falla, intentamos con la API de Lolhuman
+        const lolhumanApiKey = '8fdb6bf3e9d527f7a6476f4b';
+        const lolhumanResponse = await axios.get(`https://api.lolhuman.xyz/api/gsearch?apikey=${lolhumanApiKey}&query=${encodeURIComponent(text)}`);
+        const lolhumanData = lolhumanResponse.data;
+
+        if (lolhumanData.status === 200 && lolhumanData.result) {
+            let responseText = `🍟 *Resultado de* : ${text}\n\n`;
+            lolhumanData.result.forEach((item) => {
+                responseText += `🐢 *Titulo ∙* ${item.title}\n🚩 *Info ∙* ${item.desc}\n🔗 *Url ∙* ${item.link}\n\n`;
+            });
+            conn.reply(m.chat, responseText, m);
+            return; // Si hay resultados, termina aquí
+        }
+    } catch (lolhumanError) {
+        console.error('Error al buscar en la API de Lolhuman:', lolhumanError);
+    }
+
+    try {
+        // Si las dos APIs anteriores fallan, intentamos con google-it
+        const results = await google({ query: text });
+        let responseText = `🍟 *Resultado de* : ${text}\n\n`;
+        for (let g of results) {
+            responseText += `🐢 *Titulo ∙* ${g.title}\n🚩 *Info ∙* ${g.snippet}\n🔗 *Url ∙* ${g.link}\n\n`;
+        }
+        conn.reply(m.chat, responseText, m);
+    } catch (googleItError) {
+        conn.reply(m.chat, '🚩 Error al buscar en Google. Intenta de nuevo más tarde.', m);
+        console.error('Error al buscar con google-it:', googleItError);
+    }
+};
+
+handler.help = ['google <búsqueda>'];
+handler.tags = ['buscador'];
+handler.command = ['google'];
+handler.group = true;
+handler.register = true;
+
+export default handler;
