@@ -5,7 +5,7 @@ if (!args[0]) {
 return conn.reply(m.chat, '🍟 *Ingresa un link de Instagram*', m, rcanal)}
 try {
 await m.react(rwait)
-conn.reply(m.chat, `🕒 *Enviando El Video...*`, m, {
+conn.reply(m.chat, `🕒 *Enviando El Video Por Favor Espere...*`, m, {
 contextInfo: { externalAdReply :{ mediaUrl: null, mediaType: 1, showAdAttribution: true,
 title: packname,
 body: wm,
