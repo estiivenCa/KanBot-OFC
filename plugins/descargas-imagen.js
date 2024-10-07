@@ -19,7 +19,7 @@ if (foundProhibitedWord) return conn.reply(m.chat, `🚩 *No daré resultado a t
 };
 handler.help = ['imagen <query>'];
 handler.tags = ['buscador', 'tools', 'descargas'];
-handler.command = ['image','imagen'];
+handler.command = ['image','imagen', 'img'];
 handler.group = true;
 handler.register = true
 export default handler;
