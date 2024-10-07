@@ -7,7 +7,7 @@ const handler = async (m, { conn, args, usedPrefix, command }) => {
   const limitMB = 200; // Límite de 200 MB
   const datas = global;
 
-  if (!args[0]) throw `*🚀 Ingrese un enlace de MediaFire.*\n\n*[ 💡 ] Ejemplo:* _${usedPrefix + command} https://www.mediafire.com/file/r0lrc9ir5j3e2fs/DOOM_v13_UNCLONE_`;
+  if (!args[0]) { return conn.reply(m.chat, `*🚀 Ingrese un enlace de MediaFire.*\n\n*[ 💡 ] Ejemplo:* _${usedPrefix + command} https://www.mediafire.com/file/r0lrc9ir5j3e2fs/DOOM_v13_UNCLONE_`, m, rcanal)};
 
   try {
     await m.react('⏳'); // Reacción de espera
