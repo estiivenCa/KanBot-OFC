@@ -17,7 +17,7 @@ m.react('⚠️')
 conn.reply(m.chat, texto, m, rcanal, )
 
 }
-handler.command = ['chats']
+handler.command = ['chats', 'ch']
 export default handler
 
 function clockString(ms) {
