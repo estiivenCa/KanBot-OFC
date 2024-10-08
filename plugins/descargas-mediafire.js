@@ -62,6 +62,7 @@ const handler = async (m, { conn, args, usedPrefix, command }) => {
 };
 
 handler.command = ['mediafire', 'mediafiredl', 'dlmediafire', 'mf'];
+handler.tags = ['descargas'];
 handler.register = true;
 handler.group = true;
 export default handler;
