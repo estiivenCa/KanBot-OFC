@@ -48,7 +48,7 @@ console.log(e)
 }
 handler.help = ['banuser <@tag> <razón>'];
 handler.command = ['banuser'];
-handler.tags = ['mods'];
+handler.tags = ['owner'];
 handler.mods = true;
 handler.group = true;
 
