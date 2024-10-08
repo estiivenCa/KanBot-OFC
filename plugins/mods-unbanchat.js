@@ -6,7 +6,7 @@ chat.isBanned = false
 await conn.reply(m.chat, '🚩 *¡KANBOT YA FUÉ DESBANEADO EN ESTE CHAT!*', m, fake)
 }
 handler.help = ['unbanchat'];
-handler.tags = ['mods'];
+handler.tags = ['owner'];
 handler.command = ['unbanchat','desbanearchat','desbanchat']
 handler.mods = true;
 handler.group = true;
