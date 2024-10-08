@@ -12,7 +12,7 @@ let handler = async (m, { conn }) => {
             });
 }
 handler.help = ['ping']
-handler.tags = ['info']
+handler.tags = ['main']
 handler.command = ['ping']
 handler.register = true
 
