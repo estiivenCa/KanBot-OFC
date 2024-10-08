@@ -73,7 +73,7 @@ showAdAttribution: !![],
   conn.sendMessage(m.chat, Message, { quoted: fakegif2 });
 };
 handler.help = ["infobot", "speed"];
-handler.tags = ["info", "tools"];
+handler.tags = ["main"];
 handler.command = ['infobot'];
 handler.register = true
 export default handler;
