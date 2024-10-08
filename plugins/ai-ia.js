@@ -49,10 +49,12 @@ handler.command = ['ia', 'chatgpt']
 export default handler
 
 // Función para interactuar con la IA usando prompts, con las nuevas APIs primero
+// Función para interactuar con la IA usando prompts, con las nuevas APIs primero
 async function fetchFromAPIs(query) {
     const apisNuevas = [
         `https://api.dorratz.com/ai/gpt4?username=diego&query=${encodeURIComponent(query)}`,
-        `https://api.dorratz.com/ai2/gpt2?text=${encodeURIComponent(query)}&name=diego%20OFC&prompt=${encodeURIComponent(query)}`
+        `https://api.dorratz.com/ai2/gpt2?text=${encodeURIComponent(query)}&name=diego%20OFC&prompt=${encodeURIComponent(query)}`,
+        `https://api.fgmods.xyz/api/info/openai2?text=${encodeURIComponent(query)}&apikey=fJ6pYN8U`
     ];
     
     const apisAntiguas = [
@@ -73,6 +75,9 @@ async function fetchFromAPIs(query) {
             }
             if (api.includes('gpt2') && data.status) {
                 return `*Hola!👋 soy KanBot Provided By Stiiven*: ${data.resultado}`;
+            }
+            if (api.includes('fgmods') && data.status) {
+                return `*Hola!👋 soy KanBot Provided By Stiiven*: ${data.result}`;
             }
         } catch (error) {
             console.error(`🚩 Error al obtener respuesta de ${api}:`, error);
