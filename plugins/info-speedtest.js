@@ -20,7 +20,7 @@ const handler = async (m) => {
   }
 };
 handler.help = ['speedtest'];
-handler.tags = ['info'];
+handler.tags = ['main'];
 handler.command = ['speedtest','stest','speed'];
 
 handler.register = true
