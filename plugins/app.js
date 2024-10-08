@@ -57,5 +57,5 @@ let handler = async (m, { conn, args }) => {
     }
 };
 
-handler.command = /^(app)$/i;
-module.exports = handler;
+handler.command = ['app']
+export default handler
