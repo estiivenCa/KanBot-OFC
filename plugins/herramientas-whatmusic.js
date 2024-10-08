@@ -25,7 +25,8 @@ fs.unlinkSync(`./tmp/${m.sender}.${ext}`)
 m.reply(txt)
 } else throw '᥀·࣭࣪̇˖⛔◗ 𝙊𝙘𝙪𝙧𝙧𝙞𝙤 𝙪𝙣 𝙚𝙧𝙧𝙤𝙧 𝙞𝙣𝙚𝙨𝙥𝙚𝙧𝙖𝙙𝙤, 𝙞𝙣𝙩𝙚𝙣𝙩𝙖𝙡𝙤 𝙙𝙚 𝙣𝙪𝙚𝙫𝙤, 𝙧𝙚𝙨𝙥𝙤𝙣𝙙𝙖 𝙖 𝙪𝙣 𝙖𝙪𝙙𝙞𝙤 𝙤 𝙫𝙞𝙙𝙚𝙤.'
 }
-handler.tags = ['herramientas']
+handler.help = ['whatmusic']
+handler.tags = ['tools']
 handler.command = ['quemusica','quemusicaes','whatmusic']
 handler.group = true;
 export default handler
