@@ -37,7 +37,7 @@ await conn.reply(m.chat, '🚩 *Ocurrió un fallo*', m, rcanal, )
 
 }
 handler.help = ['ds', 'fixmsgespera']
-handler.tags = ['info']
+handler.tags = ['main']
 handler.command = ['fixmsgespera','ds']
 
 handler.register = true
