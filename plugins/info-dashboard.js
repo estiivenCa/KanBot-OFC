@@ -29,8 +29,8 @@ let handler = async (m, { conn, command }) => {
 
 }
 
-handler.help = ['dash', 'dashboard', 'views', 'database', 'usuarios', 'user']
-handler.tags = ['info']
+handler.help = ['dash', 'database']
+handler.tags = ['database']
 handler.command = ['dashboard', 'dash', 'views', 'database', 'usuarios', 'user']
 
 handler.register = true
