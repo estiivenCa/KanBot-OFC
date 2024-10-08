@@ -7,7 +7,7 @@ let handler = async (m, { conn, text, usedPrefix, command }) => {
     m.reply('⚠️ *_El reporte se envío a mi creador, cualquier informe falso puede ocasionar baneo._*')
 }
 handler.help = ['reportar']
-handler.tags = ['info']
+handler.tags = ['main']
 handler.command = ['reporte','report','reportar','bug','error']
 
 export default handler
