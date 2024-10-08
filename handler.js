@@ -47,7 +47,7 @@ m = smsg(this, m) || m
 if (!m)
 return
 m.exp = 0
-m.estrellas = false
+m.cookies = false
 m.money = false
 try {
 // TODO: use loop to insert data instead of this
@@ -65,7 +65,7 @@ if (!('premium' in user)) user.premium = false
 if (!('muto' in user)) user.muto = false
 if (!isNumber(user.joincount)) user.joincount = 1
 if (!isNumber(user.money)) user.money = 150
-if (!isNumber(user.estrellas)) user.estrellas = 20
+if (!isNumber(user.cookies)) user.cookies = 20
 if (!('registered' in user)) user.registered = false
 
 if (!user.registered) {
@@ -117,7 +117,7 @@ lastduel: 0,
 lastpago: 0,
 lastrob: 0,
 level: 0,
-estrellas: 20,
+cookies: 20,
 money: 100,
 muto: false,
 premium: false,
@@ -168,10 +168,11 @@ if (!('delete' in chat)) chat.delete = false
 if (!('modohorny' in chat)) chat.modohorny = false                   
 if (!('autosticker' in chat)) chat.autosticker = false      
 if (!('audios' in chat)) chat.audios = false
-if (!('antiBot' in chat)) chat.antiBot = false               
+if (!('antiBot' in chat)) chat.antiBot = false 
+if (!('antiBot2' in chat)) chat.antiBot2 = false               
 if (!('antiver' in chat)) chat.antiver = false 
 if (!('antiPorn' in chat)) chat.antiPorn = false     
-if (!('antiLink' in chat)) chat.antiLink = true    
+if (!('antiLink' in chat)) chat.antiLink = false     
 if (!('antiLink2' in chat)) chat.antiLink2 = false
 if (!('antiTiktok' in chat)) chat.antiTiktok = false
 if (!('antiYoutube' in chat)) chat.antiYoutube = false
@@ -206,9 +207,10 @@ modohorny: false,
 autosticker: false,
 audios: false,
 antiBot: false,
+antiBot2: false,
 antiver: false,
 antiPorn: false,
-antiLink: true,
+antiLink: false,
 antiLink2: false,
 antiTiktok: false,
 antiYoutube: false,
@@ -235,7 +237,7 @@ if (settings) {
 if (!('self' in settings)) settings.self = false
 if (!('autoread' in settings)) settings.autoread = false
 if (!('autoread2' in settings)) settings.autoread2 = false
-if (!('restrict' in settings)) settings.restrict = true
+if (!('restrict' in settings)) settings.restrict = false
 if (!('antiPrivate' in settings)) settings.antiPrivate = false
 if (!('antiCall' in settings)) settings.antiCall = true
 if (!('antiSpam' in settings)) settings.antiSpam = true
@@ -246,7 +248,7 @@ if (!('autobio' in settings)) settings.autobio = false
 self: false,
 autoread: false,
 autoread2: false,
-restrict: true,
+restrict: false,
 antiPrivate: false,
 antiCall: true,
 antiSpam: true,
@@ -279,7 +281,7 @@ if (opts['gconly'] && !m.chat.endsWith('g.us')) return
 if (opts['swonly'] && m.chat !== 'status@broadcast') return
 if (typeof m.text !== 'string')
 m.text = ''
-//responder a sus propios comandos
+
         //if (m.isBaileys) return 
         if (m.isBaileys || isBaileysFail && m?.sender === this?.this?.user?.jid) {
         return
@@ -396,7 +398,7 @@ if (name != 'owner-unbanchat.js' && name != 'owner-exec.js' && name != 'owner-ex
 if (m.text && user.banned && !isROwner) {
 if (user.antispam > 2) return
 m.reply(`🚫 Está baneado(a), no puede usar los comandos de este bot!\n\n${user.bannedReason ? `\n💌 *Motivo:* 
-${user.bannedReason}` : '💌 *Motivo:* Sin Especificar'}\n\n⚠️ *Si este bot es cuenta oficial y tiene evidencia que respalde que este mensaje es un error, puede exponer su caso en:*\n\n🤍 wa.me/573204545069`)
+${user.bannedReason}` : '💌 *Motivo:* Sin Especificar'}\n\n⚠️ *Si este bot es cuenta oficial y tiene evidencia que respalde que este mensaje es un error, puede exponer su caso en:*\n\n🤍 ${asistencia}`)
 user.antispam++        
 return
 }
@@ -454,7 +456,7 @@ continue
 m.isCommand = true
 let xp = 'exp' in plugin ? parseInt(plugin.exp) : 10
 if (xp > 2000)
-m.reply('Exp limit') 
+m.reply('Chirrido -_-') 
 else               
 if (!isPrems && plugin.money && global.db.data.users[m.sender].money < plugin.money * 1) {
 conn.reply(m.chat, `❮💰❯ 𝗡𝗼 𝘁𝗶𝗲𝗻𝗲𝘀 𝘀𝘂𝗳𝗶𝗰𝗶𝗲𝗻𝘁𝗲𝘀 𝗠𝗲𝗴𝘂𝗖𝗼𝗶𝗻𝘀 𝗽𝗮𝗿𝗮 𝘂𝘀𝗮𝗿 𝗲𝘀𝘁𝗲 𝗰𝗼𝗺𝗮𝗻𝗱𝗼.`, m, rcanal)       
@@ -462,8 +464,8 @@ continue
 }
 
 m.exp += xp
-if (!isPrems && plugin.estrellas && global.db.data.users[m.sender].estrellas < plugin.estrellas * 1) {
-conn.reply(m.chat, `❮🌟❯ 𝗡𝗼 𝘁𝗶𝗲𝗻𝗲𝘀 𝘀𝘂𝗳𝗶𝗰𝗶𝗲𝗻𝘁𝗲𝘀 𝗘𝘀𝘁𝗿𝗲𝗹𝗹𝗮𝘀 𝗽𝗮𝗿𝗮 𝘂𝘀𝗮𝗿 𝗲𝘀𝘁𝗲 𝗰𝗼𝗺𝗮𝗻𝗱𝗼. 𝗣𝗮𝗿𝗮 𝗰𝗼𝗺𝗽𝗿𝗮𝗿 𝗺𝗮𝘀 𝗘𝘀𝘁𝗿𝗲𝗹𝗹𝗮𝘀, 𝘂𝘀𝗲 𝗲𝘀𝘁𝗲 𝗰𝗼𝗺𝗮𝗻𝗱𝗼.\n\n• 𝗣𝗼𝗿 𝗘𝗷𝗲𝗺𝗽𝗹𝗼:\n\n*${usedPrefix}buyall*\n*${usedPrefix}buy*`, m, rcanal) 
+if (!isPrems && plugin.cookies && global.db.data.users[m.sender].cookies < plugin.cookies * 1) {
+conn.reply(m.chat, `❮🌟❯ 𝗡𝗼 𝘁𝗶𝗲𝗻𝗲𝘀 𝘀𝘂𝗳𝗶𝗰𝗶𝗲𝗻𝘁𝗲𝘀 𝗖𝗼𝗼𝗸𝗶𝗲𝘀 𝗽𝗮𝗿𝗮 𝘂𝘀𝗮𝗿 𝗲𝘀𝘁𝗲 𝗰𝗼𝗺𝗮𝗻𝗱𝗼. 𝗣𝗮𝗿𝗮 𝗰𝗼𝗺𝗽𝗿𝗮𝗿 𝗺𝗮𝘀 𝗖𝗼𝗼𝗸𝗶𝗲𝘀, 𝘂𝘀𝗲 𝗲𝘀𝘁𝗲 𝗰𝗼𝗺𝗮𝗻𝗱𝗼.\n\n• 𝗣𝗼𝗿 𝗘𝗷𝗲𝗺𝗽𝗹𝗼:\n\n*${usedPrefix}buyall*\n*${usedPrefix}buy*`, m, rcanal) 
 continue
 }
 
@@ -498,7 +500,7 @@ __filename
 try {
 await plugin.call(this, m, extra)
 if (!isPrems)
-m.estrellas = m.estrellas || plugin.estrellas || false
+m.cookies = m.cookies || plugin.cookies || false
 m.money = m.money || plugin.money || false
 } catch (e) {
 // Error occured
@@ -523,8 +525,8 @@ await plugin.after.call(this, m, extra)
 } catch (e) {
 console.error(e)
 }}
-if (m.estrellas)
-conn.reply(m.chat, `Utilizaste *${+m.estrellas}* 🌟`, m, fake)
+if (m.cookies)
+conn.reply(m.chat, `Utilizaste *${+m.cookies}* 🍪`, m, fake)
 }
 if (m.money)
 conn.reply(m.chat, `Utilizaste *${+m.money}* 💰`, m, fake)
@@ -547,7 +549,7 @@ await conn.sendMessage(m.chat, { delete: { remoteJid: m.chat, fromMe: false, id:
 }
 if (m.sender && (user = global.db.data.users[m.sender])) {
 user.exp += m.exp
-user.estrellas -= m.estrellas * 1
+user.cookies -= m.cookies * 1
 user.money -= m.money * 1
 }
 
@@ -739,15 +741,15 @@ console.error(e)
 
 global.dfail = (type, m, conn) => {
 const msg = {
-rowner: '「👑」 *Esta función solo puede ser usada por mi creador*\n\n> Stiiven.', 
+rowner: '「👑」 *Esta función solo puede ser usada por mi creador*\n\n> David-Chian.', 
 owner: '「👑」 *Esta función solo puede ser usada por mi desarrollador.', 
 mods: '「🤴🏻」 *Esta función solo puede ser usada por mis desarrolladores.*', 
 premium: '「🍧」 *Esta función solo es para usuarios Premium.', 
-group: '「🐢」 *Esta funcion solo puede ser ejecutada en el grupo Oficial del Bot*\nhttps://chat.whatsapp.com/C5xsN9KcmIs8O1wNeOkcX9', 
+group: '「🐢」 *Esta funcion solo puede ser ejecutada en grupos.*', 
 private: '「🍭」 *Esta función solo puede ser usada en chat privado.*', 
 admin: '「👑」 *Este comando solo puede ser usado por admins.*', 
 botAdmin: '「🚩」 *Para usar esta función debo ser admin.*', 
-unreg: '「🍟」 *¡Hey! no estas registrado, registrese para usar esta función*\n\n*/reg nombre.edad*\n\n*_❕ Ejemplo_* : */reg Kan.23*',
+unreg: '「🍟」 *¡Hey! no estas registrado, registrese para usar esta función*\n\n*/reg nombre.edad*\n\n*_❕ Ejemplo_* : */reg David.23*',
 restrict: '「💫」 *Esta característica esta desactivada.*'
 }[type];
 if (msg) return conn.reply(m.chat, msg, m, rcanal).then(_ => m.react('✖️'))}
