@@ -43,7 +43,7 @@ conn.reply(m.chat, texto, m, rcanal, )
 
 }
 handler.help = ['speed']
-handler.tags = ['info']
+handler.tags = ['main']
 handler.command = ['speed']
 handler.register = true
 export default handler
